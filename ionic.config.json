@@ -1,0 +1,7 @@
+{
+  "name": "geobox",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
