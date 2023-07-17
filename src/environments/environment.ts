@@ -6,7 +6,18 @@ export const environment = {
   production: false,
   mapbox: {
     accessToken: 'pk.eyJ1IjoiYWxpY2VjeWFuIiwiYSI6ImNsZ3FyenlwNjBzcTczb21yZHBzdnhkYmUifQ.fRSbavjs74FfwfMunA6qSg'
-  }
+  },
+  auth: {
+    domain: 'dev-realmwalker.eu.auth0.com',
+    clientId: 'IgZ8a8z20uXVoXa5MtC3NLXk7CKXNLPr',
+    authorizationParams: {
+      audience: 'dev-realmwalker',
+      redirect_uri: window.location.origin + '/callback'
+    },
+  },
+  api: {
+    host: 'http://localhost:3000/api'
+  },
 };
 
 /*

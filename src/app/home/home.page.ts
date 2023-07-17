@@ -3,7 +3,7 @@ import * as mapboxgl from "mapbox-gl";
 import {Geolocation, Position} from "@capacitor/geolocation";
 import {environment} from "../../environments/environment";
 import {IonModal, ModalController} from "@ionic/angular";
-import {ApiService} from "../api.service";
+import {ApiService} from "../services/api.service";
 import {RealmLocation, LocationType} from "../models/realm_location";
 import {Marker} from "mapbox-gl";
 

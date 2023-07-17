@@ -10,7 +10,21 @@
       <ion-title size="large">launch</ion-title>
     </ion-toolbar>
   </ion-header>
+  <!--
   <a [routerLink]="['/home']">
     link to home page
   </a>
+  -->
+  <p>!!isAuthenticated$: {{!!auth.isAuthenticated$}}</p>
+  <p>activeUser: {{userService.activeUser | json}}</p>
+
+  <ng-container *ngIf="auth.isAuthenticated$ | async; else loggedOut">
+    <button (click)="auth.logout({ logoutParams: { returnTo: document.location.origin } })">
+      Log out
+    </button>
+  </ng-container>
+
+  <ng-template #loggedOut>
+    <button (click)="handleLogin()">Log in</button>
+  </ng-template>
 </ion-content>
