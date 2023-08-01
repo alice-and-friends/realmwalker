@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
+import {AnimationController, IonicModule, IonicRouteStrategy} from '@ionic/angular';
 import { AuthModule } from '@auth0/auth0-angular';
 import { AuthHttpInterceptor } from '@auth0/auth0-angular';
 
@@ -15,7 +15,9 @@ import {GameProgressInterceptor} from "./game-progress-interceptor.service";
   declarations: [AppComponent],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(),
+    IonicModule.forRoot({
+      navAnimation: _ => new AnimationController().create() // Disables route transition animations
+    }),
     AppRoutingModule,
     HttpClientModule,
     AuthModule.forRoot({

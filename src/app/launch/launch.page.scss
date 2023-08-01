@@ -1,0 +1,15 @@
+.login-page {
+  --background: url("/assets/strawberry-battlefield.png") 0 0/100% 100% no-repeat;
+}
+.login-debug {
+  color: black;
+  font-family: monospace, serif;
+}
+h1 {
+  text-align: center;
+  margin-top: 7em;
+}
+.login-button {
+  margin-top: 16em;
+  opacity: 0.8;
+}

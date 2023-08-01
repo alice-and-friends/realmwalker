@@ -14,24 +14,20 @@
       <ion-icon src="/assets/icon/two-coins.svg" class="coin-icon"></ion-icon>
       <ion-label>0 (+0/s)</ion-label>
     </ion-chip>
-    <ion-chip slot="end">
+    <ion-chip slot="end" (click)="openCharacterModal()">
       <ion-icon src="/assets/icon/character.svg" color="secondary"></ion-icon>
-      <ion-label>{{userService.activeUser!.givenName}}</ion-label>
+      <ion-label>{{userService.activeUser?.givenName}}</ion-label>
     </ion-chip>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
   <div class="map" id="map"></div>
-
   <ion-fab slot="fixed" vertical="center" horizontal="start" class="flight-toolbar">
     <ion-fab-button id="open-build-menu" size="small">
       <ion-icon name="construct-sharp"></ion-icon>
     </ion-fab-button>
   </ion-fab>
-
-
-
   <ion-modal #systemInfo trigger="open-build-menu">
     <ng-template>
       <ion-header>

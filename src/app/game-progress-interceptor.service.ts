@@ -5,7 +5,7 @@ import {
   HttpEvent,
   HttpInterceptor, HttpResponse
 } from '@angular/common/http';
-import {async, Observable} from 'rxjs';
+import {Observable} from 'rxjs';
 import { map } from 'rxjs/operators';
 import {ToastController} from "@ionic/angular";
 

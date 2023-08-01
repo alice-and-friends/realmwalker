@@ -7,18 +7,9 @@ import {UserService} from "../services/user.service";
   templateUrl: './launch.page.html',
   styleUrls: ['./launch.page.scss'],
 })
-export class LaunchPage implements OnInit {
+export class LaunchPage {
 
   constructor(public auth: AuthService, public userService: UserService) { }
-
-  ngOnInit() {
-    if(this.auth.isAuthenticated$) {
-      console.log('yeh', this.userService.activeUser)
-    }
-    else {
-      console.log('neh')
-    }
-  }
 
   handleLogin(): void {
     this.auth.loginWithRedirect({

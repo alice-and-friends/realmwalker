@@ -6,6 +6,7 @@ import { HomePage } from './home.page';
 
 import { HomePageRoutingModule } from './home-routing.module';
 import { DungeonModalComponent } from "./dungeon-modal/dungeon-modal.component";
+import {CharacterModalComponent} from "./character-modal/character-modal.component";
 
 
 @NgModule({
@@ -19,6 +20,7 @@ import { DungeonModalComponent } from "./dungeon-modal/dungeon-modal.component";
   declarations: [
     HomePage,
     DungeonModalComponent,
+    CharacterModalComponent,
   ]
 })
 export class HomePageModule {}

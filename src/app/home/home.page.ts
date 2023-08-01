@@ -8,6 +8,8 @@ import {RealmLocation, LocationType} from "../models/realm_location";
 import {Marker} from "mapbox-gl";
 import {DungeonModalComponent} from "./dungeon-modal/dungeon-modal.component";
 import {UserService} from "../services/user.service";
+import {Router} from "@angular/router"
+import {CharacterModalComponent} from "./character-modal/character-modal.component";
 
 @Component({
   selector: 'app-home',
@@ -17,7 +19,7 @@ import {UserService} from "../services/user.service";
 export class HomePage implements OnInit{
   // General ui
   //presentingElement: any = null;
-  locationModal: HTMLIonModalElement | undefined
+  modal: HTMLIonModalElement | undefined
 
   // Map config
   map: mapboxgl.Map | undefined;
@@ -46,8 +48,12 @@ export class HomePage implements OnInit{
     }
   ]
 
-  constructor(public api: ApiService, public userService: UserService, private modalCtrl: ModalController) {
+  constructor(public api: ApiService, public userService: UserService, private router: Router, private modalCtrl: ModalController) {
     console.log('home construct')
+    if (!userService.loggedIn) {
+      this.router.navigate(['/launch']);
+      return;
+    }
     this.modalCtrl = modalCtrl;
   }
 
@@ -143,7 +149,7 @@ export class HomePage implements OnInit{
 
   async openLocationModal(location: RealmLocation) {
     try {
-      this.locationModal = await this.modalCtrl.create({
+      this.modal = await this.modalCtrl.create({
         component: (() => {
           switch(location.type) {
             case LocationType.Dungeon: return DungeonModalComponent
@@ -159,7 +165,29 @@ export class HomePage implements OnInit{
         breakpoints: [0, 0.6],
         initialBreakpoint: 0.6,
       });
-      await this.locationModal.present();
+      await this.modal.present();
+      /*
+      addEventListener('ionBreakpointDidChange', (e: any) => {
+        const breakpoint = e.detail.breakpoint;
+        console.log('ionBreakpointDidChange', breakpoint)
+      });
+      */
+    }
+    catch (error) {
+      console.error(error)
+    }
+  }
+
+  async openCharacterModal() {
+    try {
+      this.modal = await this.modalCtrl.create({
+        component: CharacterModalComponent,
+        componentProps: {
+        },
+        breakpoints: [0, 1.0],
+        initialBreakpoint: 1.0,
+      });
+      await this.modal.present();
       /*
       addEventListener('ionBreakpointDidChange', (e: any) => {
         const breakpoint = e.detail.breakpoint;

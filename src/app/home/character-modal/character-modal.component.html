@@ -1,0 +1,13 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title slot="start">Character</ion-title>
+    <ion-buttons slot="end">
+      <ion-button color="medium" (click)="cancel()">Close</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="ion-padding">
+  <ion-button expand="full" (click)="auth.logout({ logoutParams: { returnTo: document.location.origin } })">
+    Log out
+  </ion-button>
+</ion-content>

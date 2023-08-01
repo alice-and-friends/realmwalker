@@ -1,30 +1,31 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>launch</ion-title>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">launch</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content *ngIf="!userService.loggedIn" class="ion-padding login-page">
   <!--
-  <a [routerLink]="['/home']">
-    link to home page
-  </a>
+  <ion-accordion-group class="login-debug">
+    <ion-accordion value="first">
+      <ion-item slot="header">
+        <ion-label>Debug</ion-label>
+      </ion-item>
+      <div class="ion-padding" slot="content">
+        <p>isLoading$: {{auth.isLoading$ | async}}</p>
+        <p>isAuthenticated$: {{auth.isAuthenticated$ | async}}</p>
+        <p>loggedIn: {{userService.loggedIn}}</p>
+        <p>activeUser: {{userService.activeUser | json}}</p>
+      </div>
+    </ion-accordion>
+  </ion-accordion-group>
   -->
-  <p>!!isAuthenticated$: {{!!auth.isAuthenticated$}}</p>
-  <p>activeUser: {{userService.activeUser | json}}</p>
+
+  <ion-text color="primary">
+    <h1>RealmWalker</h1>
+  </ion-text>
 
   <ng-container *ngIf="auth.isAuthenticated$ | async; else loggedOut">
-    <button (click)="auth.logout({ logoutParams: { returnTo: document.location.origin } })">
+    <ion-button expand="full" (click)="auth.logout({ logoutParams: { returnTo: document.location.origin } })">
       Log out
-    </button>
+    </ion-button>
   </ng-container>
 
   <ng-template #loggedOut>
-    <button (click)="handleLogin()">Log in</button>
+    <ion-button color="dark" expand="full" (click)="handleLogin()" class="login-button">Log in</ion-button>
   </ng-template>
 </ion-content>
