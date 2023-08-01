@@ -3,4 +3,11 @@ export interface User {
   email: string;
   givenName: string;
   familyName: string;
+  xpLevelReport: {
+    xp: number,
+    level: number,
+    nextLevelAt: number,
+    toNextLevel: number,
+    nextLevelProgress: number,
+  };
 }

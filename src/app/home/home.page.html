@@ -11,12 +11,12 @@
 <ion-header>
   <ion-toolbar>
     <ion-chip>
-      <ion-icon name="prism" color="success"></ion-icon>
+      <ion-icon src="/assets/icon/two-coins.svg" class="coin-icon"></ion-icon>
       <ion-label>0 (+0/s)</ion-label>
     </ion-chip>
-    <ion-chip>
-      <ion-icon name="diamond-outline" color="secondary"></ion-icon>
-      <ion-label>0</ion-label>
+    <ion-chip slot="end">
+      <ion-icon src="/assets/icon/character.svg" color="secondary"></ion-icon>
+      <ion-label>{{userService.activeUser!.givenName}}</ion-label>
     </ion-chip>
   </ion-toolbar>
 </ion-header>
@@ -30,28 +30,7 @@
     </ion-fab-button>
   </ion-fab>
 
-  <ion-modal [isOpen]="locationModalOpen" [initialBreakpoint]="0.75" [breakpoints]="[0, 0.75, 1]" (ionBreakpointDidChange)="modalBreakpointCheck($event)">
-    <ng-template>
-      <ion-header>
-        <ion-toolbar>
-          <ion-buttons slot="start">
-            <ion-button (click)="locationModalOpen = false">Close</ion-button>
-          </ion-buttons>
-          <ion-title>{{inspectedLocation?.type}}</ion-title>
-          <ion-buttons slot="end">
-            <!--<ion-button (click)="confirm()" [strong]="true">Confirm</ion-button>-->
-          </ion-buttons>
-        </ion-toolbar>
-      </ion-header>
-      <ion-content class="ion-padding">
-        <ion-item>
-          <ion-label position="stacked">{{inspectedLocation?.name}}</ion-label>
-          <ion-label position="stacked">{{inspectedLocation?.type}}</ion-label>
-        </ion-item>
-        <ion-button (click)="battle()" [strong]="true">Battle</ion-button>
-      </ion-content>
-    </ng-template>
-  </ion-modal>
+
 
   <ion-modal #systemInfo trigger="open-build-menu">
     <ng-template>

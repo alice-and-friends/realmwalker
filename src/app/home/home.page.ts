@@ -1,11 +1,13 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import * as mapboxgl from "mapbox-gl";
 import {Geolocation, Position} from "@capacitor/geolocation";
 import {environment} from "../../environments/environment";
-import {IonModal, ModalController} from "@ionic/angular";
+import {ModalController} from "@ionic/angular";
 import {ApiService} from "../services/api.service";
 import {RealmLocation, LocationType} from "../models/realm_location";
 import {Marker} from "mapbox-gl";
+import {DungeonModalComponent} from "./dungeon-modal/dungeon-modal.component";
+import {UserService} from "../services/user.service";
 
 @Component({
   selector: 'app-home',
@@ -15,20 +17,12 @@ import {Marker} from "mapbox-gl";
 export class HomePage implements OnInit{
   // General ui
   //presentingElement: any = null;
-  modalBreakpointCheck(e: any) {
-    if (e.detail.breakpoint == 0) {
-      this.locationModalOpen = false;
-    }
-  }
+  locationModal: HTMLIonModalElement | undefined
 
   // Map config
   map: mapboxgl.Map | undefined;
   mapMarkers: Marker[] = []
   playerPosition: Position | undefined
-
-  // Location
-  locationModalOpen: boolean = false;
-  inspectedLocation: RealmLocation | undefined;
 
   // Player input
   buildMenu = [
@@ -52,7 +46,7 @@ export class HomePage implements OnInit{
     }
   ]
 
-  constructor(public api: ApiService, private modalCtrl: ModalController) {
+  constructor(public api: ApiService, public userService: UserService, private modalCtrl: ModalController) {
     console.log('home construct')
     this.modalCtrl = modalCtrl;
   }
@@ -75,8 +69,6 @@ export class HomePage implements OnInit{
     // Mapbox config
 
     (mapboxgl.accessToken as any) = environment.mapbox.accessToken;
-
-    console.log('Your access token:', mapboxgl.accessToken);
     this.map = new mapboxgl.Map({
       container: 'map',
       style: 'mapbox://styles/alicecyan/clgs324md001m01qye8obgx8p',
@@ -87,7 +79,6 @@ export class HomePage implements OnInit{
       attributionControl: false,
       // pitch: 60
     });
-    console.log('Your map:', this.map);
 
     // Navigation controls
     // this.map.addControl(new mapboxgl.NavigationControl(), 'bottom-right'); // position is optional
@@ -150,21 +141,35 @@ export class HomePage implements OnInit{
     })
   }
 
-  async inspectLocation(el: HTMLDivElement, location: RealmLocation) {
-    this.inspectedLocation = location;
-    this.locationModalOpen = true
-  }
-
-  battle() {
-    this.api.battle(this.inspectedLocation!.id).subscribe((result: any) => {
-      if (result.defeated) {
-        alert('Victory!')
-        if (this.inspectedLocation) {
-          // this.inspectedLocation.setAsDefeated();
-        }
-        this.loadMarkers();
-      }
-    })
+  async openLocationModal(location: RealmLocation) {
+    try {
+      this.locationModal = await this.modalCtrl.create({
+        component: (() => {
+          switch(location.type) {
+            case LocationType.Dungeon: return DungeonModalComponent
+            case LocationType.Battlefield: return DungeonModalComponent
+            case LocationType.Npc: return DungeonModalComponent
+            default: throw(new Error(`Could not find matching modal controller for location type ${location.type}.`))
+          }
+        })(),
+        componentProps: {
+          locationType: location.type,
+          locationId: location.id,
+        },
+        breakpoints: [0, 0.6],
+        initialBreakpoint: 0.6,
+      });
+      await this.locationModal.present();
+      /*
+      addEventListener('ionBreakpointDidChange', (e: any) => {
+        const breakpoint = e.detail.breakpoint;
+        console.log('ionBreakpointDidChange', breakpoint)
+      });
+      */
+    }
+    catch (error) {
+      console.error(error)
+    }
   }
 
   addMarker(location: any) {
@@ -178,11 +183,32 @@ export class HomePage implements OnInit{
       el.style.width = `${width}px`;
       el.style.height = `${height}px`;
       //el.style.backgroundSize = '100%';
-      el.innerHTML = `<ion-icon name="${location.icon}" color="primary" slot="start" class="map-feature-icon"></ion-icon>`;
+      switch(location.type) {
+        case LocationType.Dungeon:
+          el.className += ` dungeon monster-level-${location.locationMapDetail.level} monster-classification-${location.locationMapDetail.monsterClassification}`
+          el.innerHTML = `<ion-icon
+            src="/assets/icon/${location.locationMapDetail.monsterClassification}.svg"
+            color="dark"
+            slot="start"
+            class="map-feature-icon"
+            ></ion-icon>`;
+          break;
+        case LocationType.Battlefield:
+          el.innerHTML = `<ion-icon name="Trophy" color="primary" slot="start" class="map-feature-icon"></ion-icon>`;
+          break;
+        case LocationType.Npc:
+          el.innerHTML = `<ion-icon name="chatbox-ellipses" color="dark" slot="start" class="map-feature-icon"></ion-icon>`;
+          break;
+        default:
+          el.innerHTML = `<ion-icon name="Help" color="primary" slot="start" class="map-feature-icon"></ion-icon>`;
+      }
 
       el.addEventListener('click', () => {
-        this.inspectLocation(el, location)
+        this.openLocationModal(location)
       });
+      el.addEventListener('zoom', (e) => {
+        console.log(e);
+      })
 
       // Add markers to the map.
       let marker = new mapboxgl.Marker(el)

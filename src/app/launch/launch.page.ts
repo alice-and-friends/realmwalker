@@ -18,10 +18,6 @@ export class LaunchPage implements OnInit {
     else {
       console.log('neh')
     }
-    setInterval(() => {
-      console.log('hello world')
-    }, 2000)
-
   }
 
   handleLogin(): void {

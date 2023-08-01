@@ -1,0 +1,14 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title slot="start">Dungeon</ion-title>
+    <ion-buttons slot="end">
+      <ion-button color="medium" (click)="cancel()">Close</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="ion-padding" *ngIf="locationObject">
+  <h1>{{locationObject.monster.name}}</h1>
+  <p class="monster-level">Level {{locationObject.level}} {{locationObject.monster.classification}}</p>
+  <p class="monster-description quote-box">{{locationObject.monster.description}}</p>
+  <ion-button expand="full" (click)="battle()">⚔️ Battle</ion-button>
+</ion-content>

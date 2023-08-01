@@ -1,15 +1,15 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { AuthModule } from '@auth0/auth0-angular';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthHttpInterceptor } from '@auth0/auth0-angular';
 
 import { environment as env } from '../environments/environment';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
+import {GameProgressInterceptor} from "./game-progress-interceptor.service";
 
 @NgModule({
   declarations: [AppComponent],
@@ -38,6 +38,11 @@ import { AppRoutingModule } from './app-routing.module';
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthHttpInterceptor,
+      multi: true,
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: GameProgressInterceptor,
       multi: true,
     },
   ],
