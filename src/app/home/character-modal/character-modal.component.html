@@ -7,6 +7,13 @@
   </ion-toolbar>
 </ion-header>
 <ion-content class="ion-padding">
+  <ion-list>
+    <ion-item *ngFor="let item of inventory">
+      <ion-label slot="start">{{item.name}}</ion-label>
+      <ion-button size="small" slot="end" *ngIf="item.isEquipped">Equipped</ion-button>
+      <ion-button size="small" slot="end" color="dark" fill="outline" *ngIf="!item.isEquipped && item.equipable">Equip</ion-button>
+    </ion-item>
+  </ion-list>
   <ion-button expand="full" (click)="auth.logout({ logoutParams: { returnTo: document.location.origin } })">
     Log out
   </ion-button>

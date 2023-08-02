@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import {RealmLocation} from "../models/realm_location";
+import {RealmLocation} from "../models/realm-location";
 import {map, Observable} from "rxjs";
 import {User} from "../models/user";
 import {environment as env} from "../../environments/environment";
 import {Dungeon} from "../models/dungeon";
 import {Battlefield} from "../models/battlefield";
 import {Npc} from "../models/npc";
+import {InventoryItem} from "../models/inventory-item";
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +20,16 @@ export class ApiService {
 
   me(): Observable <User> {
     return this.http.get<User>(this.url + '/v1/users/me');
+  }
+
+  getInventory() {
+    return this.http.get<InventoryItem[]>(this.url + '/v1/inventory')
+      .pipe(
+        map((data: any[]) => data.map((item: any) => {
+          const model = new InventoryItem(item);
+          return model;
+        }))
+      );
   }
 
   getLocations() {

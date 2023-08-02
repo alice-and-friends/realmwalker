@@ -8,13 +8,13 @@ export class RealmLocation {
   public name: string;
   public type: LocationType;
   public coordinates: number[];
-  public locationMapDetail: any;
+  public dungeonDetails: any;
 
   constructor(data: any) {
     this.id = data.id;
     this.name = data.name;
     this.type = data.locationType;
     this.coordinates = [data.coordinates.y, data.coordinates.x];
-    this.locationMapDetail = data.locationMapDetail;
+    this.dungeonDetails = data.dungeonDetails;
   }
 }

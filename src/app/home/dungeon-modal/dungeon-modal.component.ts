@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ModalController} from "@ionic/angular";
-import {LocationType} from "../../models/realm_location";
+import {LocationType} from "../../models/realm-location";
 import {ApiService} from "../../services/api.service";
 import {Dungeon} from "../../models/dungeon";
 import {Battlefield} from "../../models/battlefield";

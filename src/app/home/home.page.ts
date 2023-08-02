@@ -4,7 +4,7 @@ import {Geolocation, Position} from "@capacitor/geolocation";
 import {environment} from "../../environments/environment";
 import {ModalController} from "@ionic/angular";
 import {ApiService} from "../services/api.service";
-import {RealmLocation, LocationType} from "../models/realm_location";
+import {RealmLocation, LocationType} from "../models/realm-location";
 import {Marker} from "mapbox-gl";
 import {DungeonModalComponent} from "./dungeon-modal/dungeon-modal.component";
 import {UserService} from "../services/user.service";
@@ -213,9 +213,9 @@ export class HomePage implements OnInit{
       //el.style.backgroundSize = '100%';
       switch(location.type) {
         case LocationType.Dungeon:
-          el.className += ` dungeon monster-level-${location.locationMapDetail.level} monster-classification-${location.locationMapDetail.monsterClassification}`
+          el.className += ` dungeon monster-level-${location.dungeonDetails.level} monster-classification-${location.dungeonDetails.monsterClassification}`
           el.innerHTML = `<ion-icon
-            src="/assets/icon/${location.locationMapDetail.monsterClassification}.svg"
+            src="/assets/icon/${location.dungeonDetails.monsterClassification}.svg"
             color="dark"
             slot="start"
             class="map-feature-icon"
@@ -234,9 +234,6 @@ export class HomePage implements OnInit{
       el.addEventListener('click', () => {
         this.openLocationModal(location)
       });
-      el.addEventListener('zoom', (e) => {
-        console.log(e);
-      })
 
       // Add markers to the map.
       let marker = new mapboxgl.Marker(el)

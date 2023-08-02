@@ -1,4 +1,4 @@
-import {RealmLocation} from "./realm_location";
+import {RealmLocation} from "./realm-location";
 import {Dungeon} from "./dungeon";
 
 export class Battlefield extends RealmLocation {

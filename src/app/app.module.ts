@@ -9,7 +9,7 @@ import { AuthHttpInterceptor } from '@auth0/auth0-angular';
 import { environment as env } from '../environments/environment';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import {GameProgressInterceptor} from "./game-progress-interceptor.service";
+import {GameProgressInterceptor} from "./services/game-progress-interceptor.service";
 
 @NgModule({
   declarations: [AppComponent],
