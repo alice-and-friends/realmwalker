@@ -10,7 +10,7 @@
   <div class="character-summary">
     <h1 class="player-title">{{user.name}}</h1>
     <p>Level {{user.xpLevelReport.level}} • {{user.xpLevelReport.xp}} XP</p>
-    <p>You have {{user.xpLevelReport.nextLevelProgress}}% to go</p>
+    <p>You have {{100-user.xpLevelReport.nextLevelProgress}}% to go</p>
     <ion-progress-bar [value]="user.xpLevelReport.nextLevelProgress/100"></ion-progress-bar>
     <p>{{user.xpLevelReport.toNextLevel}} XP for next level</p>
   </div>
