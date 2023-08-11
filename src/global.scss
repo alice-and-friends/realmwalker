@@ -44,9 +44,10 @@ h1, h2, h3, h4, h5, h6 {
   font-family: "Cinzel", "Times New Roman", serif;
   font-weight: 500;
 }
-p {
-  margin-top: 0.5em;
-}
+h1 {font-size: 26px}
+h2 {font-size: 20px}
+h3 {font-size: 16px}
+p {margin-top: 0.5em}
 
 .marker { /* TODO: Should not be here */
   display: block;

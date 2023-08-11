@@ -8,46 +8,74 @@
 </ion-header>
 -->
 
-<ion-header>
-  <ion-toolbar>
-    <ion-chip>
-      <ion-icon src="/assets/icon/two-coins.svg" class="coin-icon"></ion-icon>
-      <ion-label>0 (+0/s)</ion-label>
-    </ion-chip>
-    <ion-chip slot="end" (click)="openCharacterModal()">
-      <ion-icon src="/assets/icon/character.svg" color="secondary"></ion-icon>
-      <ion-label>{{userService.activeUser?.name}}</ion-label>
-    </ion-chip>
-  </ion-toolbar>
+<ion-header class="map-toolbar">
+  <ion-grid>
+    <ion-row class="ion-align-items-center">
+      <ion-col></ion-col>
+      <ion-col *ngIf="userService.activeUser" (click)="openCharacterModal()" size="6" class="ion-text-center">
+        <h1 class="player-title">{{userService.activeUser.name}}</h1>
+        <p>Level {{userService.activeUser.xpLevelReport.level}}</p>
+        <ion-progress-bar [value]="userService.activeUser.xpLevelReport.nextLevelProgress/100"></ion-progress-bar>
+      </ion-col>
+      <ion-col class="ion-text-end">
+        <ion-button size="small" fill="clear">
+          <ion-icon slot="icon-only" name="menu"></ion-icon>
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <!--
+  <div class="map-toolbar">
+    <div></div>
+    <div *ngIf="userService.activeUser" (click)="openCharacterModal()" class="character-summary">
+      <h1 class="player-title">{{userService.activeUser.name}}</h1>
+      <p>Level {{userService.activeUser.xpLevelReport.level}}</p>
+      <ion-progress-bar [value]="userService.activeUser.xpLevelReport.nextLevelProgress/100"></ion-progress-bar>
+    </div>
+    <div class="ion-text-right ion-padding-right ion-align-items-center">
+      <ion-button size="small" slot="end">
+        <ion-icon slot="icon-only" name="menu"></ion-icon>
+      </ion-button>
+    </div>
+  </div>
+
+  <ion-chip  (click)="openCharacterModal()">
+    <ion-icon src="/assets/icon/character.svg" color="secondary"></ion-icon>
+    <ion-label>{{userService.activeUser?.name}}</ion-label>
+  </ion-chip>
+  <ion-chip>
+    <ion-icon src="/assets/icon/two-coins.svg" class="coin-icon"></ion-icon>
+    <ion-label>0 (+0/s)</ion-label>
+  </ion-chip>
+  -->
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <div class="map" id="map"></div>
-  <ion-fab slot="fixed" vertical="center" horizontal="start" class="flight-toolbar">
-    <ion-fab-button id="open-build-menu" size="small">
-      <ion-icon name="construct-sharp"></ion-icon>
-    </ion-fab-button>
-  </ion-fab>
-  <ion-modal #systemInfo trigger="open-build-menu">
-    <ng-template>
-      <ion-header>
-        <ion-toolbar>
-          <ion-title>Title</ion-title>
-          <ion-buttons slot="end">
-            <ion-button (click)="systemInfo.dismiss()">Close</ion-button>
-          </ion-buttons>
-        </ion-toolbar>
-      </ion-header>
-      <ion-content>
-        <ion-list>
-          <ion-item button *ngFor="let buildOption of buildMenu;" (click)='buildOption.f()'>
-            <ion-icon name="{{buildOption.icon}}" color="primary" slot="start"></ion-icon>
-            <ion-label>
-              <h2>{{buildOption.label}}</h2>
-            </ion-label>
-          </ion-item>
-        </ion-list>
-      </ion-content>
-    </ng-template>
-  </ion-modal>
-</ion-content>
+<div class="map" id="map"></div>
+
+<ion-fab slot="fixed" vertical="center" horizontal="start" class="flight-toolbar">
+  <ion-fab-button id="open-build-menu" size="small">
+    <ion-icon name="construct-sharp"></ion-icon>
+  </ion-fab-button>
+</ion-fab>
+<ion-modal #systemInfo trigger="open-build-menu">
+  <ng-template>
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Title</ion-title>
+        <ion-buttons slot="end">
+          <ion-button (click)="systemInfo.dismiss()">Close</ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content>
+      <ion-list>
+        <ion-item button *ngFor="let buildOption of buildMenu;" (click)='buildOption.f()'>
+          <ion-icon name="{{buildOption.icon}}" color="primary" slot="start"></ion-icon>
+          <ion-label>
+            <h2>{{buildOption.label}}</h2>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-content>
+  </ng-template>
+</ion-modal>

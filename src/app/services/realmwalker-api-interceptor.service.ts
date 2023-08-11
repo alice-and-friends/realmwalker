@@ -9,11 +9,12 @@ import {catchError, Observable, throwError} from 'rxjs';
 import { map } from 'rxjs/operators';
 import {environment as env} from "../../environments/environment";
 import {NotificationService} from "./notification.service";
+import {UserService} from "./user.service";
 
 @Injectable()
 export class RealmwalkerApiInterceptor implements HttpInterceptor {
 
-  constructor(private notification: NotificationService) {}
+  constructor(private notification: NotificationService, private userService: UserService) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
@@ -39,12 +40,23 @@ export class RealmwalkerApiInterceptor implements HttpInterceptor {
 
           // Check for xp/level up
           if (event.body && event.body.xpLevelChange) {
+
+            // Update user object
             if (event.body.xpLevelChange.xpDiff > 0) {
               console.log('gained xp', event.body.xpLevelChange.xpDiff)
+              this.userService.activeUser!.xpLevelReport = event.body.xpLevelReport;
+            } else if (event.body.xpLevelChange.xpDiff < 0) {
+              console.log('lost xp', event.body.xpLevelChange.xpDiff)
+              this.userService.activeUser!.xpLevelReport = event.body.xpLevelReport;
             }
+
+            // Notify the user of level changes
             if (event.body.xpLevelChange.levelDiff > 0) {
               console.log('advanced to level', event.body.xpLevelChange.currentLevel)
               this.notification.presentToast(`You advanced to level ${event.body.xpLevelChange.currentLevel}!`)
+            } else if (event.body.xpLevelChange.levelDiff < 0) {
+              console.log('downgraded to level', event.body.xpLevelChange.currentLevel)
+              this.notification.presentToast(`You were downgraded to level ${event.body.xpLevelChange.currentLevel}.`)
             }
           }
         }

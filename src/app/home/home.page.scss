@@ -6,6 +6,31 @@
   width: 100%;
 }
 
+ion-header {
+  background: rgba(0,0,0,0.6);
+}
+.map-toolbar {
+  ion-col {
+    padding: 0;
+  }
+
+  .character-summary {
+    text-align: center;
+  }
+
+  h1 {
+    font-size: 20px;
+    margin: 0 0 2px 0;
+  }
+  p {
+    font-size: 10px;
+    margin: 0 0 3px 0;
+  }
+  ion-icon {
+    color: #ddd;
+  }
+}
+
 .coin-icon {
   color: gold;
 }

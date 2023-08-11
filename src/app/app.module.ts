@@ -11,6 +11,7 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import {RealmwalkerApiInterceptor} from "./services/realmwalker-api-interceptor.service";
 import {NotificationService} from "./services/notification.service";
+import {UserService} from "./services/user.service";
 
 @NgModule({
   declarations: [AppComponent],
@@ -48,7 +49,7 @@ import {NotificationService} from "./services/notification.service";
       provide: HTTP_INTERCEPTORS,
       useClass: RealmwalkerApiInterceptor,
       multi: true,
-      deps: [NotificationService]
+      deps: [NotificationService, UserService]
     },
   ],
   bootstrap: [AppComponent],

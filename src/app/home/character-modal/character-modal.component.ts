@@ -3,6 +3,8 @@ import {AlertController, IonicSafeString, ModalController} from "@ionic/angular"
 import {ApiService} from "../../services/api.service";
 import {AuthService} from "@auth0/auth0-angular";
 import {InventoryItem} from "../../models/inventory-item";
+import {UserService} from "../../services/user.service";
+import {User} from "../../models/user";
 
 @Component({
   selector: 'app-character-modal',
@@ -11,8 +13,17 @@ import {InventoryItem} from "../../models/inventory-item";
 })
 export class CharacterModalComponent  implements OnInit {
   inventory: InventoryItem[] | undefined;
+  user: User | undefined;
 
-  constructor(private modalCtrl: ModalController, private alertController:AlertController, private api: ApiService, public auth: AuthService) { }
+  constructor(
+    private modalCtrl: ModalController,
+    private alertController:AlertController,
+    private api: ApiService,
+    public auth: AuthService,
+    public userService: UserService
+  ) {
+    this.user = userService.activeUser
+  }
 
   ngOnInit() {
     this.api.getInventory().subscribe((data: any) => {
