@@ -31,6 +31,13 @@ export class ApiService {
         }))
       );
   }
+  setEquipped(itemId: string, equipped: boolean, force:boolean=false) {
+    return this.http.post(this.url + '/v1/inventory/set_equipped', {
+      'item_id': itemId,
+      'equipped': equipped,
+      'force': force,
+    })
+  }
 
   getLocations() {
     return this.http.get<RealmLocation[]>(this.url + '/v1/realm_locations')

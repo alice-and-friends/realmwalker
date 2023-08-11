@@ -7,14 +7,28 @@
   </ion-toolbar>
 </ion-header>
 <ion-content class="ion-padding">
-  <ion-list>
-    <ion-item *ngFor="let item of inventory">
-      <ion-label slot="start">{{item.name}}</ion-label>
-      <ion-button size="small" slot="end" *ngIf="item.isEquipped">Equipped</ion-button>
-      <ion-button size="small" slot="end" color="dark" fill="outline" *ngIf="!item.isEquipped && item.equipable">Equip</ion-button>
-    </ion-item>
-  </ion-list>
-  <ion-button expand="full" (click)="auth.logout({ logoutParams: { returnTo: document.location.origin } })">
-    Log out
-  </ion-button>
+  <ion-grid class="inventory-list">
+    <ion-row *ngFor="let item of inventory" class="inventory-item ion-align-items-center">
+      <ion-col>
+        <ion-label>{{item.name}}</ion-label>
+        <!--<ion-icon name="help-circle"></ion-icon>-->
+        <!--<ion-chip [className]="'small-chip rarity-' + item.rarity">{{item.rarity}}</ion-chip>-->
+        <br>
+        <p class="item-detail">
+          {{item.rarity}} {{item.itemType}}<span *ngIf="item.itemType === 'weapon'">, {{item.twoHanded ? 'two-handed' : 'one-handed'}}</span>
+        </p>
+        <p *ngFor="let bonus of item.bonuses" class="item-detail item-bonus">{{bonus}}</p>
+      </ion-col>
+      <ion-col *ngIf="item.equipable" size="auto">
+        <ion-button size="small" color="dark" [fill]="item.isEquipped ? 'solid' : 'outline'" (click)="toggleEquipped(item)">
+          {{item.isEquipped ? '✔ Equipped' : 'Equip'}}
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <div>
+    <ion-button expand="full" (click)="auth.logout({ logoutParams: { returnTo: document.location.origin } })">
+      Log out
+    </ion-button>
+  </div>
 </ion-content>

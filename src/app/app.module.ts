@@ -16,7 +16,8 @@ import {GameProgressInterceptor} from "./services/game-progress-interceptor.serv
   imports: [
     BrowserModule,
     IonicModule.forRoot({
-      navAnimation: _ => new AnimationController().create() // Disables route transition animations
+      navAnimation: _ => new AnimationController().create(), // Disables route transition animations
+      innerHTMLTemplatesEnabled: true, // Enables html support in alert boxes
     }),
     AppRoutingModule,
     HttpClientModule,

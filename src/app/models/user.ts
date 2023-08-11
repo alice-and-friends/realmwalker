@@ -1,8 +1,7 @@
 export interface User {
   id: number;
   email: string;
-  givenName: string;
-  familyName: string;
+  name: string;
   xpLevelReport: {
     xp: number,
     level: number,

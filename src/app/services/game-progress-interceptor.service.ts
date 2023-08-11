@@ -16,7 +16,7 @@ export class GameProgressInterceptor implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     function checkForXpChange(body: any) {
-      if (body.xpLevelChange) {
+      if (body && body.xpLevelChange) {
         if (body.xpLevelChange.xpDiff > 0) {
           console.log('gained xp', body.xpLevelChange.xpDiff)
         }
