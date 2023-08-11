@@ -9,7 +9,8 @@ import { AuthHttpInterceptor } from '@auth0/auth0-angular';
 import { environment as env } from '../environments/environment';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import {GameProgressInterceptor} from "./services/game-progress-interceptor.service";
+import {RealmwalkerApiInterceptor} from "./services/realmwalker-api-interceptor.service";
+import {NotificationService} from "./services/notification.service";
 
 @NgModule({
   declarations: [AppComponent],
@@ -45,8 +46,9 @@ import {GameProgressInterceptor} from "./services/game-progress-interceptor.serv
     },
     {
       provide: HTTP_INTERCEPTORS,
-      useClass: GameProgressInterceptor,
+      useClass: RealmwalkerApiInterceptor,
       multi: true,
+      deps: [NotificationService]
     },
   ],
   bootstrap: [AppComponent],
