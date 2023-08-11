@@ -24,7 +24,7 @@ export class NotificationService {
       }
       : {
         message: message,
-        duration: 1500,
+        duration: 2000,
         position: params.position || 'bottom',
       };
     const toast = await this.toastController.create(opts);

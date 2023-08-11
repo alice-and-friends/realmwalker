@@ -65,15 +65,12 @@ export class HomePage implements OnInit{
 
   async ngOnInit() {
     console.log('home init')
-    // Something to do with modals
-    // this.presentingElement = document.querySelector('.ion-page');
 
     // Player info
     this.playerPosition = await Geolocation.getCurrentPosition();
     console.log('You are here:', this.playerPosition);
 
     // Mapbox config
-
     (mapboxgl.accessToken as any) = environment.mapbox.accessToken;
     this.map = new mapboxgl.Map({
       container: 'map',
@@ -184,16 +181,8 @@ export class HomePage implements OnInit{
         component: CharacterModalComponent,
         componentProps: {
         },
-        breakpoints: [0, 1.0],
-        initialBreakpoint: 1.0,
       });
       await this.modal.present();
-      /*
-      addEventListener('ionBreakpointDidChange', (e: any) => {
-        const breakpoint = e.detail.breakpoint;
-        console.log('ionBreakpointDidChange', breakpoint)
-      });
-      */
     }
     catch (error) {
       console.error(error)
@@ -207,10 +196,8 @@ export class HomePage implements OnInit{
       const width = 32;
       const height = 32;
       el.className = 'marker';
-      //el.style.backgroundImage = `url(https://placekitten.com/g/${width}/${height}/)`;
       el.style.width = `${width}px`;
       el.style.height = `${height}px`;
-      //el.style.backgroundSize = '100%';
       switch(location.type) {
         case LocationType.Dungeon:
           el.className += ` dungeon monster-level-${location.dungeonDetails.level} monster-classification-${location.dungeonDetails.monsterClassification}`

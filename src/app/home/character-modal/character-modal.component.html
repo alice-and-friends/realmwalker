@@ -22,7 +22,7 @@
         <ion-label>{{item.name}}</ion-label>
         <!--<ion-icon name="help-circle"></ion-icon>-->
         <!--<ion-chip [className]="'small-chip rarity-' + item.rarity">{{item.rarity}}</ion-chip>-->
-        <br>
+        <hr>
         <p class="item-detail">
           {{item.rarity}} {{item.itemType}}<span *ngIf="item.itemType === 'weapon'">, {{item.twoHanded ? 'two-handed' : 'one-handed'}}</span>
         </p>
