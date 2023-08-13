@@ -15,6 +15,10 @@ Run `ng generate component component-name` to generate a new component. You can 
 
 TBD
 
+## Resources
+
+- Icons: [game-icons.net](https://game-icons.net/)
+
 ## Further help
 
 - Check out [Ionic docs](https://ionicframework.com/docs/)
