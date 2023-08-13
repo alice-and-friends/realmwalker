@@ -23,10 +23,12 @@
         <!--<ion-icon name="help-circle"></ion-icon>-->
         <!--<ion-chip [className]="'small-chip rarity-' + item.rarity">{{item.rarity}}</ion-chip>-->
         <hr>
-        <p class="item-detail">
+        <p class="detail-line">
           {{item.rarity}} {{item.itemType}}<span *ngIf="item.itemType === 'weapon'">, {{item.twoHanded ? 'two-handed' : 'one-handed'}}</span>
         </p>
-        <p *ngFor="let bonus of item.bonuses" class="item-detail item-bonus">{{bonus}}</p>
+        <ion-text color="success">
+          <p *ngFor="let bonus of item.bonuses" class="detail-line compact">{{bonus}}</p>
+        </ion-text>
       </ion-col>
       <ion-col *ngIf="item.equipable" size="auto">
         <ion-button size="small" color="dark" [fill]="item.isEquipped ? 'solid' : 'outline'" (click)="toggleEquipped(item)">

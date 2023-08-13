@@ -14,6 +14,7 @@ import {User} from "../../models/user";
 export class CharacterModalComponent  implements OnInit {
   inventory: InventoryItem[] | undefined;
   user: User | undefined;
+  dismissCallback: any
 
   constructor(
     private modalCtrl: ModalController,
@@ -93,7 +94,9 @@ export class CharacterModalComponent  implements OnInit {
   }
 
   cancel() {
-    return this.modalCtrl.dismiss('cancel');
+    this.modalCtrl.dismiss('cancel').then(r => {
+      if (this.dismissCallback) this.dismissCallback()
+    });
   }
 
   protected readonly document = document;

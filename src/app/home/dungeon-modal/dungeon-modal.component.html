@@ -10,5 +10,31 @@
   <h1>{{locationObject.monster.name}}</h1>
   <p class="monster-level">Level {{locationObject.level}} {{locationObject.monster.classification}}</p>
   <p class="monster-description quote-box">{{locationObject.monster.description}}</p>
-  <ion-button expand="full" (click)="battle()">⚔️ Battle</ion-button>
+  <div *ngIf="analysis; else analyzeButton" class="ion-text-center ion-margin-bottom">
+    <h2>Assessment: <span [class]="'assessment-'+analysis.assessment.toLowerCase()">{{analysis.assessment}}</span></h2>
+    <h3>
+      Chance of success: {{analysis.chanceOfSuccess}}%
+      <span *ngIf="analysis.overkill">({{analysis.overkill}} overkill)</span>
+    </h3>
+    <p class="detail-line compact">Base chance: {{analysis.baseChance}}%</p>
+    <ion-text color="success">
+      <p *ngFor="let modifier of analysis.modifiersPositive" class="detail-line compact">{{modifier}}</p>
+    </ion-text>
+    <ion-text color="danger">
+      <p *ngFor="let modifier of analysis.modifiersNegative" class="detail-line compact">{{modifier}}</p>
+    </ion-text>
+    <p class="detail-line">
+      Chance of death: {{analysis.chanceOfDeath}}%<br>
+      Chance of inventory loss: {{analysis.chanceOfInventoryLoss}}%<br>
+      Chance of equipment loss: {{analysis.chanceOfEquipmentLoss}}%
+    </p>
+    <ion-text color="secondary">
+      <p *ngFor="let modifier of analysis.modifiersDeath" class="detail-line compact">{{modifier}}</p>
+    </ion-text>
+  </div>
+  <ng-template #analyzeButton>
+    <ion-button expand="full" (click)="analyze()" [disabled]="loading">Analyze</ion-button>
+  </ng-template>
+  <ion-button expand="full" (click)="changeEquipment()" [disabled]="loading">Change equipment</ion-button>
+  <ion-button expand="full" (click)="battle()" [disabled]="loading">Battle!</ion-button>
 </ion-content>

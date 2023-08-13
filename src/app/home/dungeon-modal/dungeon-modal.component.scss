@@ -10,3 +10,6 @@
   color: #58170E;
   padding: 0.5em;
 }
+.assessment-trivial, .assessment-easy { color: var(--ion-color-success) }
+.assessment-risky { color: var(--ion-color-warning) }
+.assessment-dangerous, .assessment-deadly { color: var(--ion-color-danger) }

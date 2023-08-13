@@ -8,6 +8,7 @@ import {Dungeon} from "../models/dungeon";
 import {Battlefield} from "../models/battlefield";
 import {Npc} from "../models/npc";
 import {InventoryItem} from "../models/inventory-item";
+import {BattlePrediction} from "../models/battle-prediction";
 
 @Injectable({
   providedIn: 'root'
@@ -56,8 +57,15 @@ export class ApiService {
       })
     )
   }
+  getBattlePrediction(dungeonId: string) {
+    return this.http.get<BattlePrediction>(this.url + `/v1/dungeons/${dungeonId}/analyze`).pipe(
+      map(data => {
+        return new BattlePrediction(data)
+      })
+    )
+  }
   battle(dungeonId: string) {
-    return this.http.post(this.url + `/v1/dungeons/${dungeonId}/battle`, {
+    return this.http.post(this.url + `/v1/dungeons/${dungeonId}/battle`, { // TODO: BattleResult interface
       // TODO: Battle options
     })
   }

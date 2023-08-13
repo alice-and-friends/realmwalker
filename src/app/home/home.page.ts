@@ -30,7 +30,6 @@ export class HomePage implements OnInit{
   buildMenu = [
     {
       label: 'Build HQ', icon: 'star-sharp', f: () => {
-        console.log('do the thing')
         this.modalCtrl.dismiss().then(r => console.log(r));
         const coords = this.playerPosition!.coords;
         this.addMarker({
@@ -48,8 +47,7 @@ export class HomePage implements OnInit{
     }
   ]
 
-  constructor(public api: ApiService, public userService: UserService, private router: Router, private modalCtrl: ModalController) {
-    console.log('home construct')
+  constructor(public api: ApiService, public userService: UserService, private router: Router, private readonly modalCtrl: ModalController) {
     if (!userService.loggedIn) {
       this.router.navigate(['/launch']);
       return;
@@ -58,7 +56,6 @@ export class HomePage implements OnInit{
   }
 
   takeBuildAction = (opts: any) => {
-    console.log(this.modalCtrl)
     this.modalCtrl.dismiss().then(r => console.log(r));
     // opts.f();
   }
@@ -158,9 +155,11 @@ export class HomePage implements OnInit{
         componentProps: {
           locationType: location.type,
           locationId: location.id,
+          modal: this.modal,
+          openCharacterModal: await this.changeEquipmentForLocationFunc(location),
         },
-        breakpoints: [0, 0.6],
-        initialBreakpoint: 0.6,
+        breakpoints: [0, 0.65, 0.95],
+        initialBreakpoint: 0.65,
       });
       await this.modal.present();
       /*
@@ -175,17 +174,28 @@ export class HomePage implements OnInit{
     }
   }
 
-  async openCharacterModal() {
+  async openCharacterModal(dismissCallback:any=null) {
     try {
       this.modal = await this.modalCtrl.create({
         component: CharacterModalComponent,
         componentProps: {
+          dismissCallback: dismissCallback
         },
       });
       await this.modal.present();
     }
     catch (error) {
       console.error(error)
+    }
+  }
+  changeEquipmentForLocationFunc(location: RealmLocation) {
+    return async () => {
+      if (this.modal) {
+        await this.modalCtrl.dismiss();
+      }
+      await this.openCharacterModal(() => {
+        this.openLocationModal(location)
+      })
     }
   }
 
