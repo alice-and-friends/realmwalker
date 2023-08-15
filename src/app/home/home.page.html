@@ -12,7 +12,7 @@
       <ion-col *ngIf="userService.activeUser" (click)="openCharacterModal()" size="6" class="ion-text-center">
         <h1 class="player-title">{{userService.activeUser.name}}</h1>
         <p>Level {{userService.activeUser.xpLevelReport.level}}</p>
-        <ion-progress-bar [value]="userService.activeUser.xpLevelReport.nextLevelProgress/100"></ion-progress-bar>
+        <ion-progress-bar color="secondary" [value]="userService.activeUser.xpLevelReport.nextLevelProgress/100"></ion-progress-bar>
       </ion-col>
       <ion-col class="ion-text-end">
         <ion-button size="small" fill="clear">

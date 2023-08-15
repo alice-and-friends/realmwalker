@@ -15,14 +15,16 @@
   </ion-accordion-group>
   -->
 
-  <ion-text color="primary">
+  <ion-text color="danger">
     <h1>RealmWalker</h1>
   </ion-text>
 
   <ng-container *ngIf="auth.isAuthenticated$ | async; else loggedOut">
-    <ion-button expand="full" (click)="auth.logout({ logoutParams: { returnTo: document.location.origin } })">
+    <!--
+    <ion-button color="dark" expand="full" (click)="auth.logout({ logoutParams: { returnTo: document.location.origin } })">
       Log out
     </ion-button>
+    -->
   </ng-container>
 
   <ng-template #loggedOut>

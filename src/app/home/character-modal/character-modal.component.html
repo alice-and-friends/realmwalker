@@ -7,36 +7,39 @@
   </ion-toolbar>
 </ion-header>
 <ion-content class="ion-padding" *ngIf="user">
-  <div class="character-summary">
+  <div class="ornate-frame-top"></div>
+  <div class="character-summary ion-padding">
     <h1 class="player-title">{{user.name}}</h1>
     <p>Level {{user.xpLevelReport.level}} • {{user.xpLevelReport.xp}} XP</p>
     <p>You have {{100-user.xpLevelReport.nextLevelProgress}}% to go</p>
-    <ion-progress-bar [value]="user.xpLevelReport.nextLevelProgress/100"></ion-progress-bar>
+    <ion-progress-bar color="secondary" [value]="user.xpLevelReport.nextLevelProgress/100"></ion-progress-bar>
     <p>{{user.xpLevelReport.toNextLevel}} XP for next level</p>
   </div>
+  <div class="ornate-frame-bottom"></div>
   <hr>
-  <h2>Inventory</h2>
-  <ion-grid class="inventory-list">
-    <ion-row *ngFor="let item of inventory" class="inventory-item ion-align-items-center">
-      <ion-col>
-        <ion-label>{{item.name}}</ion-label>
-        <!--<ion-icon name="help-circle"></ion-icon>-->
-        <!--<ion-chip [className]="'small-chip rarity-' + item.rarity">{{item.rarity}}</ion-chip>-->
-        <hr>
-        <p class="detail-line">
-          {{item.rarity}} {{item.itemType}}<span *ngIf="item.itemType === 'weapon'">, {{item.twoHanded ? 'two-handed' : 'one-handed'}}</span>
-        </p>
-        <ion-text color="success">
-          <p *ngFor="let bonus of item.bonuses" class="detail-line compact">{{bonus}}</p>
-        </ion-text>
-      </ion-col>
-      <ion-col *ngIf="item.equipable" size="auto">
-        <ion-button size="small" color="dark" [fill]="item.isEquipped ? 'solid' : 'outline'" (click)="toggleEquipped(item)">
-          {{item.isEquipped ? '✔ Equipped' : 'Equip'}}
-        </ion-button>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+  <div class="inventory">
+    <h1>Inventory</h1>
+    <ion-grid class="inventory-list">
+      <ion-row *ngFor="let item of inventory" class="inventory-item ion-align-items-center">
+        <ion-col>
+          <ion-label>{{item.name}}</ion-label>
+          <!--<ion-icon name="help-circle"></ion-icon>-->
+          <!--<ion-chip [className]="'small-chip rarity-' + item.rarity">{{item.rarity}}</ion-chip>-->
+          <p class="detail-line">
+            {{item.rarity}} {{item.itemType}}<span *ngIf="item.itemType === 'weapon'">, {{item.twoHanded ? 'two-handed' : 'one-handed'}}</span>
+          </p>
+          <ion-text color="success">
+            <p *ngFor="let bonus of item.bonuses" class="detail-line compact">{{bonus}}</p>
+          </ion-text>
+        </ion-col>
+        <ion-col *ngIf="item.equipable" size="auto">
+          <ion-button size="small" color="dark" [fill]="item.isEquipped ? 'solid' : 'outline'" (click)="toggleEquipped(item)">
+            {{item.isEquipped ? '✔ Equipped' : 'Equip'}}
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
   <div>
     <ion-button expand="full" (click)="auth.logout({ logoutParams: { returnTo: document.location.origin } })">
       Log out
