@@ -219,7 +219,7 @@ export class HomePage implements OnInit{
             ></ion-icon>`;
           break;
         case LocationType.Battlefield:
-          el.innerHTML = `<ion-icon name="Trophy" color="primary" slot="start" class="map-feature-icon"></ion-icon>`;
+          el.innerHTML = `<ion-icon src="/assets/icon/banner.svg" color="primary" slot="start" class="map-feature-icon"></ion-icon>`;
           break;
         case LocationType.Npc:
           el.innerHTML = `<ion-icon name="chatbox-ellipses" color="dark" slot="start" class="map-feature-icon"></ion-icon>`;
