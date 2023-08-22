@@ -4,10 +4,10 @@ export class BattlePrediction {
   overkill: number
   modifiersPositive: string[]
   modifiersNegative: string[]
-  chanceOfDeath: number
-  chanceOfInventoryLoss: number
-  chanceOfEquipmentLoss: number
-  modifiersDeath: string[]
+  riskOfDeath: { overall: number, onDefeat: number }
+  // chanceOfInventoryLoss: number
+  // chanceOfEquipmentLoss: number
+  // modifiersDeath: string[]
   assessment: string
 
   constructor(data: any) {
@@ -16,10 +16,10 @@ export class BattlePrediction {
     this.overkill = data.overkill
     this.modifiersPositive = data.modifiersPositive
     this.modifiersNegative = data.modifiersNegative
-    this.chanceOfDeath = data.chanceOfDeath
-    this.chanceOfInventoryLoss = data.chanceOfInventoryLoss
-    this.chanceOfEquipmentLoss = data.chanceOfEquipmentLoss
-    this.modifiersDeath = data.modifiersDeath
+    this.riskOfDeath = data.riskOfDeath
+    // this.chanceOfInventoryLoss = data.chanceOfInventoryLoss
+    // this.chanceOfEquipmentLoss = data.chanceOfEquipmentLoss
+    // this.modifiersDeath = data.modifiersDeath
 
     if (this.chanceOfSuccess >= 95) {
       this.assessment = "Trivial"

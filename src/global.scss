@@ -25,6 +25,7 @@
 @import "@ionic/angular/css/text-transformation.css";
 @import "@ionic/angular/css/flex-utils.css";
 
+.margin-bottom-none {margin-bottom: 0}
 @font-face {
   font-family: 'Cinzel';
   font-weight: 400;
@@ -47,7 +48,38 @@ h1, h2, /*h3, h4, h5, h6*/ {
 h1 {font-size: 26px}
 h2 {font-size: 20px}
 h3 {font-size: 16px}
-p {margin-top: 0.5em}
+p {
+  margin-top: 0.5em;
+  line-height: 1.3em;
+}
+
+ion-modal.floating-modal {
+  --background: transparent;
+  ion-backdrop {
+    visibility: visible !important;
+    z-index:0;
+  }
+  .ion-page {
+    display: flex;
+    justify-content: flex-end;
+    position: absolute;
+    left: 5%;
+    width: 90%;
+
+    >div {
+      margin-bottom: 5%;
+      /*min-height: 55%;*/
+      background: var(--ion-color-light);
+      box-shadow: 1px 2px 5px 1px rgba(0,0,0,0.5);
+
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: stretch;
+      align-content: stretch;
+    }
+  }
+}
 
 .ornate-frame-base {
   -webkit-mask-image: url(/assets/frame-corner.svg);
@@ -91,7 +123,7 @@ p {margin-top: 0.5em}
 }
 
 .quote-box {
-  background: #F8F3D6;
+  background: #e7e2c7;
   border-width: 2px 2px;
   border-style: double solid;
   border-color: #D2B56B #D2B56B;

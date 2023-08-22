@@ -1,8 +1,8 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title slot="start">Dungeon</ion-title>
+    <ion-title slot="start">Encounter</ion-title>
     <ion-buttons slot="end">
-      <ion-button color="medium" (click)="cancel()">Close</ion-button>
+      <ion-button color="medium" (click)="returnToMap()">Close</ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -24,7 +24,7 @@
       Chance of success: {{analysis.chanceOfSuccess}}%
       <span *ngIf="analysis.overkill">({{analysis.overkill}} overkill)</span>
     </h3>
-    <p *ngIf="analysis.chanceOfDeath" class="detail-line"><b>Risk of death: {{analysis.chanceOfDeath}}%</b></p>
+    <p *ngIf="analysis.riskOfDeath.overall" class="detail-line"><b>Risk of death: {{analysis.riskOfDeath.overall}}%</b></p>
 <!--    <p *ngIf="analysis.chanceOfInventoryLoss" class="detail-line">Chance of inventory loss: {{analysis.chanceOfInventoryLoss}}%</p>-->
 <!--    <p *ngIf="analysis.chanceOfEquipmentLoss" class="detail-line">Chance of equipment loss: {{analysis.chanceOfEquipmentLoss}}%</p>-->
 <!--    <ion-text color="secondary">-->
@@ -39,7 +39,7 @@
         </ion-button>
       </ion-col>
       <ion-col>
-        <ion-button expand="block" fill="outline" color="dark" (click)="changeEquipment()" [disabled]="loading">
+        <ion-button expand="block" fill="outline" color="dark" (click)="openCharacterModal()" [disabled]="loading">
           <ion-icon slot="start" src="/assets/icon/switch-weapon.svg"></ion-icon> Change equipment
         </ion-button>
       </ion-col>

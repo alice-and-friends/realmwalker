@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import {AlertController, IonicSafeString, ModalController} from "@ionic/angular";
 import {ApiService} from "../../services/api.service";
-import {AuthService} from "@auth0/auth0-angular";
 import {InventoryItem} from "../../models/inventory-item";
 import {UserService} from "../../services/user.service";
 import {User} from "../../models/user";
+import {formatNumber} from "@angular/common";
 
 @Component({
   selector: 'app-character-modal',
@@ -12,15 +12,15 @@ import {User} from "../../models/user";
   styleUrls: ['./character-modal.component.scss'],
 })
 export class CharacterModalComponent  implements OnInit {
-  inventory: InventoryItem[] | undefined;
-  user: User | undefined;
+  inventoryItems: InventoryItem[] | undefined
+  gold: number | undefined
+  user: User | undefined
   dismissCallback: any
 
   constructor(
     private modalCtrl: ModalController,
     private alertController:AlertController,
     private api: ApiService,
-    public auth: AuthService,
     public userService: UserService
   ) {
     this.user = userService.activeUser
@@ -28,7 +28,8 @@ export class CharacterModalComponent  implements OnInit {
 
   ngOnInit() {
     this.api.getInventory().subscribe((data: any) => {
-      this.inventory = data;
+      this.gold = data.gold;
+      this.inventoryItems = data.items;
     })
   }
 
@@ -43,7 +44,7 @@ export class CharacterModalComponent  implements OnInit {
             () => {
               this.api.setEquipped(item.id, desiredState, true).subscribe(
                 async (response: any) => {
-                  this.inventory = response.inventory;
+                  this.inventoryItems = response.items;
                 },
                 error => {
                   item.isEquipped = !desiredState; // Undo optimistic change
@@ -99,5 +100,4 @@ export class CharacterModalComponent  implements OnInit {
     });
   }
 
-  protected readonly document = document;
 }

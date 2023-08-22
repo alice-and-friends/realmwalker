@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import * as mapboxgl from "mapbox-gl";
 import {Geolocation, Position} from "@capacitor/geolocation";
 import {environment} from "../../environments/environment";
-import {ModalController} from "@ionic/angular";
+import {ActionSheetController, ModalController} from "@ionic/angular";
 import {ApiService} from "../services/api.service";
 import {RealmLocation, LocationType} from "../models/realm-location";
 import {Marker} from "mapbox-gl";
@@ -10,6 +10,7 @@ import {DungeonModalComponent} from "./dungeon-modal/dungeon-modal.component";
 import {UserService} from "../services/user.service";
 import {Router} from "@angular/router"
 import {CharacterModalComponent} from "./character-modal/character-modal.component";
+import {AuthService} from "@auth0/auth0-angular";
 
 @Component({
   selector: 'app-home',
@@ -47,7 +48,14 @@ export class HomePage implements OnInit{
     }
   ]
 
-  constructor(public api: ApiService, public userService: UserService, private router: Router, private readonly modalCtrl: ModalController) {
+  constructor(
+    public api: ApiService,
+    public userService: UserService,
+    private router: Router,
+    public auth: AuthService,
+    private readonly modalCtrl: ModalController,
+    private readonly actionSheetCtrl: ActionSheetController
+  ) {
     if (!userService.loggedIn) {
       this.router.navigate(['/launch']);
       return;
@@ -158,8 +166,8 @@ export class HomePage implements OnInit{
           modal: this.modal,
           openCharacterModal: await this.changeEquipmentForLocationFunc(location),
         },
-        breakpoints: [0, 0.65, 0.95],
-        initialBreakpoint: 0.65,
+        breakpoints: [0, 0.60, 0.85],
+        initialBreakpoint: 0.60,
       });
       await this.modal.present();
       /*
@@ -241,6 +249,26 @@ export class HomePage implements OnInit{
     else {
       console.error('this.map is not an instance of mapboxgl.Map')
     }
+  }
+
+  async presentLogoutActionSheet() {
+    const actionSheet = await this.actionSheetCtrl.create({
+      header: 'Actions',
+      buttons: [
+        {
+          text: 'Log out',
+          handler: () => {
+            this.auth.logout({ logoutParams: { returnTo: document.location.origin } })
+          }
+        },
+        {
+          text: 'Cancel',
+          role: 'cancel',
+        },
+      ],
+    });
+
+    await actionSheet.present();
   }
 
 }

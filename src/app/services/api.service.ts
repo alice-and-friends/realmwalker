@@ -9,6 +9,7 @@ import {Battlefield} from "../models/battlefield";
 import {Npc} from "../models/npc";
 import {InventoryItem} from "../models/inventory-item";
 import {BattlePrediction} from "../models/battle-prediction";
+import {BattleResult} from "../models/battle-result";
 
 @Injectable({
   providedIn: 'root'
@@ -22,14 +23,13 @@ export class ApiService {
   me(): Observable <User> {
     return this.http.get<User>(this.url + '/v1/users/me');
   }
-
   getInventory() {
-    return this.http.get<InventoryItem[]>(this.url + '/v1/inventory')
+    return this.http.get(this.url + '/v1/inventory')
       .pipe(
-        map((data: any[]) => data.map((item: any) => {
-          const model = new InventoryItem(item);
-          return model;
-        }))
+        map((data: any) => {
+          const inventoryItems = data.items.map((item: any) => new InventoryItem(item));
+          return { items: inventoryItems, ...data };
+        })
       );
   }
   setEquipped(itemId: string, equipped: boolean, force:boolean=false) {
@@ -65,8 +65,8 @@ export class ApiService {
     )
   }
   battle(dungeonId: string) {
-    return this.http.post(this.url + `/v1/dungeons/${dungeonId}/battle`, { // TODO: BattleResult interface
-      // TODO: Battle options
+    return this.http.post<BattleResult>(this.url + `/v1/dungeons/${dungeonId}/battle`, {
+      // TODO: Battle options?
     })
   }
 

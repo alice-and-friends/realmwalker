@@ -15,7 +15,7 @@
         <ion-progress-bar color="secondary" [value]="userService.activeUser.xpLevelReport.nextLevelProgress/100"></ion-progress-bar>
       </ion-col>
       <ion-col class="ion-text-end">
-        <ion-button size="small" fill="clear">
+        <ion-button size="small" fill="clear" (click)="presentLogoutActionSheet()">
           <ion-icon slot="icon-only" name="menu"></ion-icon>
         </ion-button>
       </ion-col>

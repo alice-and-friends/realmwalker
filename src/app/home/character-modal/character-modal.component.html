@@ -10,17 +10,21 @@
   <div class="ornate-frame-top"></div>
   <div class="character-summary ion-padding">
     <h1 class="player-title">{{user.name}}</h1>
-    <p>Level {{user.xpLevelReport.level}} • {{user.xpLevelReport.xp}} XP</p>
+    <p>Level {{user.xpLevelReport.level | number}} • {{user.xpLevelReport.xp | number}} XP</p>
     <p>You have {{100-user.xpLevelReport.nextLevelProgress}}% to go</p>
     <ion-progress-bar color="secondary" [value]="user.xpLevelReport.nextLevelProgress/100"></ion-progress-bar>
-    <p>{{user.xpLevelReport.toNextLevel}} XP for next level</p>
+    <p>{{user.xpLevelReport.toNextLevel | number}} XP for next level</p>
   </div>
   <div class="ornate-frame-bottom"></div>
   <hr>
-  <div class="inventory">
+  <div class="inventory" *ngIf="gold !== undefined">
     <h1>Inventory</h1>
+    <ion-chip class="coin-icon">
+      <ion-icon src="/assets/icon/two-coins.svg"></ion-icon>
+      <ion-label>{{gold | number}}</ion-label>
+    </ion-chip>
     <ion-grid class="inventory-list">
-      <ion-row *ngFor="let item of inventory" class="inventory-item ion-align-items-center">
+      <ion-row *ngFor="let item of inventoryItems" class="inventory-item ion-align-items-center">
         <ion-col>
           <ion-label>{{item.name}}</ion-label>
           <!--<ion-icon name="help-circle"></ion-icon>-->
@@ -39,10 +43,5 @@
         </ion-col>
       </ion-row>
     </ion-grid>
-  </div>
-  <div>
-    <ion-button expand="full" (click)="auth.logout({ logoutParams: { returnTo: document.location.origin } })">
-      Log out
-    </ion-button>
   </div>
 </ion-content>

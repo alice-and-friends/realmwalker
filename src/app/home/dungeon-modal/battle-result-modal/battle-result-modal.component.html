@@ -1,0 +1,99 @@
+<div class="ion-padding ion-text-center">
+
+  <!-- HEADER -->
+  <div *ngIf="data.battleResult.userWon; else defeatHeader">
+    <h1>Victory!</h1>
+    <div *ngIf="data.battleResult.monsterDied; else userEscapedHeader">
+      <ion-icon color="primary" src="/assets/icon/banner.svg" class="big-result-icon"></ion-icon>
+    </div>
+    <ng-template #userEscapedHeader>
+      <div>
+        <ion-icon color="warning" src="/assets/icon/sparkles.svg" class="big-result-icon"></ion-icon>
+      </div>
+    </ng-template>
+  </div>
+  <ng-template #defeatHeader>
+    <h1>Defeat</h1>
+    <div *ngIf="data.battleResult.userDied; else userEscapedHeader">
+      <ion-icon color="medium" src="/assets/icon/tombstone.svg" class="big-result-icon"></ion-icon>
+      <h2 class="ion-no-margin">You are dead.</h2>
+    </div>
+    <ng-template #userEscapedHeader>
+      <div>
+        <ion-icon color="medium" src="/assets/icon/run.svg" class="big-result-icon"></ion-icon>
+      </div>
+    </ng-template>
+  </ng-template>
+
+  <!-- STORY -->
+  <div *ngIf="data.battleResult.userWon; else defeatStory" class="ion-margin-top">
+    <div *ngIf="data.battleResult.monsterDied; else monsterEscapedStory">
+      <p class="quote-box ion-no-margin">With valor and determination, you have conquered the beast. The land echoes your victory, a testament to your unwavering spirit.</p>
+    </div>
+    <ng-template #monsterEscapedStory>
+      <p class="quote-box ion-no-margin">The {{monsterName.toLowerCase()}} has slipped away, leaving you with a feeling of unease. Be ever watchful, for danger could return when you least expect it.</p>
+    </ng-template>
+  </div>
+  <ng-template #defeatStory>
+    <div class="ion-margin-top">
+      <div *ngIf="data.battleResult.userDied; else userEscapedStory">
+        <p class="quote-box ion-no-margin">
+          Alas! Brave adventurer, you have met a sad fate. But do not despair, for the gods will bring you back into the world in exchange for a small sacrifice.
+        </p>
+      </div>
+      <ng-template #userEscapedStory>
+        <p class="quote-box ion-no-margin">You managed to escape the clutches of danger just in time. Live to fight another day, brave adventurer!</p>
+      </ng-template>
+    </div>
+  </ng-template>
+
+  <!-- LOOT -->
+  <div *ngIf="data.battleResult.userWon;" class="ion-margin-top">
+    <div *ngIf="data.battleResult.monsterDied; else monsterEscapedLoot">
+      <div *ngIf="data.inventoryChanges?.loot?.gold || data.inventoryChanges?.loot?.items.length; else noLoot">
+        <p>
+          Loot from {{monsterName}}:<br>
+          {{formattedLootList()}}
+        </p>
+      </div>
+      <ng-template #noLoot>
+        <p class="ion-no-margin">No loot.</p>
+      </ng-template>
+      <ion-button fill="outline" color="dark" size="small" (click)="viewInventory()">Open inventory</ion-button>
+    </div>
+    <ng-template #monsterEscapedLoot>
+      <p class="ion-no-margin">No loot.</p>
+    </ng-template>
+  </div>
+
+  <!-- XP/LEVEL -->
+  <div *ngIf="data.battleResult.userWon" class="ion-margin-top">
+    <p *ngIf="data.xpLevelChange.xpDiff > 0" class="ion-no-margin">You gained {{data.xpLevelChange.xpDiff | number}} xp.</p>
+    <p *ngIf="data.xpLevelChange.levelDiff > 0" class="ion-no-margin">You advanced to level {{data.xpLevelChange.currentLevel | number}}.</p>
+  </div>
+  <div *ngIf="data.battleResult.userDied" class="ion-margin-top">
+    <p *ngIf="data.inventoryChanges?.amuletOfLifeConsumed === false" class="ion-no-margin">You were not wearing an amulet of life.</p>
+    <p *ngIf="data.xpLevelChange.xpDiff < 0" class="ion-no-margin">You lost {{-data.xpLevelChange.xpDiff | number}} xp.</p>
+    <p *ngIf="data.xpLevelChange.levelDiff < 0" class="ion-no-margin">You were demoted to level {{data.xpLevelChange.currentLevel | number}}.</p>
+  </div>
+
+  <!-- FOOTER -->
+  <div *ngIf="data.battleResult.userWon; else defeatFooter" class="ion-margin-top">
+    <div *ngIf="data.battleResult.monsterDied; else monsterEscapedFooter">
+      <ion-button expand="block" fill="solid" color="dark" (click)="returnToMap()">Journey onwards</ion-button>
+    </div>
+    <ng-template #monsterEscapedFooter>
+      <ion-button expand="block" fill="solid" color="dark" (click)="returnToMap()">Journey onwards</ion-button>
+    </ng-template>
+  </div>
+  <ng-template #defeatFooter>
+    <div class="ion-margin-top">
+      <div *ngIf="data.battleResult.userDied; else userEscapedFooter">
+        <ion-button expand="block" fill="solid" color="dark" (click)="returnToMap()">Ok</ion-button>
+      </div>
+      <ng-template #userEscapedFooter>
+        <ion-button expand="block" fill="solid" color="dark" (click)="returnToMap()">Journey onwards</ion-button>
+      </ng-template>
+    </div>
+  </ng-template>
+</div>
