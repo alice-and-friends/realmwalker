@@ -5,6 +5,7 @@ import {InventoryItem} from "../../models/inventory-item";
 import {UserService} from "../../services/user.service";
 import {User} from "../../models/user";
 import {formatNumber} from "@angular/common";
+import {Inventory} from "../../models/inventory";
 
 @Component({
   selector: 'app-character-modal',
@@ -28,14 +29,18 @@ export class CharacterModalComponent  implements OnInit {
 
   ngOnInit() {
     this.api.getInventory().subscribe((data: any) => {
-      this.gold = data.gold;
-      this.inventoryItems = data.items;
+      this.setInventory(data)
     })
   }
 
+  setInventory(inventory: Inventory) {
+    this.gold = inventory.gold
+    this.inventoryItems = inventory.items
+  }
+
   toggleEquipped(item: InventoryItem) {
-    const desiredState = !item.isEquipped
-    item.isEquipped = desiredState; // Optimistic update
+    const desiredState = !item.equipped
+    item.equipped = desiredState; // Optimistic update
     this.api.setEquipped(item.id, desiredState).subscribe(
       async (response: any) => {
         if (desiredState && !response.equipped && response.unequipItems.length) {
@@ -44,22 +49,22 @@ export class CharacterModalComponent  implements OnInit {
             () => {
               this.api.setEquipped(item.id, desiredState, true).subscribe(
                 async (response: any) => {
-                  this.inventoryItems = response.items;
+                  this.setInventory(response.inventory)
                 },
                 error => {
-                  item.isEquipped = !desiredState; // Undo optimistic change
+                  item.equipped = !desiredState; // Undo optimistic change
                   console.error(error)
                 },
               );
             },
             () => {
-              item.isEquipped = !desiredState; // Undo optimistic change
+              item.equipped = !desiredState; // Undo optimistic change
             }
           )
         }
       },
       error => {
-        item.isEquipped = !desiredState; // Undo optimistic change
+        item.equipped = !desiredState; // Undo optimistic change
         console.error(error)
       },
     );

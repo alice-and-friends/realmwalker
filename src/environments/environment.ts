@@ -12,7 +12,7 @@ export const environment = {
     clientId: 'IgZ8a8z20uXVoXa5MtC3NLXk7CKXNLPr',
     authorizationParams: {
       audience: 'dev-realmwalker',
-      redirect_uri: window.location.origin + '/callback'
+      redirect_uri: window.location.origin
     },
   },
   api: {

@@ -3,17 +3,9 @@
   padding: 0 4em 0.5em;
 }
 
-.coin-icon {
-  color: #ffbf54;
-  ion-icon { fill: #ffbf54 }
-}
-
 .inventory-list {
-  padding-left: 0;
-  padding-right: 0;
-}
-.inventory-item {
-  width: 100%;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  margin-top: 0.1em;
+
+  h1 {
+    margin: 0
+  }
 }

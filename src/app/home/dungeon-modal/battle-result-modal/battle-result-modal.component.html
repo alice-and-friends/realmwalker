@@ -4,23 +4,23 @@
   <div *ngIf="data.battleResult.userWon; else defeatHeader">
     <h1>Victory!</h1>
     <div *ngIf="data.battleResult.monsterDied; else userEscapedHeader">
-      <ion-icon color="primary" src="/assets/icon/banner.svg" class="big-result-icon"></ion-icon>
+      <ion-icon color="primary" src="/assets/icon/banner.svg" class="header-icon-size"></ion-icon>
     </div>
     <ng-template #userEscapedHeader>
       <div>
-        <ion-icon color="warning" src="/assets/icon/sparkles.svg" class="big-result-icon"></ion-icon>
+        <ion-icon color="warning" src="/assets/icon/sparkles.svg" class="header-icon-size"></ion-icon>
       </div>
     </ng-template>
   </div>
   <ng-template #defeatHeader>
     <h1>Defeat</h1>
     <div *ngIf="data.battleResult.userDied; else userEscapedHeader">
-      <ion-icon color="medium" src="/assets/icon/tombstone.svg" class="big-result-icon"></ion-icon>
+      <ion-icon color="medium" src="/assets/icon/tombstone.svg" class="header-icon-size"></ion-icon>
       <h2 class="ion-no-margin">You are dead.</h2>
     </div>
     <ng-template #userEscapedHeader>
       <div>
-        <ion-icon color="medium" src="/assets/icon/run.svg" class="big-result-icon"></ion-icon>
+        <ion-icon color="medium" src="/assets/icon/run.svg" class="header-icon-size"></ion-icon>
       </div>
     </ng-template>
   </ng-template>

@@ -2,46 +2,54 @@
   <ion-toolbar>
     <ion-title slot="start">Character</ion-title>
     <ion-buttons slot="end">
-      <ion-button color="medium" (click)="cancel()">Close</ion-button>
+      <ion-button color="medium" (click)="cancel()">
+        <ion-icon name="close"></ion-icon>
+      </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
-<ion-content class="ion-padding" *ngIf="user">
-  <div class="ornate-frame-top"></div>
-  <div class="character-summary ion-padding">
-    <h1 class="player-title">{{user.name}}</h1>
-    <p>Level {{user.xpLevelReport.level | number}} • {{user.xpLevelReport.xp | number}} XP</p>
-    <p>You have {{100-user.xpLevelReport.nextLevelProgress}}% to go</p>
-    <ion-progress-bar color="secondary" [value]="user.xpLevelReport.nextLevelProgress/100"></ion-progress-bar>
-    <p>{{user.xpLevelReport.toNextLevel | number}} XP for next level</p>
+<ion-content *ngIf="user">
+  <div class="padding-10">
+    <div class="ornate-frame-top"></div>
+    <div class="character-summary ion-padding">
+      <h1 class="player-title">{{user.name}}</h1>
+      <p>Level {{user.xpLevelReport.level | number}} • {{user.xpLevelReport.xp | number}} XP</p>
+      <p>You have {{100-user.xpLevelReport.nextLevelProgress}}% to go</p>
+      <ion-progress-bar color="secondary" [value]="user.xpLevelReport.nextLevelProgress/100"></ion-progress-bar>
+      <p>{{user.xpLevelReport.toNextLevel | number}} XP for next level</p>
+    </div>
+    <div class="ornate-frame-bottom"></div>
   </div>
-  <div class="ornate-frame-bottom"></div>
-  <hr>
-  <div class="inventory" *ngIf="gold !== undefined">
-    <h1>Inventory</h1>
-    <ion-chip class="coin-icon">
-      <ion-icon src="/assets/icon/two-coins.svg"></ion-icon>
-      <ion-label>{{gold | number}}</ion-label>
-    </ion-chip>
-    <ion-grid class="inventory-list">
-      <ion-row *ngFor="let item of inventoryItems" class="inventory-item ion-align-items-center">
-        <ion-col>
-          <ion-label>{{item.name}}</ion-label>
-          <!--<ion-icon name="help-circle"></ion-icon>-->
-          <!--<ion-chip [className]="'small-chip rarity-' + item.rarity">{{item.rarity}}</ion-chip>-->
-          <p class="detail-line">
-            {{item.rarity}} {{item.itemType}}<span *ngIf="item.itemType === 'weapon'">, {{item.twoHanded ? 'two-handed' : 'one-handed'}}</span>
-          </p>
-          <ion-text color="success">
-            <p *ngFor="let bonus of item.bonuses" class="detail-line compact">{{bonus}}</p>
-          </ion-text>
-        </ion-col>
-        <ion-col *ngIf="item.equipable" size="auto">
-          <ion-button size="small" color="dark" [fill]="item.isEquipped ? 'solid' : 'outline'" (click)="toggleEquipped(item)">
-            {{item.isEquipped ? '✔ Equipped' : 'Equip'}}
-          </ion-button>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-  </div>
+  <ion-grid *ngIf="inventoryItems?.length" class="inventory-list">
+    <ion-row class="ion-align-items-center">
+      <ion-col>
+        <h1>Inventory</h1>
+      </ion-col>
+      <ion-col class="ion-text-end">
+        <ion-chip *ngIf="gold !== undefined" class="coin-icon">
+          <ion-icon src="/assets/icon/two-coins.svg"></ion-icon>
+          <ion-label>{{gold | number}}</ion-label>
+        </ion-chip>
+      </ion-col>
+    </ion-row>
+    <ion-row *ngFor="let item of inventoryItems" class="inventory-list-item">
+      <ion-col size="auto">
+        <ion-icon [src]="item.icon" color="dark" class="inventory-item-icon"></ion-icon>
+      </ion-col>
+      <ion-col>
+        <ion-label>{{item.name}}</ion-label>
+        <p class="detail-line compact">
+          {{item.rarity}} {{item.itemType}}<span *ngIf="item.itemType === 'weapon'">, {{item.twoHanded ? 'two-handed' : 'one-handed'}}</span>
+        </p>
+        <ion-text color="success">
+          <p *ngFor="let bonus of item.bonuses" class="detail-line compact">{{bonus}}</p>
+        </ion-text>
+      </ion-col>
+      <ion-col *ngIf="item.equipable" size="auto">
+        <ion-button size="small" color="dark" [fill]="item.equipped ? 'solid' : 'outline'" (click)="toggleEquipped(item)">
+          {{item.equipped ? '✔ Equipped' : 'Equip'}}
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>

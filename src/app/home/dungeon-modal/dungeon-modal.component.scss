@@ -6,10 +6,6 @@
   filter: grayscale(100%);
   opacity: 0.9;
 }
-.monster-level {
-  font-style: italic;
-  font-weight: 300;
-}
 .assessment-trivial, .assessment-easy { color: var(--ion-color-success) }
 .assessment-risky { color: var(--ion-color-warning) }
 .assessment-dangerous, .assessment-deadly { color: var(--ion-color-danger) }
