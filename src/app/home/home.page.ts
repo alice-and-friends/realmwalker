@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import * as mapboxgl from "mapbox-gl";
 import {Geolocation, Position} from "@capacitor/geolocation";
 import {environment} from "../../environments/environment";
-import {ActionSheetController, ModalController} from "@ionic/angular";
+import {ActionSheetController, ModalController, ModalOptions} from "@ionic/angular";
 import {ApiService} from "../services/api.service";
 import {RealmLocation, LocationType} from "../models/realm-location";
 import {Marker} from "mapbox-gl";
@@ -11,6 +11,7 @@ import {UserService} from "../services/user.service";
 import {Router} from "@angular/router"
 import {CharacterModalComponent} from "./character-modal/character-modal.component";
 import {AuthService} from "@auth0/auth0-angular";
+import {NpcModalComponent} from "./npc-modal/npc-modal.component";
 
 @Component({
   selector: 'app-home',
@@ -151,24 +152,42 @@ export class HomePage implements OnInit{
 
   async openLocationModal(location: RealmLocation) {
     try {
-      this.modal = await this.modalCtrl.create({
-        component: (() => {
-          switch(location.type) {
-            case LocationType.Dungeon: return DungeonModalComponent
-            case LocationType.Battlefield: return DungeonModalComponent
-            case LocationType.Npc: return DungeonModalComponent
-            default: throw(new Error(`Could not find matching modal controller for location type ${location.type}.`))
-          }
-        })(),
+      // @ts-ignore
+      let modalOpts: ModalOptions = {
         componentProps: {
           locationType: location.type,
           locationId: location.id,
           modal: this.modal,
           openCharacterModal: await this.changeEquipmentForLocationFunc(location),
         },
-        breakpoints: [0, 0.60, 0.85],
-        initialBreakpoint: 0.60,
-      });
+      }
+      switch(location.type) {
+        case LocationType.Dungeon:
+          modalOpts = {
+            ...modalOpts,
+            component: DungeonModalComponent,
+            breakpoints: [0, 0.60, 0.85],
+            initialBreakpoint: 0.60,
+          }
+          break;
+        // case LocationType.Battlefield:
+        //   modalOpts = {
+        //     ...modalOpts,
+        //     component: BattlefieldModalComponent,
+        //     breakpoints: [0, 0.60, 0.85],
+        //     initialBreakpoint: 0.60,
+        //   }
+        //   break;
+        case LocationType.Npc:
+          modalOpts = {
+            ...modalOpts,
+            component: NpcModalComponent
+          }
+          break;
+        default:
+          throw(new Error(`Could not find matching modal controller for location type ${location.type}.`))
+      }
+      this.modal = await this.modalCtrl.create(modalOpts);
       await this.modal.present();
       /*
       addEventListener('ionBreakpointDidChange', (e: any) => {
@@ -211,8 +230,8 @@ export class HomePage implements OnInit{
     if (this.map instanceof mapboxgl.Map) {
       // Create a DOM element for each marker.
       const el = document.createElement('div');
-      const width = 32;
-      const height = 32;
+      const width = 26;
+      const height = 26;
       el.className = 'marker';
       el.style.width = `${width}px`;
       el.style.height = `${height}px`;
@@ -230,7 +249,19 @@ export class HomePage implements OnInit{
           el.innerHTML = `<ion-icon src="/assets/icon/banner.svg" color="primary" slot="start" class="map-feature-icon"></ion-icon>`;
           break;
         case LocationType.Npc:
-          el.innerHTML = `<ion-icon name="chatbox-ellipses" color="dark" slot="start" class="map-feature-icon"></ion-icon>`;
+          switch(location.npcDetails.shopType) {
+            case 'armorer':
+              el.innerHTML = `<ion-icon src="/assets/icon/anvil.svg" color="medium" slot="start" class="map-feature-icon"></ion-icon>`;
+              break;
+            case 'jeweller':
+              el.innerHTML = `<ion-icon src="/assets/icon/diamond.svg" color="primary" slot="start" class="map-feature-icon"></ion-icon>`;
+              break;
+            case 'magic':
+              el.innerHTML = `<ion-icon src="/assets/icon/potion.svg" color="secondary" slot="start" class="map-feature-icon"></ion-icon>`;
+              break;
+            default:
+              el.innerHTML = `<ion-icon name="chatbox-ellipses" color="dark" slot="start" class="map-feature-icon"></ion-icon>`;
+          }
           break;
         default:
           el.innerHTML = `<ion-icon name="Help" color="primary" slot="start" class="map-feature-icon"></ion-icon>`;

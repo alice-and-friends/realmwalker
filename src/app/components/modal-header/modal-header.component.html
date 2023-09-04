@@ -1,0 +1,13 @@
+<ion-grid class="ion-no-padding">
+  <ion-row class="ion-align-items-center">
+    <ion-col *ngIf="icon" size="auto" class="ion-padding-end">
+      <ion-icon [src]="icon" [color]="iconColor" class="portrait header-icon-size"></ion-icon>
+    </ion-col>
+    <ion-col class="relative">
+      <h1 *ngIf="title" class="ion-no-margin">{{title}}</h1>
+      <p *ngIf="description" class="description">{{description}}</p>
+      <ng-content></ng-content>
+    </ion-col>
+  </ion-row>
+</ion-grid>
+<p *ngIf="quote" class="monster-description quote-box ion-margin-top">{{quote}}</p>

@@ -6,3 +6,7 @@ export function determineArticle(word: string): string {
 export function capitalize(str: string) {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
+
+export function randomElement (arr: any[]) {
+  return arr.length ? arr[Math.floor(Math.random() * arr.length)] : undefined
+}

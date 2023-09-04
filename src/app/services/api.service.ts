@@ -10,6 +10,7 @@ import {Npc} from "../models/npc";
 import {InventoryItem} from "../models/inventory-item";
 import {BattlePrediction} from "../models/battle-prediction";
 import {BattleResult} from "../models/battle-result";
+import {Inventory} from "../models/inventory";
 
 @Injectable({
   providedIn: 'root'
@@ -23,12 +24,11 @@ export class ApiService {
   me(): Observable <User> {
     return this.http.get<User>(this.url + '/v1/users/me');
   }
-  getInventory() {
+  getInventory(): Observable<Inventory> {
     return this.http.get(this.url + '/v1/inventory')
       .pipe(
         map((data: any) => {
-          const inventoryItems = data.items.map((item: any) => new InventoryItem(item));
-          return { items: inventoryItems, ...data };
+          return new Inventory(data);
         })
       );
   }
@@ -37,7 +37,12 @@ export class ApiService {
       'item_id': itemId,
       'equipped': equipped,
       'force': force,
-    })
+    }).pipe(
+  map((data: any) => {
+        data.inventory = new Inventory(data.inventory)
+        return data;
+      })
+    );
   }
 
   getLocations() {
@@ -84,5 +89,23 @@ export class ApiService {
         return new Npc(data)
       })
     )
+  }
+  buyItem({npcId, tradeOfferId}: any) {
+    return this.http.post(this.url + `/v1/npcs/${npcId}/trade_offers/${tradeOfferId}/buy`, {})
+      .pipe(
+      map((data: any) => {
+        data.inventory = new Inventory(data.inventory)
+        return data;
+      })
+    );
+  }
+  sellItem({npcId, tradeOfferId}: any) {
+    return this.http.post(this.url + `/v1/npcs/${npcId}/trade_offers/${tradeOfferId}/sell`, {})
+      .pipe(
+      map((data: any) => {
+        data.inventory = new Inventory(data.inventory)
+        return data;
+      })
+    );
   }
 }

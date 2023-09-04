@@ -24,7 +24,7 @@ export class RealmwalkerApiInterceptor implements HttpInterceptor {
 
     return next.handle(req).pipe(
       catchError((error: HttpErrorResponse) => {
-        console.log(error)
+        console.error(error)
         let errorMsg = '';
         if (error.error instanceof ErrorEvent) {
           // This is client side error
