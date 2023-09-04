@@ -27,6 +27,8 @@ export class HomePage implements OnInit{
   map: mapboxgl.Map | undefined;
   mapMarkers: Marker[] = []
   playerPosition: Position | undefined
+  loadMarkers: any
+  timer: any
 
   // Player input
   buildMenu = [
@@ -111,7 +113,17 @@ export class HomePage implements OnInit{
     );
 
     // Add markers to the map.
+    this.loadMarkers = () => {
+      this.api.getLocations().subscribe((data: RealmLocation[]) => {
+        this.mapMarkers.forEach((marker) => marker.remove())
+        this.mapMarkers = []
+        data.forEach(location => {
+          this.addMarker(location);
+        });
+      })
+    }
     this.loadMarkers();
+    this.timer = setInterval(this.loadMarkers, 10 * 1000); // Refresh map every 10 seconds
 
     // Add map controls
     // this.map.addControl(new mapboxgl.NavigationControl());
@@ -140,16 +152,6 @@ export class HomePage implements OnInit{
     })
   }
 
-  loadMarkers() {
-    this.api.getLocations().subscribe((data: RealmLocation[]) => {
-      this.mapMarkers.forEach((marker) => marker.remove())
-      this.mapMarkers = []
-      data.forEach(location => {
-        this.addMarker(location);
-      });
-    })
-  }
-
   async openLocationModal(location: RealmLocation) {
     try {
       // @ts-ignore
@@ -159,6 +161,7 @@ export class HomePage implements OnInit{
           locationId: location.id,
           modal: this.modal,
           openCharacterModal: await this.changeEquipmentForLocationFunc(location),
+          refreshMap: this.loadMarkers,
         },
       }
       switch(location.type) {

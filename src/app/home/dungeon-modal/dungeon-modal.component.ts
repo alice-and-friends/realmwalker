@@ -19,6 +19,7 @@ export class DungeonModalComponent implements OnInit {
   analysis: BattlePrediction | undefined
   openCharacterModal!: any
   battleResult: any | undefined
+  refreshMap!: any
 
   constructor(private modalCtrl: ModalController, private api: ApiService) {
   }
@@ -60,7 +61,10 @@ export class DungeonModalComponent implements OnInit {
         });
         await this.battleResultModal.present();
       })
-      .add(() => this.loading = false)
+      .add(() => {
+        this.loading = false
+        this.refreshMap();
+      })
   }
 
   returnToMap() {
