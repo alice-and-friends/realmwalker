@@ -183,6 +183,13 @@ ion-modal.floating-modal {
     font-size: 32px;
     width: 100%;
     height: 100%;
+
+    &.addon-icon {
+      right: 0;
+      top: -65%;
+      width: 80%;
+      height: 80%;
+    }
   }
 
   &.dungeon {

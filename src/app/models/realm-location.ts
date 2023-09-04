@@ -5,11 +5,20 @@ export enum LocationType {
   Battlefield = 'Battlefield',
   Npc = 'Npc',
 }
+export class Coordinates {
+  lon: number
+  lat: number
+
+  constructor(data: {lon: number, lat: number}) {
+    this.lat = data.lat
+    this.lon = data.lon
+  }
+}
 export class RealmLocation {
   public id: string;
   public name: string;
   public type: LocationType;
-  public coordinates: number[];
+  public coordinates: Coordinates;
   public dungeonDetails: {
     level: number,
     monsterClassification: string
@@ -23,7 +32,7 @@ export class RealmLocation {
     this.id = data.id;
     this.name = data.name;
     this.type = data.locationType;
-    this.coordinates = [data.coordinates.y, data.coordinates.x];
+    this.coordinates = new Coordinates(data.coordinates);
     switch(this.type) {
       case LocationType.Dungeon:
         this.dungeonDetails = data.dungeonDetails;

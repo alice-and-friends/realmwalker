@@ -1,7 +1,6 @@
 import {RealmLocation} from "./realm-location";
 import {randomElement} from "../lib/util";
 import {TradeOffer} from "./trade-offer";
-import {InventoryItem} from "./inventory-item";
 
 export enum Species {
   Human = 'human',
@@ -58,6 +57,12 @@ enum Greeting {
   SHOP_SIMPLE_1 = "You want thing?",
   SHOP_SIMPLE_2 = "Me sell. You buy?",
   SHOP_SIMPLE_3 = "You want trade?",
+  SHOP_SPOOKED_1 = "Greetings, traveler! I'd be more than happy to do business, but there's a troublesome creature nearby. Mind helping me clear it out?",
+  SHOP_SPOOKED_2 = "Help me clear out the nearby monster, then we can trade.",
+  SHOP_SPOOKED_3 = "Aaah! Stranger, I'm in trouble. There's a monster lurking nearby! Help me, and we can talk business.",
+  SHOP_SIMPLE_SPOOKED_1 = "Oh dear! Monster outside! You make it go, then we trade?",
+  SHOP_SIMPLE_SPOOKED_2 = "Aaah! Me not brave! Scary thing outside! You make it go?",
+  SHOP_SIMPLE_SPOOKED_3 = "Aaah! Danger nearby! You help?",
 }
 export class Npc extends RealmLocation {
   public species: Species
@@ -67,6 +72,7 @@ export class Npc extends RealmLocation {
   public buyOffers: TradeOffer[]
   public sellOffers: TradeOffer[]
   public portrait: string
+  public spooked: boolean
   public greeting: string
   constructor(data: any) {
     super(data);
@@ -75,17 +81,24 @@ export class Npc extends RealmLocation {
     this.role = data.role
     this.shopType = data.shopType
     this.portrait = `/assets/icon/npc-${data.portrait}.svg`
-    this.greeting = randomElement(this.greetingOptions(this.species, this.role, this.shopType))
+    this.spooked = data.spooked
+    this.greeting = randomElement(this.greetingOptions(this.species, this.role, this.shopType, this.spooked))
     this.buyOffers = data.buyOffers.map((item: any) => new TradeOffer(item))
     this.sellOffers = data.sellOffers.map((item: any) => new TradeOffer(item))
   }
 
-  greetingOptions(species: string, role:string, shopType:string|undefined): string[] {
+  greetingOptions(species: string, role:string, shopType:string|undefined, spooked:boolean|undefined): string[] {
     if (role !== 'shopkeeper') {
       return [
         Greeting.GENERAL_1, Greeting.GENERAL_2, Greeting.GENERAL_3, Greeting.GENERAL_4,
         Greeting.GENERAL_5, Greeting.GENERAL_6,
       ]
+    }
+    if (this.spooked) {
+      if (['troll', 'giant'].includes(species)) {
+        return [Greeting.SHOP_SIMPLE_SPOOKED_1, Greeting.SHOP_SIMPLE_SPOOKED_2, Greeting.SHOP_SIMPLE_SPOOKED_3]
+      }
+      return [Greeting.SHOP_SPOOKED_1, Greeting.SHOP_SPOOKED_2, Greeting.SHOP_SPOOKED_3]
     }
     if (['troll', 'giant'].includes(species)) {
       return [Greeting.SHOP_SIMPLE_1, Greeting.SHOP_SIMPLE_2, Greeting.SHOP_SIMPLE_3]

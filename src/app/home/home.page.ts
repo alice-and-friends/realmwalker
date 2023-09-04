@@ -262,6 +262,9 @@ export class HomePage implements OnInit{
             default:
               el.innerHTML = `<ion-icon name="chatbox-ellipses" color="dark" slot="start" class="map-feature-icon"></ion-icon>`;
           }
+          if (location.npcDetails.spooked) {
+            el.innerHTML += '<ion-icon src="/assets/icon/chatbox-exclamation-2.svg" color="dark" slot="start" class="map-feature-icon addon-icon">';
+          }
           break;
         default:
           el.innerHTML = `<ion-icon name="Help" color="primary" slot="start" class="map-feature-icon"></ion-icon>`;
@@ -273,7 +276,7 @@ export class HomePage implements OnInit{
 
       // Add markers to the map.
       let marker = new mapboxgl.Marker(el)
-        .setLngLat(location.coordinates as any)
+        .setLngLat([location.coordinates.lat, location.coordinates.lon])
         .addTo(this.map);
       this.mapMarkers.push(marker)
     }

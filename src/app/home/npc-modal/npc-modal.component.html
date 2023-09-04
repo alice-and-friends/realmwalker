@@ -30,50 +30,22 @@
         <ion-label>Sell</ion-label>
       </ion-segment-button>
     </ion-segment>
+
+    <p *ngIf="locationObject.spooked; else openForBusiness" class="ion-text-center">
+      This npc will not trade as long as there are nearby.
+    </p>
   </div>
 
-  <ion-grid *ngIf="tradingMode === 'buy'; else sell" class="inventory-list no-padding-top">
-    <ion-row *ngFor="let offer of locationObject.sellOffers" class="inventory-list-item">
-      <ion-col size="auto">
-        <ion-icon [src]="offer.icon" color="dark" class="inventory-item-icon"></ion-icon>
-      </ion-col>
-      <ion-col>
-        <ion-label>{{offer.name}}</ion-label>
-        <p class="detail-line compact">
-          Price {{offer.sellOffer | number}}
-          <span *ngIf="offer._userHas">• {{offer._userHas}} in inventory</span>
-        </p>
-        <!--
-        <p class="detail-line">
-          {{item.rarity}} {{item.itemType}}<span *ngIf="item.itemType === 'weapon'">, {{item.twoHanded ? 'two-handed' : 'one-handed'}}</span>
-        </p>
-        <ion-text color="success">
-          <p *ngFor="let bonus of item.bonuses" class="detail-line compact">{{bonus}}</p>
-        </ion-text>
-        -->
-      </ion-col>
-      <ion-col size="auto">
-        <ion-button
-          size="small"
-          color="dark"
-          fill="solid"
-          (click)="buyOne(offer)"
-          [disabled]="inventory!.gold < offer.sellOffer"
-        >Buy</ion-button>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
-  <ng-template #sell>
-    <p *ngIf="!buyOffersFiltered.length" class="ion-text-center">Nothing to sell.</p>
-    <ion-grid class="inventory-list no-padding-top">
-      <ion-row *ngFor="let offer of buyOffersFiltered" class="inventory-list-item">
+  <ng-template #openForBusiness>
+    <ion-grid *ngIf="tradingMode === 'buy'; else sell" class="inventory-list no-padding-top">
+      <ion-row *ngFor="let offer of locationObject.sellOffers" class="inventory-list-item">
         <ion-col size="auto">
           <ion-icon [src]="offer.icon" color="dark" class="inventory-item-icon"></ion-icon>
         </ion-col>
         <ion-col>
           <ion-label>{{offer.name}}</ion-label>
           <p class="detail-line compact">
-            Price {{offer.buyOffer | number}}
+            Price {{offer.sellOffer | number}}
             <span *ngIf="offer._userHas">• {{offer._userHas}} in inventory</span>
           </p>
           <!--
@@ -90,13 +62,47 @@
             size="small"
             color="dark"
             fill="solid"
-            (click)="sellOne(offer)"
-            [disabled]="!offer._userHas"
-          >
-            {{offer._userHas ? 'Sell (1)' : 'Sell'}}
-          </ion-button>
+            (click)="buyOne(offer)"
+            [disabled]="inventory!.gold < offer.sellOffer"
+          >Buy</ion-button>
         </ion-col>
       </ion-row>
     </ion-grid>
+    <ng-template #sell>
+      <p *ngIf="!buyOffersFiltered.length" class="ion-text-center">Nothing to sell.</p>
+      <ion-grid class="inventory-list no-padding-top">
+        <ion-row *ngFor="let offer of buyOffersFiltered" class="inventory-list-item">
+          <ion-col size="auto">
+            <ion-icon [src]="offer.icon" color="dark" class="inventory-item-icon"></ion-icon>
+          </ion-col>
+          <ion-col>
+            <ion-label>{{offer.name}}</ion-label>
+            <p class="detail-line compact">
+              Price {{offer.buyOffer | number}}
+              <span *ngIf="offer._userHas">• {{offer._userHas}} in inventory</span>
+            </p>
+            <!--
+            <p class="detail-line">
+              {{item.rarity}} {{item.itemType}}<span *ngIf="item.itemType === 'weapon'">, {{item.twoHanded ? 'two-handed' : 'one-handed'}}</span>
+            </p>
+            <ion-text color="success">
+              <p *ngFor="let bonus of item.bonuses" class="detail-line compact">{{bonus}}</p>
+            </ion-text>
+            -->
+          </ion-col>
+          <ion-col size="auto">
+            <ion-button
+              size="small"
+              color="dark"
+              fill="solid"
+              (click)="sellOne(offer)"
+              [disabled]="!offer._userHas"
+            >
+              {{offer._userHas ? 'Sell (1)' : 'Sell'}}
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ng-template>
   </ng-template>
 </ion-content>
