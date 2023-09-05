@@ -16,36 +16,49 @@ export class RealmwalkerApiInterceptor implements HttpInterceptor {
 
   constructor(private notification: NotificationService, private userService: UserService) {}
 
+  requestShouldBeIntercepted(req: HttpRequest<any>) {
+    return req.url!.includes(env.api.host);
+  }
+  responseShouldBeIntercepted(event: HttpResponse<any>) {
+    return event.url!.includes(env.api.host);
+  }
+
+  handleError(errorResponse: HttpErrorResponse) {
+    console.error(errorResponse)
+    let errorMsg = '';
+    if (errorResponse.error instanceof ErrorEvent) {
+      // This is client side error
+      this.notification.presentToast(`Error: ${errorResponse.message}`, {error: true});
+    } else {
+      // This is server side error
+      this.notification.presentToast(`Error ${errorResponse.status}: ${errorResponse.error.message || errorResponse.statusText}`, {error: true});
+    }
+    return throwError(() => errorResponse.message);
+  }
+
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
-    function shouldBeIntercepted(event: HttpResponse<any>) {
-      return event.url!.includes(env.api.host);
+    if (this.requestShouldBeIntercepted(req)) {
+      const geoLocation = 'secure-user-token';
+      req = req.clone({
+        setHeaders: { Geolocation: `${geoLocation}` }
+      });
+      console.log(req)
     }
 
     return next.handle(req).pipe(
-      catchError((error: HttpErrorResponse) => {
-        console.error(error)
-        let errorMsg = '';
-        if (error.error instanceof ErrorEvent) {
-          // This is client side error
-          this.notification.presentToast(`Error: ${error.message}`, {error: true});
-        } else {
-          // This is server side error
-          this.notification.presentToast(`Error ${error.status}: ${error.error.message || error.statusText}`, {error: true});
-        }
-        return throwError(() => error.message);
-      }),
-      map(event => {
-        if (event instanceof HttpResponse && shouldBeIntercepted(event)) {
+      catchError((error: HttpErrorResponse) => this.handleError(error)),
+      map(response => {
+        if (response instanceof HttpResponse && this.responseShouldBeIntercepted(response)) {
 
-          // Check for xp/level up
-          if (event.body && event.body.xpLevelChange) {
+          // Check for changes in xp or level
+          if (response.body && response.body.xpLevelChange) {
 
             // Update user object
-            this.userService.activeUser!.xpLevelReport = event.body.xpLevelReport;
+            this.userService.activeUser!.xpLevelReport = response.body.xpLevelReport;
           }
         }
-        return event;
+        return response;
       }),
     );
   }

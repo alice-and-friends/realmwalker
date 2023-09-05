@@ -62,7 +62,8 @@ enum Greeting {
   SHOP_SPOOKED_3 = "Aaah! Stranger, I'm in trouble. There's a monster lurking nearby! Help me, and we can talk business.",
   SHOP_SIMPLE_SPOOKED_1 = "Oh dear! Monster outside! You make it go, then we trade?",
   SHOP_SIMPLE_SPOOKED_2 = "Aaah! Me not brave! Scary thing outside! You make it go?",
-  SHOP_SIMPLE_SPOOKED_3 = "Aaah! Danger nearby! You help?",
+  SHOP_SIMPLE_SPOOKED_3 = "Hmm. Danger nearby. You help?",
+  SHOP_SPOOKED_GOBLIN = "Aaah! Me not brave Goblin! You kill monster, then we trade?",
 }
 export class Npc extends RealmLocation {
   public species: Species
@@ -97,10 +98,12 @@ export class Npc extends RealmLocation {
     if (this.spooked) {
       if (['troll', 'giant'].includes(species)) {
         return [Greeting.SHOP_SIMPLE_SPOOKED_1, Greeting.SHOP_SIMPLE_SPOOKED_2, Greeting.SHOP_SIMPLE_SPOOKED_3]
+      } else if (['goblin'].includes(species)) {
+        return [Greeting.SHOP_SPOOKED_GOBLIN]
       }
       return [Greeting.SHOP_SPOOKED_1, Greeting.SHOP_SPOOKED_2, Greeting.SHOP_SPOOKED_3]
     }
-    if (['troll', 'giant'].includes(species)) {
+    if (['troll', 'giant', 'goblin'].includes(species)) {
       return [Greeting.SHOP_SIMPLE_1, Greeting.SHOP_SIMPLE_2, Greeting.SHOP_SIMPLE_3]
     }
     switch(shopType) {
