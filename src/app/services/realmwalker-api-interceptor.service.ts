@@ -10,11 +10,12 @@ import { map } from 'rxjs/operators';
 import {environment as env} from "../../environments/environment";
 import {NotificationService} from "./notification.service";
 import {UserService} from "./user.service";
+import {LocationService} from "./location.service";
 
 @Injectable()
 export class RealmwalkerApiInterceptor implements HttpInterceptor {
 
-  constructor(private notification: NotificationService, private userService: UserService) {}
+  constructor(private notification: NotificationService, private userService: UserService, public location: LocationService) {}
 
   requestShouldBeIntercepted(req: HttpRequest<any>) {
     return req.url!.includes(env.api.host);
@@ -39,11 +40,14 @@ export class RealmwalkerApiInterceptor implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
     if (this.requestShouldBeIntercepted(req)) {
-      const geoLocation = 'secure-user-token';
-      req = req.clone({
-        setHeaders: { Geolocation: `${geoLocation}` }
-      });
-      console.log(req)
+      if (!!this.location.lat && !!this.location.lng) {
+        const geoLocation = `${this.location.lat} ${this.location.lng}`;
+        req = req.clone({
+          setHeaders: { Geolocation: `${geoLocation}` }
+        });
+      } else {
+        console.warn('Interceptor was not able to get location from location service for request', req)
+      }
     }
 
     return next.handle(req).pipe(

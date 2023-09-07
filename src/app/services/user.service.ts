@@ -14,17 +14,20 @@ export class UserService {
   constructor(private api: ApiService, private router: Router) {}
 
   login() {
-    this.api.me().subscribe(
-      (response: any) => {
+    console.info('User service starting login procedure')
+    this.api.me().subscribe({
+      next: (response: any) => {
         this.activeUser = response;
         this.loggedIn = true;
+        console.info('User service redirecting to home route')
         this.router.navigate(['/home'])
       },
-      () => {
+      error: (err: any) => {
+        console.warn(err)
         this.activeUser = undefined;
         this.loggedIn = false;
         this.router.navigate(['/launch'])
       }
-    );
+    });
   }
 }

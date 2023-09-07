@@ -12,6 +12,7 @@ import {Router} from "@angular/router"
 import {CharacterModalComponent} from "./character-modal/character-modal.component";
 import {AuthService} from "@auth0/auth0-angular";
 import {NpcModalComponent} from "./npc-modal/npc-modal.component";
+import {LocationService} from "../services/location.service";
 
 @Component({
   selector: 'app-home',
@@ -26,7 +27,6 @@ export class HomePage implements OnInit{
   // Map config
   map: mapboxgl.Map | undefined;
   mapMarkers: Marker[] = []
-  playerPosition: Position | undefined
   loadMarkers: any
   timer: any
 
@@ -35,7 +35,7 @@ export class HomePage implements OnInit{
     {
       label: 'Build HQ', icon: 'star-sharp', f: () => {
         this.modalCtrl.dismiss().then(r => console.log(r));
-        const coords = this.playerPosition!.coords;
+        const coords = null //this.playerPosition!.coords;
         this.addMarker({
           'type': 'Feature',
           'properties': {
@@ -44,7 +44,7 @@ export class HomePage implements OnInit{
           },
           'geometry': {
             'type': 'Point',
-            'coordinates': [coords.longitude, coords.latitude]
+            'coordinates': [10, 10], //[location.lon, coords.latitude]
           }
         })
       }
@@ -57,7 +57,8 @@ export class HomePage implements OnInit{
     private router: Router,
     public auth: AuthService,
     private readonly modalCtrl: ModalController,
-    private readonly actionSheetCtrl: ActionSheetController
+    private readonly actionSheetCtrl: ActionSheetController,
+    public location: LocationService,
   ) {
     if (!userService.loggedIn) {
       this.router.navigate(['/launch']);
@@ -72,21 +73,17 @@ export class HomePage implements OnInit{
   }
 
   async ngOnInit() {
-    console.log('home init')
-
-    // Player info
-    this.playerPosition = await Geolocation.getCurrentPosition();
-    console.log('You are here:', this.playerPosition);
+    console.debug('Init home view. User location:', this.location.lat, this.location.lng);
 
     // Mapbox config
     (mapboxgl.accessToken as any) = environment.mapbox.accessToken;
     this.map = new mapboxgl.Map({
       container: 'map',
       style: 'mapbox://styles/alicecyan/clgs324md001m01qye8obgx8p',
-      zoom: 1,
+      zoom: 12,
       maxZoom: 16,
-      // minZoom: 12,
-      // center: [this.playerPosition.coords.longitude, this.playerPosition.coords.latitude],
+      // minZoom: 8,
+      center: [this.location.lng, this.location.lat],
       attributionControl: false,
       // pitch: 60
     });
@@ -131,13 +128,13 @@ export class HomePage implements OnInit{
     geolocate.on("error", () => {
       // Fallback solution taken from here: https://github.com/mapbox/mapbox-gl-js/issues/9680
       console.warn('geolocate failed, going with flyTo fallback')
-      if (this.playerPosition) {
+      if (this.location.lat && this.location.lng) {
         // @ts-ignore
         this.map.flyTo(
           {
             center: [
-              this.playerPosition.coords.longitude,
-              this.playerPosition.coords.latitude
+              this.location.lng,
+              this.location.lat
             ],
             zoom: 15,
             bearing: 0
@@ -146,10 +143,10 @@ export class HomePage implements OnInit{
       }
     });
 
-    this.map.on('load', () => {
-      console.log('trigger geolocate')
-      geolocate.trigger()
-    })
+    // this.map.on('load', () => {
+    //   console.log('trigger geolocate', this.location.lat, this.location.lng)
+    //   geolocate.trigger()
+    // })
   }
 
   async openLocationModal(location: RealmLocation) {

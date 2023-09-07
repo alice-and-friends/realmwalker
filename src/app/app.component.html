@@ -5,4 +5,8 @@
   <ng-template #ready>
     <ion-router-outlet></ion-router-outlet>
   </ng-template>
+  <div class="debug">
+    <span *ngIf="location.permissionError; else coordinates">permissionError=true</span>
+    <ng-template #coordinates>{{location.lat}}, {{location.lng}}</ng-template>
+  </div>
 </ion-app>
