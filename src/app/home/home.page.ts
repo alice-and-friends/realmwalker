@@ -239,7 +239,7 @@ export class HomePage implements OnInit{
         case LocationType.Dungeon:
           el.className += ` dungeon monster-level-${location.dungeonDetails.level} monster-classification-${location.dungeonDetails.monsterClassification}`
           el.innerHTML = `<ion-icon
-            src="/assets/icon/${location.dungeonDetails.monsterClassification}.svg"
+            src="/assets/icon/classification-${location.dungeonDetails.monsterClassification}.svg"
             color="dark"
             slot="start"
             class="map-feature-icon"
@@ -251,19 +251,19 @@ export class HomePage implements OnInit{
         case LocationType.Npc:
           switch(location.npcDetails.shopType) {
             case 'armorer':
-              el.innerHTML = `<ion-icon src="/assets/icon/anvil.svg" color="medium" slot="start" class="map-feature-icon"></ion-icon>`;
+              el.innerHTML = `<ion-icon src="/assets/icon/location-armorer.svg" color="medium" slot="start" class="map-feature-icon"></ion-icon>`;
               break;
             case 'jeweller':
-              el.innerHTML = `<ion-icon src="/assets/icon/diamond.svg" color="primary" slot="start" class="map-feature-icon"></ion-icon>`;
+              el.innerHTML = `<ion-icon src="/assets/icon/location-jeweller.svg" color="primary" slot="start" class="map-feature-icon"></ion-icon>`;
               break;
             case 'magic':
-              el.innerHTML = `<ion-icon src="/assets/icon/potion.svg" color="secondary" slot="start" class="map-feature-icon"></ion-icon>`;
+              el.innerHTML = `<ion-icon src="/assets/icon/location-magic.svg" color="secondary" slot="start" class="map-feature-icon"></ion-icon>`;
               break;
             default:
-              el.innerHTML = `<ion-icon name="chatbox-ellipses" color="dark" slot="start" class="map-feature-icon"></ion-icon>`;
+              el.innerHTML = `<ion-icon src="/assets/icon/location-shop.svg" color="dark" slot="start" class="map-feature-icon"></ion-icon>`;
           }
           if (location.npcDetails.spooked) {
-            el.innerHTML += '<ion-icon src="/assets/icon/chatbox-exclamation-2.svg" color="dark" slot="start" class="map-feature-icon addon-icon">';
+            el.innerHTML += '<ion-icon src="/assets/icon/location-spooked-npc.svg" color="dark" slot="start" class="map-feature-icon addon-icon">';
           }
           break;
         default:
