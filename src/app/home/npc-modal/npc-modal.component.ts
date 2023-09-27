@@ -40,30 +40,29 @@ export class NpcModalComponent  implements OnInit {
 
   async loadNpc(): Promise<void> {
     return new Promise<void>((resolve, reject) => {
-      this.api.getNpc(this.locationId).subscribe(
-        (data: Npc) => {
+      this.api.getNpc(this.locationId).subscribe({
+        next: (data: Npc) => {
           this.locationObject = data;
           resolve();
         },
-        error => reject(error)
-      );
+        error: error => reject(error)
+      });
     });
   }
 
   async loadInventory(): Promise<void> {
     return new Promise<void>((resolve, reject) => {
-      this.api.getInventory().subscribe(
-        (data: Inventory) => {
+      this.api.getInventory().subscribe({
+        next: (data: Inventory) => {
           this.inventory = data;
           resolve();
         },
-        error => reject(error)
-      );
+        error: error => reject(error)
+      });
     });
   }
 
   buyOne(tradeOffer: TradeOffer) {
-    console.log('buy', tradeOffer)
     this.api.buyItem({ npcId: this.locationObject!.id, tradeOfferId: tradeOffer.id}).subscribe((data: any) => {
       this.inventory = data.inventory;
       this.setOfferInventoryCount()

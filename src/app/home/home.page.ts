@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import * as mapboxgl from "mapbox-gl";
-import {Geolocation, Position} from "@capacitor/geolocation";
 import {environment} from "../../environments/environment";
 import {ActionSheetController, ModalController, ModalOptions} from "@ionic/angular";
 import {ApiService} from "../services/api.service";
@@ -13,13 +12,15 @@ import {CharacterModalComponent} from "./character-modal/character-modal.compone
 import {AuthService} from "@auth0/auth0-angular";
 import {NpcModalComponent} from "./npc-modal/npc-modal.component";
 import {LocationService} from "../services/location.service";
+import {BaseModalComponent} from "./base-modal/base-modal.component";
+import {Base} from "../models/base";
 
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
 })
-export class HomePage implements OnInit{
+export class HomePage implements OnInit {
   // General ui
   //presentingElement: any = null;
   modal: HTMLIonModalElement | undefined
@@ -31,25 +32,7 @@ export class HomePage implements OnInit{
   timer: any
 
   // Player input
-  buildMenu = [
-    {
-      label: 'Build HQ', icon: 'star-sharp', f: () => {
-        this.modalCtrl.dismiss().then(r => console.log(r));
-        const coords = null //this.playerPosition!.coords;
-        this.addMarker({
-          'type': 'Feature',
-          'properties': {
-            'icon': 'star-sharp',
-            'message': 'Foo'
-          },
-          'geometry': {
-            'type': 'Point',
-            'coordinates': [10, 10], //[location.lon, coords.latitude]
-          }
-        })
-      }
-    }
-  ]
+  buildMenu: any[] = []
 
   constructor(
     public api: ApiService,
@@ -65,11 +48,25 @@ export class HomePage implements OnInit{
       return;
     }
     this.modalCtrl = modalCtrl;
-  }
 
-  takeBuildAction = (opts: any) => {
-    this.modalCtrl.dismiss().then(r => console.log(r));
-    // opts.f();
+    if (userService.activeUser!.base === null) {
+      this.buildMenu.push({
+        label: 'Build HQ', icon: 'star-sharp', f: async () => {
+          await this.modalCtrl.dismiss();
+          const modalOpts: ModalOptions = {
+            component: BaseModalComponent,
+            componentProps: {
+              modal: this.modal,
+              refreshMap: this.loadMarkers,
+              locationType: LocationType.Base,
+              createLocation: true,
+            },
+          }
+          this.modal = await this.modalCtrl.create(modalOpts);
+          await this.modal.present();
+        }
+      })
+    }
   }
 
   async ngOnInit() {
@@ -104,27 +101,6 @@ export class HomePage implements OnInit{
       // Draw an arrow next to the location dot to indicate which direction the device is heading.
       showUserHeading: true
     });
-    this.map.addControl(
-      geolocate,
-      'bottom-right'
-    );
-
-    // Add markers to the map.
-    this.loadMarkers = () => {
-      this.api.getLocations().subscribe((data: RealmLocation[]) => {
-        this.mapMarkers.forEach((marker) => marker.remove())
-        this.mapMarkers = []
-        data.forEach(location => {
-          this.addMarker(location);
-        });
-      })
-    }
-    this.loadMarkers();
-    this.timer = setInterval(this.loadMarkers, 10 * 1000); // Refresh map every 10 seconds
-
-    // Add map controls
-    // this.map.addControl(new mapboxgl.NavigationControl());
-
     geolocate.on("error", () => {
       // Fallback solution taken from here: https://github.com/mapbox/mapbox-gl-js/issues/9680
       console.warn('geolocate failed, going with flyTo fallback')
@@ -142,11 +118,30 @@ export class HomePage implements OnInit{
         );
       }
     });
+    this.map.addControl(
+      geolocate,
+      'bottom-right'
+    );
+    this.map.on('load', () => {
+      setTimeout(() => {
+        console.log('trigger geolocate', this.location.lat, this.location.lng)
+        geolocate.trigger()
+      }, 1000)
+    })
 
-    // this.map.on('load', () => {
-    //   console.log('trigger geolocate', this.location.lat, this.location.lng)
-    //   geolocate.trigger()
-    // })
+    // Add markers to the map.
+    this.loadMarkers = () => {
+      this.api.getLocations().subscribe((data: RealmLocation[]) => {
+        this.mapMarkers.forEach((marker) => marker.remove())
+        this.mapMarkers = []
+        data.forEach(location => {
+          this.addMarker(location);
+        });
+        console.debug('Load markers completed.')
+      })
+    }
+    this.loadMarkers();
+    // this.timer = setInterval(this.loadMarkers, 10 * 1000); // Refresh map every 10 seconds
   }
 
   async openLocationModal(location: RealmLocation) {
@@ -154,11 +149,11 @@ export class HomePage implements OnInit{
       // @ts-ignore
       let modalOpts: ModalOptions = {
         componentProps: {
+          modal: this.modal,
+          refreshMap: this.loadMarkers,
           locationType: location.type,
           locationId: location.id,
-          modal: this.modal,
           openCharacterModal: await this.changeEquipmentForLocationFunc(location),
-          refreshMap: this.loadMarkers,
         },
       }
       switch(location.type) {
@@ -182,6 +177,12 @@ export class HomePage implements OnInit{
           modalOpts = {
             ...modalOpts,
             component: NpcModalComponent
+          }
+          break;
+        case LocationType.Base:
+          modalOpts = {
+            ...modalOpts,
+            component: BaseModalComponent,
           }
           break;
         default:
@@ -247,6 +248,10 @@ export class HomePage implements OnInit{
           break;
         case LocationType.Battlefield:
           el.innerHTML = `<ion-icon src="/assets/icon/banner.svg" color="primary" slot="start" class="map-feature-icon"></ion-icon>`;
+          break;
+        case LocationType.Base:
+          el.className += ' significant-location'
+          el.innerHTML = `<ion-icon src="/assets/icon/location-base.svg" color="primary" slot="start" class="map-feature-icon"></ion-icon>`;
           break;
         case LocationType.Npc:
           switch(location.npcDetails.shopType) {

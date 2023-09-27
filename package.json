@@ -29,9 +29,9 @@
     "@capacitor/status-bar": "4.1.1",
     "@ionic/angular": "^7.1.2",
     "@types/geojson": "^7946.0.10",
-    "@types/mapbox-gl": "^2.7.10",
+    "@types/mapbox-gl": "^2.7.14",
     "ionicons": "^7.0.0",
-    "mapbox-gl": "^2.14.1",
+    "mapbox-gl": "^2.15.0",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.13.1"

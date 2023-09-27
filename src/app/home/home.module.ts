@@ -10,6 +10,7 @@ import {CharacterModalComponent} from "./character-modal/character-modal.compone
 import {BattleResultModalComponent} from "./dungeon-modal/battle-result-modal/battle-result-modal.component";
 import {NpcModalComponent} from "./npc-modal/npc-modal.component";
 import {ModalHeaderComponent} from "../components/modal-header/modal-header.component";
+import {BaseModalComponent} from "./base-modal/base-modal.component";
 
 
 @NgModule({
@@ -26,6 +27,7 @@ import {ModalHeaderComponent} from "../components/modal-header/modal-header.comp
     CharacterModalComponent,
     BattleResultModalComponent,
     ModalHeaderComponent,
+    BaseModalComponent,
   ]
 })
 export class HomePageModule {}

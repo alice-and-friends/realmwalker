@@ -11,6 +11,7 @@ import {InventoryItem} from "../models/inventory-item";
 import {BattlePrediction} from "../models/battle-prediction";
 import {BattleResult} from "../models/battle-result";
 import {Inventory} from "../models/inventory";
+import {Base} from "../models/base";
 
 @Injectable({
   providedIn: 'root'
@@ -23,6 +24,22 @@ export class ApiService {
 
   me(): Observable <User> {
     return this.http.get<User>(this.url + '/v1/users/me');
+  }
+  getBase(): Observable<Base> {
+    return this.http.get(this.url + '/v1/base')
+      .pipe(
+        map((data: any) => {
+          return new Base(data);
+        })
+      );
+  }
+  createBase() {
+    return this.http.post(this.url + '/v1/base', {})
+      .pipe(
+        map((data: any) => {
+          return new Base(data);
+        })
+      );
   }
   getInventory(): Observable<Inventory> {
     return this.http.get(this.url + '/v1/inventory')
@@ -43,6 +60,11 @@ export class ApiService {
         return data;
       })
     );
+  }
+  updateItem(id: string, params: object) {
+    return this.http.patch(this.url + `/v1/inventory_items/${id}`, {
+      'inventory_item': params
+    })
   }
 
   getLocations() {

@@ -25,7 +25,7 @@
 
 <div class="map" id="map"></div>
 
-<ion-fab slot="fixed" vertical="center" horizontal="start" class="flight-toolbar">
+<ion-fab *ngIf="buildMenu.length" slot="fixed" vertical="center" horizontal="start" class="flight-toolbar">
   <ion-fab-button id="open-build-menu" size="small">
     <ion-icon name="construct-sharp"></ion-icon>
   </ion-fab-button>

@@ -1,18 +1,11 @@
 import {NpcRole, ShopType} from "./npc";
+import {Coordinates} from "./coordinates";
 
 export enum LocationType {
   Dungeon = 'Dungeon',
   Battlefield = 'Battlefield',
   Npc = 'Npc',
-}
-export class Coordinates {
-  lon: number
-  lat: number
-
-  constructor(data: {lon: number, lat: number}) {
-    this.lat = data.lat
-    this.lon = data.lon
-  }
+  Base = 'Base',
 }
 export class RealmLocation {
   public id: string;

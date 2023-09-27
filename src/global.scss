@@ -192,6 +192,20 @@ ion-modal.floating-modal {
     }
   }
 
+  &.significant-location {
+    background-color: var(--ion-color-primary);
+
+    ion-icon {
+      opacity: 0.8;
+      fill: #fff;
+      width: 90%;
+      height: 90%;
+      left: 5%;
+      top: 5%;
+      border-radius: 50%;
+    }
+  }
+
   &.dungeon {
     ion-icon {
       fill: var(--ion-color-danger);

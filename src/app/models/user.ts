@@ -2,6 +2,7 @@ export interface User {
   id: number;
   email: string;
   name: string;
+  base: null|object;
   xpLevelReport: {
     xp: number,
     level: number,

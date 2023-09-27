@@ -81,7 +81,7 @@ export class LocationService {
           this.ngZone.run(() => {
             this.lat = position.coords.latitude;
             this.lng = position.coords.longitude;
-            console.info(`Position changed to ${this.lat}, ${this.lng}`)
+            console.debug(`Position changed to ${this.lat}, ${this.lng}`)
           })
         }
       )
