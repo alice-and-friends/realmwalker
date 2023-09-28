@@ -13,7 +13,8 @@ import {AuthService} from "@auth0/auth0-angular";
 import {NpcModalComponent} from "./npc-modal/npc-modal.component";
 import {LocationService} from "../services/location.service";
 import {BaseModalComponent} from "./base-modal/base-modal.component";
-import {Base} from "../models/base";
+import {BattleResultModalComponent} from "./dungeon-modal/battle-result-modal/battle-result-modal.component";
+import {ConstructionModalComponent} from "./construction-modal/construction-modal.component";
 
 @Component({
   selector: 'app-home',
@@ -22,7 +23,7 @@ import {Base} from "../models/base";
 })
 export class HomePage implements OnInit {
   // General ui
-  //presentingElement: any = null;
+  presentingElement: any = null;
   modal: HTMLIonModalElement | undefined
 
   // Map config
@@ -30,9 +31,6 @@ export class HomePage implements OnInit {
   mapMarkers: Marker[] = []
   loadMarkers: any
   timer: any
-
-  // Player input
-  buildMenu: any[] = []
 
   constructor(
     public api: ApiService,
@@ -48,25 +46,6 @@ export class HomePage implements OnInit {
       return;
     }
     this.modalCtrl = modalCtrl;
-
-    if (userService.activeUser!.base === null) {
-      this.buildMenu.push({
-        label: 'Build HQ', icon: 'star-sharp', f: async () => {
-          await this.modalCtrl.dismiss();
-          const modalOpts: ModalOptions = {
-            component: BaseModalComponent,
-            componentProps: {
-              modal: this.modal,
-              refreshMap: this.loadMarkers,
-              locationType: LocationType.Base,
-              createLocation: true,
-            },
-          }
-          this.modal = await this.modalCtrl.create(modalOpts);
-          await this.modal.present();
-        }
-      })
-    }
   }
 
   async ngOnInit() {
@@ -144,6 +123,16 @@ export class HomePage implements OnInit {
     // this.timer = setInterval(this.loadMarkers, 10 * 1000); // Refresh map every 10 seconds
   }
 
+  changeEquipmentForLocationFunc(location: RealmLocation) {
+    return async () => {
+      if (this.modal) {
+        await this.modalCtrl.dismiss();
+      }
+      await this.openCharacterModal(() => {
+        this.openLocationModal(location)
+      })
+    }
+  }
   async openLocationModal(location: RealmLocation) {
     try {
       // @ts-ignore
@@ -176,7 +165,7 @@ export class HomePage implements OnInit {
         case LocationType.Npc:
           modalOpts = {
             ...modalOpts,
-            component: NpcModalComponent
+            component: NpcModalComponent,
           }
           break;
         case LocationType.Base:
@@ -216,14 +205,33 @@ export class HomePage implements OnInit {
       console.error(error)
     }
   }
-  changeEquipmentForLocationFunc(location: RealmLocation) {
-    return async () => {
-      if (this.modal) {
-        await this.modalCtrl.dismiss();
-      }
-      await this.openCharacterModal(() => {
-        this.openLocationModal(location)
-      })
+
+  async openConstructionModal() {
+    try {
+      this.modal = await this.modalCtrl.create({
+        component: ConstructionModalComponent,
+        cssClass: 'floating-modal',
+        showBackdrop: true,
+        backdropDismiss: false,
+        componentProps: {
+          openBaseModal: async () => {
+            await this.modalCtrl.dismiss();
+            const modalOpts: ModalOptions = {
+              component: BaseModalComponent,
+              componentProps: {
+                refreshMap: this.loadMarkers,
+                createLocation: true, // This tells the modal controller that it needs to create a new base
+              },
+            }
+            this.modal = await this.modalCtrl.create(modalOpts);
+            await this.modal.present();
+          }
+        }
+      });
+      await this.modal.present();
+    }
+    catch (error) {
+      console.error(error)
     }
   }
 

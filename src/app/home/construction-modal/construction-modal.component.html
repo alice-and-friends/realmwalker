@@ -1,0 +1,9 @@
+<div class="ion-padding ion-text-center">
+  <div>
+    <h1>{{title}}</h1>
+    <ion-icon color="primary" src="/assets/icon/location-base.svg" class="header-icon-size"></ion-icon>
+    <div [innerHTML]="description"></div>
+    <ion-button expand="block" fill="solid" color="dark" (click)="constructBase()">{{primaryAction}}</ion-button>
+    <ion-button expand="block" fill="outline" color="dark" (click)="cancel()">{{cancelAction}}</ion-button>
+  </div>
+</div>

@@ -13,20 +13,35 @@ export class UserService {
 
   constructor(private api: ApiService, private router: Router) {}
 
+  logout() {
+    this.activeUser = undefined;
+    this.loggedIn = false;
+    this.router.navigate(['/launch'])
+  }
+
   login() {
     console.info('User service starting login procedure')
     this.api.me().subscribe({
       next: (response: any) => {
         this.activeUser = response;
         this.loggedIn = true;
-        console.info('User service redirecting to home route')
+        console.debug('User service redirecting to home route')
         this.router.navigate(['/home'])
       },
       error: (err: any) => {
-        console.warn(err)
-        this.activeUser = undefined;
-        this.loggedIn = false;
-        this.router.navigate(['/launch'])
+        console.error('Error on login', err)
+        this.logout()
+      }
+    });
+  }
+
+  refresh() {
+    this.api.me().subscribe({
+      next: (response: any) => {
+        this.activeUser = response;
+      },
+      error: (err: any) => {
+        console.error('Refresh user failed', err)
       }
     });
   }

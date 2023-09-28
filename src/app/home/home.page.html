@@ -25,31 +25,8 @@
 
 <div class="map" id="map"></div>
 
-<ion-fab *ngIf="buildMenu.length" slot="fixed" vertical="center" horizontal="start" class="flight-toolbar">
-  <ion-fab-button id="open-build-menu" size="small">
+<ion-fab *ngIf="userService.activeUser?.base === null" slot="fixed" vertical="center" horizontal="start" class="flight-toolbar">
+  <ion-fab-button id="open-build-menu" (click)="openConstructionModal()" size="small">
     <ion-icon name="construct-sharp"></ion-icon>
   </ion-fab-button>
 </ion-fab>
-
-<ion-modal #systemInfo trigger="open-build-menu">
-  <ng-template>
-    <ion-header>
-      <ion-toolbar>
-        <ion-title>Title</ion-title>
-        <ion-buttons slot="end">
-          <ion-button (click)="systemInfo.dismiss()">Close</ion-button>
-        </ion-buttons>
-      </ion-toolbar>
-    </ion-header>
-    <ion-content>
-      <ion-list>
-        <ion-item button *ngFor="let buildOption of buildMenu;" (click)='buildOption.f()'>
-          <ion-icon name="{{buildOption.icon}}" color="primary" slot="start"></ion-icon>
-          <ion-label>
-            <h2>{{buildOption.label}}</h2>
-          </ion-label>
-        </ion-item>
-      </ion-list>
-    </ion-content>
-  </ng-template>
-</ion-modal>

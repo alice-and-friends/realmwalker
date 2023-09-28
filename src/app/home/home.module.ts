@@ -11,6 +11,7 @@ import {BattleResultModalComponent} from "./dungeon-modal/battle-result-modal/ba
 import {NpcModalComponent} from "./npc-modal/npc-modal.component";
 import {ModalHeaderComponent} from "../components/modal-header/modal-header.component";
 import {BaseModalComponent} from "./base-modal/base-modal.component";
+import {ConstructionModalComponent} from "./construction-modal/construction-modal.component";
 
 
 @NgModule({
@@ -28,6 +29,7 @@ import {BaseModalComponent} from "./base-modal/base-modal.component";
     BattleResultModalComponent,
     ModalHeaderComponent,
     BaseModalComponent,
+    ConstructionModalComponent,
   ]
 })
 export class HomePageModule {}

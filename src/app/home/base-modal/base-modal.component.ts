@@ -44,6 +44,7 @@ export class BaseModalComponent  implements OnInit {
         next : (data: Base) => {
           this.locationObject = data;
           if (this.createLocation) {
+            this.userService.refresh()
             this.refreshMap();
           }
           resolve();
