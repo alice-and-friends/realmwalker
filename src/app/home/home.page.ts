@@ -57,7 +57,7 @@ export class HomePage implements OnInit {
       container: 'map',
       style: 'mapbox://styles/alicecyan/clgs324md001m01qye8obgx8p',
       zoom: 12,
-      maxZoom: 16,
+      maxZoom: 18,
       // minZoom: 8,
       center: [this.location.lng, this.location.lat],
       attributionControl: false,
@@ -289,7 +289,7 @@ export class HomePage implements OnInit {
 
       // Add markers to the map.
       let marker = new mapboxgl.Marker(el)
-        .setLngLat([location.coordinates.lat, location.coordinates.lon])
+        .setLngLat([location.coordinates.lon, location.coordinates.lat])
         .addTo(this.map);
       this.mapMarkers.push(marker)
     }
