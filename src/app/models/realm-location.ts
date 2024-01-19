@@ -1,5 +1,6 @@
 import {NpcRole, ShopType} from "./npc";
 import {Coordinates} from "./coordinates";
+import {Monster} from "./monster";
 
 export enum LocationType {
   Dungeon = 'Dungeon',
@@ -12,10 +13,7 @@ export class RealmLocation {
   public name: string;
   public type: LocationType;
   public coordinates: Coordinates;
-  public dungeonDetails: {
-    level: number,
-    monsterClassification: string
-  } | undefined;
+  public monster: Monster | undefined;
   public npcDetails: {
     role: NpcRole,
     shopType: ShopType | undefined
@@ -28,7 +26,7 @@ export class RealmLocation {
     this.coordinates = new Coordinates(data.coordinates);
     switch(this.type) {
       case LocationType.Dungeon:
-        this.dungeonDetails = data.dungeonDetails;
+        this.monster = new Monster(data.monster);
         break;
       case LocationType.Npc:
         this.npcDetails = data.npcDetails;

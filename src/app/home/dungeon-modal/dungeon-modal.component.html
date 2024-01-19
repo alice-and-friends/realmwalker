@@ -9,9 +9,9 @@
 <ion-content *ngIf="locationObject" class="ion-padding">
   <!--<div class="modal-bg"></div>-->
   <app-modal-header
-    [icon]="'/assets/icon/classification-'+locationObject.monster.classification+'.svg'"
+    [icon]="locationObject.monster.icon"
     [title]="locationObject.monster.name"
-    [description]="'Level '+locationObject.level+' '+locationObject.monster.classification"
+    [description]="'Level '+locationObject.monster.level+' '+locationObject.monster.classification"
     [quote]="locationObject.monster.description"
   ></app-modal-header>
   <div *ngIf="analysis;" class="ion-text-center ion-margin-bottom">

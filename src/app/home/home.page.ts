@@ -239,16 +239,32 @@ export class HomePage implements OnInit {
     if (this.map instanceof mapboxgl.Map) {
       // Create a DOM element for each marker.
       const el = document.createElement('div');
-      const width = 26;
-      const height = 26;
       el.className = 'marker';
-      el.style.width = `${width}px`;
-      el.style.height = `${height}px`;
+      let width = 26;
+      let height = 26;
       switch(location.type) {
         case LocationType.Dungeon:
-          el.className += ` dungeon monster-level-${location.dungeonDetails.level} monster-classification-${location.dungeonDetails.monsterClassification}`
+          switch (true) {
+            case (location.monster.level == 10):
+              width = 100;
+              height = 100;
+              break;
+            case (location.monster.level == 9):
+              width = width + 15;
+              height = height + 15;
+              break;
+            case (location.monster.level >= 6):
+              width = width + 7;
+              height = height + 7;
+              break;
+            default:
+              width = width + 2;
+              height = height + 2;
+              break;
+          }
+          el.className += ` dungeon monster-level-${location.monster.level} monster-classification-${location.monster.classification}`
           el.innerHTML = `<ion-icon
-            src="/assets/icon/classification-${location.dungeonDetails.monsterClassification}.svg"
+            src="${location.monster.icon}"
             color="dark"
             slot="start"
             class="map-feature-icon"
@@ -282,6 +298,8 @@ export class HomePage implements OnInit {
         default:
           el.innerHTML = `<ion-icon name="Help" color="primary" slot="start" class="map-feature-icon"></ion-icon>`;
       }
+      el.style.width = `${width}px`;
+      el.style.height = `${height}px`;
 
       el.addEventListener('click', () => {
         this.openLocationModal(location)

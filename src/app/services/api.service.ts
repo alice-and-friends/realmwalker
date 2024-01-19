@@ -12,6 +12,7 @@ import {BattlePrediction} from "../models/battle-prediction";
 import {BattleResult} from "../models/battle-result";
 import {Inventory} from "../models/inventory";
 import {Base} from "../models/base";
+import {Monster} from "../models/monster";
 
 @Injectable({
   providedIn: 'root'
@@ -129,5 +130,14 @@ export class ApiService {
         return data;
       })
     );
+  }
+
+  getMonsters() {
+    return this.http.get<Monster[]>(this.url + '/v1/monsters')
+      .pipe(
+        map((data: any[]) => data.map((item: any) => {
+          return new Monster(item);
+        }))
+      );
   }
 }

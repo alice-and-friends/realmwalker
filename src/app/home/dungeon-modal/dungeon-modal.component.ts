@@ -70,4 +70,6 @@ export class DungeonModalComponent implements OnInit {
   returnToMap() {
     return this.modalCtrl.dismiss('cancel');
   }
+
+  protected readonly JSON = JSON;
 }

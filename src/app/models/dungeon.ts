@@ -1,17 +1,11 @@
 import {RealmLocation} from "./realm-location";
+import {Monster} from "./monster";
 
-type Monster = {
-  name: string
-  classification: string
-  description: string
-}
 export class Dungeon extends RealmLocation {
-  public monster: Monster;
-  public level: number;
+  public override monster!: Monster;
 
   constructor(data: any) {
     super(data);
-    this.monster = data.monster;
-    this.level = data.level;
+    this.monster = new Monster(data.monster);
   }
 }

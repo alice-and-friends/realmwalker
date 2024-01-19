@@ -1,0 +1,25 @@
+<ion-content [fullscreen]="true">
+
+  <table>
+    <thead>
+    <tr>
+      <th></th>
+      <th *ngFor="let classification of classifications">
+        {{ classification }}
+      </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let level of levels" style="border-top: 1px solid grey">
+      <td><b>{{ level }}</b></td>
+      <td *ngFor="let classification of classifications">
+        <ul style="list-style: none; margin: 0; padding: 5px">
+          <li *ngFor="let monster of getMonsters(level, classification)" title="{{monster.name}}" style="display: inline-block; margin: 0; padding: 0;">
+            <ion-icon [src]="monster.icon" color="dark" style="width: 40px; height: 40px; border: 1px solid salmon; margin: 0; padding: 0;"></ion-icon>
+          </li>
+        </ul>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</ion-content>

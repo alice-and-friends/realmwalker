@@ -22,6 +22,10 @@ const routes: Routes = [
     redirectTo: 'launch',
     pathMatch: 'full'
   },
+  {
+    path: 'monsters',
+    loadChildren: () => import('./monsters/monsters.module').then( m => m.MonstersPageModule)
+  },
 ];
 
 @NgModule({
