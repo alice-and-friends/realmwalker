@@ -277,6 +277,12 @@ export class HomePage implements OnInit {
           el.className += ' significant-location'
           el.innerHTML = `<ion-icon src="/assets/icon/location/base.svg" color="primary" slot="start" class="map-feature-icon"></ion-icon>`;
           break;
+        case LocationType.LeyLine:
+          width = 40;
+          height = 40;
+          el.className += ' ley-line-marker'
+          el.innerHTML = `<ion-icon src="/assets/icon/location/ley-line.svg" slot="start" class="map-feature-icon"></ion-icon>`;
+          break;
         case LocationType.Npc:
           switch(location.npcDetails.shopType) {
             case 'armorer':

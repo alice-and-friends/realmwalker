@@ -7,6 +7,7 @@ export enum LocationType {
   Battlefield = 'Battlefield',
   Npc = 'Npc',
   Base = 'Base',
+  LeyLine = 'LeyLine'
 }
 export class RealmLocation {
   public id: string;
