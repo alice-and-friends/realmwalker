@@ -275,24 +275,24 @@ export class HomePage implements OnInit {
           break;
         case LocationType.Base:
           el.className += ' significant-location'
-          el.innerHTML = `<ion-icon src="/assets/icon/location-base.svg" color="primary" slot="start" class="map-feature-icon"></ion-icon>`;
+          el.innerHTML = `<ion-icon src="/assets/icon/location/base.svg" color="primary" slot="start" class="map-feature-icon"></ion-icon>`;
           break;
         case LocationType.Npc:
           switch(location.npcDetails.shopType) {
             case 'armorer':
-              el.innerHTML = `<ion-icon src="/assets/icon/location-armorer.svg" color="medium" slot="start" class="map-feature-icon"></ion-icon>`;
+              el.innerHTML = `<ion-icon src="/assets/icon/location/armorer.svg" color="medium" slot="start" class="map-feature-icon"></ion-icon>`;
               break;
             case 'jeweller':
-              el.innerHTML = `<ion-icon src="/assets/icon/location-jeweller.svg" color="primary" slot="start" class="map-feature-icon"></ion-icon>`;
+              el.innerHTML = `<ion-icon src="/assets/icon/location/jeweller.svg" color="primary" slot="start" class="map-feature-icon"></ion-icon>`;
               break;
             case 'magic':
-              el.innerHTML = `<ion-icon src="/assets/icon/location-magic.svg" color="secondary" slot="start" class="map-feature-icon"></ion-icon>`;
+              el.innerHTML = `<ion-icon src="/assets/icon/location/magic.svg" color="secondary" slot="start" class="map-feature-icon"></ion-icon>`;
               break;
             default:
-              el.innerHTML = `<ion-icon src="/assets/icon/location-shop.svg" color="dark" slot="start" class="map-feature-icon"></ion-icon>`;
+              el.innerHTML = `<ion-icon src="/assets/icon/location/shop.svg" color="dark" slot="start" class="map-feature-icon"></ion-icon>`;
           }
           if (location.npcDetails.spooked) {
-            el.innerHTML += '<ion-icon src="/assets/icon/location-spooked-npc.svg" color="dark" slot="start" class="map-feature-icon addon-icon">';
+            el.innerHTML += '<ion-icon src="/assets/icon/location/spooked-npc.svg" color="dark" slot="start" class="map-feature-icon addon-icon">';
           }
           break;
         default:
