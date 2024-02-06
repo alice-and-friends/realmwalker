@@ -5,9 +5,7 @@ import {map, Observable} from "rxjs";
 import {User} from "../models/user";
 import {environment as env} from "../../environments/environment";
 import {Dungeon} from "../models/dungeon";
-import {Battlefield} from "../models/battlefield";
 import {Npc} from "../models/npc";
-import {InventoryItem} from "../models/inventory-item";
 import {BattlePrediction} from "../models/battle-prediction";
 import {BattleResult} from "../models/battle-result";
 import {Inventory} from "../models/inventory";
@@ -96,14 +94,6 @@ export class ApiService {
     return this.http.post<BattleResult>(this.url + `/v1/dungeons/${dungeonId}/battle`, {
       // TODO: Battle options?
     })
-  }
-
-  getBattlefield(id: string) {
-    return this.http.get<Battlefield>(this.url + `/v1/battlefields/${id}`).pipe(
-      map(data => {
-        return new Battlefield(data)
-      })
-    )
   }
 
   getNpc(id: string) {

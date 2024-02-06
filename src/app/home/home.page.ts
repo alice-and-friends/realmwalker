@@ -3,7 +3,7 @@ import * as mapboxgl from "mapbox-gl";
 import {environment} from "../../environments/environment";
 import {ActionSheetController, ModalController, ModalOptions} from "@ionic/angular";
 import {ApiService} from "../services/api.service";
-import {RealmLocation, LocationType} from "../models/realm-location";
+import {RealmLocation, LocationType, LocationStatus} from "../models/realm-location";
 import {Marker} from "mapbox-gl";
 import {DungeonModalComponent} from "./dungeon-modal/dungeon-modal.component";
 import {UserService} from "../services/user.service";
@@ -154,14 +154,6 @@ export class HomePage implements OnInit {
             initialBreakpoint: 0.60,
           }
           break;
-        // case LocationType.Battlefield:
-        //   modalOpts = {
-        //     ...modalOpts,
-        //     component: BattlefieldModalComponent,
-        //     breakpoints: [0, 0.60, 0.85],
-        //     initialBreakpoint: 0.60,
-        //   }
-        //   break;
         case LocationType.Npc:
           modalOpts = {
             ...modalOpts,
@@ -262,16 +254,18 @@ export class HomePage implements OnInit {
               height = height + 2;
               break;
           }
-          el.className += ` dungeon monster-level-${location.monster.level} monster-classification-${location.monster.classification}`
-          el.innerHTML = `<ion-icon
-            src="${location.monster.icon}"
+          if (location.status === LocationStatus.Defeated) {
+            el.innerHTML = `<ion-icon src="/assets/icon/banner.svg" color="primary" slot="start" class="map-feature-icon"></ion-icon>`;
+          }
+          else {
+            el.className += ` dungeon monster-level-${location.monster.level} monster-classification-${location.monster.classification}`
+            el.innerHTML = `<ion-icon
+            src="${location.status === LocationStatus.Defeated ? '/assets/icon/banner.svg' : location.monster.icon}"
             color="dark"
             slot="start"
             class="map-feature-icon"
             ></ion-icon>`;
-          break;
-        case LocationType.Battlefield:
-          el.innerHTML = `<ion-icon src="/assets/icon/banner.svg" color="primary" slot="start" class="map-feature-icon"></ion-icon>`;
+          }
           break;
         case LocationType.Base:
           el.className += ' significant-location'

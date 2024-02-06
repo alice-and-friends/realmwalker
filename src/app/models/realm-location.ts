@@ -4,15 +4,20 @@ import {Monster} from "./monster";
 
 export enum LocationType {
   Dungeon = 'Dungeon',
-  Battlefield = 'Battlefield',
   Npc = 'Npc',
   Base = 'Base',
   LeyLine = 'LeyLine'
+}
+export enum LocationStatus {
+  Expired = 'expired',
+  Active = 'active',
+  Defeated = 'defeated',
 }
 export class RealmLocation {
   public id: string;
   public name: string;
   public type: LocationType;
+  public status: LocationStatus;
   public coordinates: Coordinates;
   public monster: Monster | undefined;
   public npcDetails: {
@@ -23,7 +28,8 @@ export class RealmLocation {
   constructor(data: any) {
     this.id = data.id;
     this.name = data.name;
-    this.type = data.locationType;
+    this.type = data.type;
+    this.status = data.status;
     this.coordinates = new Coordinates(data.coordinates);
     switch(this.type) {
       case LocationType.Dungeon:
