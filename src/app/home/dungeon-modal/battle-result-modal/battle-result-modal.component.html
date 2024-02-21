@@ -73,7 +73,7 @@
   </div>
   <div *ngIf="data.battleResult.userDied" class="ion-margin-top">
     <p *ngIf="data.inventoryChanges?.amuletOfLifeConsumed === false" class="ion-no-margin">You were not wearing an amulet of life.</p>
-    <p *ngIf="data.xpLevelChange.xpDiff < 0" class="ion-no-margin">You lost {{-data.xpLevelChange.xpDiff | number}} xp.</p>
+    <p class="ion-no-margin">You lost {{-data.xpLevelChange.xpDiff | number}} xp.</p>
     <p *ngIf="data.xpLevelChange.levelDiff < 0" class="ion-no-margin">You were demoted to level {{data.xpLevelChange.currentLevel | number}}.</p>
   </div>
 
