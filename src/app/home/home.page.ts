@@ -120,7 +120,10 @@ export class HomePage implements OnInit {
       })
     }
     this.loadMarkers();
-    // this.timer = setInterval(this.loadMarkers, 10 * 1000); // Refresh map every 10 seconds
+    if (environment.config.mapRefreshRate) {
+      // Refresh map every n seconds
+      this.timer = setInterval(this.loadMarkers, environment.config.mapRefreshRate * 1000);
+    }
   }
 
   changeEquipmentForLocationFunc(location: RealmLocation) {

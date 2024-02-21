@@ -18,6 +18,9 @@ export const environment = {
   api: {
     host: 'http://localhost:3000/api'
   },
+  config: {
+    mapRefreshRate: 0,
+  },
 };
 
 /*
