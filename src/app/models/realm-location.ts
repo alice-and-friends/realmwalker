@@ -6,7 +6,8 @@ export enum LocationType {
   Dungeon = 'Dungeon',
   Npc = 'Npc',
   Base = 'Base',
-  LeyLine = 'LeyLine'
+  LeyLine = 'LeyLine',
+  Runestone = 'Runestone',
 }
 export enum LocationStatus {
   Expired = 'expired',

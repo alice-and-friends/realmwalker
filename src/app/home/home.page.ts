@@ -298,6 +298,9 @@ export class HomePage implements OnInit {
             el.innerHTML += '<ion-icon src="/assets/icon/location/spooked-npc.svg" color="dark" slot="start" class="map-feature-icon addon-icon">';
           }
           break;
+        case LocationType.Runestone:
+          el.innerHTML = `<ion-icon src="/assets/icon/location/runestone.svg" color="medium" slot="start" class="map-feature-icon"></ion-icon>`;
+          break;
         default:
           el.innerHTML = `<ion-icon name="Help" color="primary" slot="start" class="map-feature-icon"></ion-icon>`;
       }
