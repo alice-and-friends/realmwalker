@@ -1,0 +1,4 @@
+<div (click)="handleClick()" [ngStyle]="{'width.px': iconSize, 'height.px': iconSize}" class="{{getMarkerClass()}}">
+  <div class="marker-icon" [innerHTML]="dynamicSvg"></div>
+  <ion-icon *ngIf="location.npcDetails?.spooked" src="/assets/icon/location/spooked-npc.svg" color="dark" slot="start" class="marker-icon addon-icon"></ion-icon>
+</div>

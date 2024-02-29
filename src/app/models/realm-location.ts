@@ -23,7 +23,8 @@ export class RealmLocation {
   public monster: Monster | undefined;
   public npcDetails: {
     role: NpcRole,
-    shopType: ShopType | undefined
+    shopType: ShopType | undefined,
+    spooked: boolean,
   } | undefined;
 
   constructor(data: any) {

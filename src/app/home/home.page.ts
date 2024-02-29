@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Injector, OnInit, ViewContainerRef} from '@angular/core';
 import * as mapboxgl from "mapbox-gl";
 import {environment} from "../../environments/environment";
 import {ActionSheetController, ModalController, ModalOptions} from "@ionic/angular";
@@ -15,6 +15,7 @@ import {LocationService} from "../services/location.service";
 import {BaseModalComponent} from "./base-modal/base-modal.component";
 import {BattleResultModalComponent} from "./dungeon-modal/battle-result-modal/battle-result-modal.component";
 import {ConstructionModalComponent} from "./construction-modal/construction-modal.component";
+import {MapMarkerComponent} from "../components/map-marker/map-marker.component";
 
 @Component({
   selector: 'app-home',
@@ -40,6 +41,10 @@ export class HomePage implements OnInit {
     private readonly modalCtrl: ModalController,
     private readonly actionSheetCtrl: ActionSheetController,
     public location: LocationService,
+
+    // new
+    private injector: Injector,
+    private viewContainerRef: ViewContainerRef,
   ) {
     if (!userService.loggedIn) {
       this.router.navigate(['/launch']);
@@ -230,96 +235,27 @@ export class HomePage implements OnInit {
     }
   }
 
+  async handleMarkerClick(location: RealmLocation) {
+    await this.openLocationModal(location)
+  }
+
   addMarker(location: any) {
-    if (this.map instanceof mapboxgl.Map) {
-      // Create a DOM element for each marker.
-      const el = document.createElement('div');
-      el.className = 'marker';
-      let width = 26;
-      let height = 26;
-      switch(location.type) {
-        case LocationType.Dungeon:
-          switch (true) {
-            case (location.monster.level == 10):
-              width = 100;
-              height = 100;
-              break;
-            case (location.monster.level == 9):
-              width = width + 15;
-              height = height + 15;
-              break;
-            case (location.monster.level >= 6):
-              width = width + 7;
-              height = height + 7;
-              break;
-            default:
-              width = width + 2;
-              height = height + 2;
-              break;
-          }
-          if (location.status === LocationStatus.Defeated) {
-            el.innerHTML = `<ion-icon src="/assets/icon/banner.svg" color="primary" slot="start" class="map-feature-icon"></ion-icon>`;
-          }
-          else {
-            el.className += ` dungeon monster-level-${location.monster.level} monster-classification-${location.monster.classification}`
-            el.innerHTML = `<ion-icon
-            src="${location.status === LocationStatus.Defeated ? '/assets/icon/banner.svg' : location.monster.icon}"
-            color="dark"
-            slot="start"
-            class="map-feature-icon"
-            ></ion-icon>`;
-          }
-          break;
-        case LocationType.Base:
-          el.className += ' significant-location'
-          el.innerHTML = `<ion-icon src="/assets/icon/location/base.svg" color="primary" slot="start" class="map-feature-icon"></ion-icon>`;
-          break;
-        case LocationType.LeyLine:
-          width = 40;
-          height = 40;
-          el.className += ' ley-line-marker'
-          el.innerHTML = `<ion-icon src="/assets/icon/location/ley-line.svg" slot="start" class="map-feature-icon"></ion-icon>`;
-          break;
-        case LocationType.Npc:
-          switch(location.npcDetails.shopType) {
-            case 'armorer':
-              el.innerHTML = `<ion-icon src="/assets/icon/location/armorer.svg" color="medium" slot="start" class="map-feature-icon"></ion-icon>`;
-              break;
-            case 'jeweller':
-              el.innerHTML = `<ion-icon src="/assets/icon/location/jeweller.svg" color="primary" slot="start" class="map-feature-icon"></ion-icon>`;
-              break;
-            case 'magic':
-              el.innerHTML = `<ion-icon src="/assets/icon/location/magic.svg" color="secondary" slot="start" class="map-feature-icon"></ion-icon>`;
-              break;
-            default:
-              el.innerHTML = `<ion-icon src="/assets/icon/location/shop.svg" color="dark" slot="start" class="map-feature-icon"></ion-icon>`;
-          }
-          if (location.npcDetails.spooked) {
-            el.innerHTML += '<ion-icon src="/assets/icon/location/spooked-npc.svg" color="dark" slot="start" class="map-feature-icon addon-icon">';
-          }
-          break;
-        case LocationType.Runestone:
-          el.innerHTML = `<ion-icon src="/assets/icon/location/runestone.svg" color="medium" slot="start" class="map-feature-icon"></ion-icon>`;
-          break;
-        default:
-          el.innerHTML = `<ion-icon name="Help" color="primary" slot="start" class="map-feature-icon"></ion-icon>`;
-      }
-      el.style.width = `${width}px`;
-      el.style.height = `${height}px`;
-
-      el.addEventListener('click', () => {
-        this.openLocationModal(location)
-      });
-
-      // Add markers to the map.
-      let marker = new mapboxgl.Marker(el)
-        .setLngLat([location.coordinates.lon, location.coordinates.lat])
-        .addTo(this.map);
-      this.mapMarkers.push(marker)
+    if (!(this.map instanceof mapboxgl.Map)) {
+      throw('this.map is not an instance of mapboxgl.Map')
     }
-    else {
-      console.error('this.map is not an instance of mapboxgl.Map')
-    }
+
+    // Create the component instance
+    const componentRef = this.viewContainerRef.createComponent(MapMarkerComponent, {injector: this.injector});
+    componentRef.instance.location = location;
+    componentRef.instance.onClick = this.handleMarkerClick.bind(this);;
+
+    const domElem = (componentRef.location.nativeElement as HTMLElement);
+
+    // Use this domElem as the element for the Mapbox marker
+    let marker = new mapboxgl.Marker(domElem)
+      .setLngLat([location.coordinates.lon, location.coordinates.lat])
+      .addTo(this.map);
+    this.mapMarkers.push(marker);
   }
 
   async presentLogoutActionSheet() {

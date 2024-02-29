@@ -12,6 +12,7 @@ import {NpcModalComponent} from "./npc-modal/npc-modal.component";
 import {ModalHeaderComponent} from "../components/modal-header/modal-header.component";
 import {BaseModalComponent} from "./base-modal/base-modal.component";
 import {ConstructionModalComponent} from "./construction-modal/construction-modal.component";
+import {MapMarkerComponent} from "../components/map-marker/map-marker.component";
 
 
 @NgModule({
@@ -30,6 +31,7 @@ import {ConstructionModalComponent} from "./construction-modal/construction-moda
     ModalHeaderComponent,
     BaseModalComponent,
     ConstructionModalComponent,
+    MapMarkerComponent,
   ]
 })
 export class HomePageModule {}
