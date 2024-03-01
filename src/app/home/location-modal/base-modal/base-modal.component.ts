@@ -1,37 +1,36 @@
 import { Component, OnInit } from '@angular/core';
 import {ModalController} from "@ionic/angular";
-import {ApiService} from "../../services/api.service";
-import {Base} from "../../models/base";
-import {Inventory} from "../../models/inventory";
-import {NotificationService} from "../../services/notification.service";
-import {UserService} from "../../services/user.service";
-import {User} from "../../models/user";
-import {InventoryItem} from "../../models/inventory-item";
+import {ApiService} from "../../../services/api.service";
+import {Base} from "../../../models/base";
+import {Inventory} from "../../../models/inventory";
+import {NotificationService} from "../../../services/notification.service";
+import {UserService} from "../../../services/user.service";
+import {User} from "../../../models/user";
+import {InventoryItem} from "../../../models/inventory-item";
+import {AbstractLocationModalComponent} from "../location-modal.component";
 
 @Component({
   selector: 'app-base-modal',
   templateUrl: './base-modal.component.html',
   styleUrls: ['./base-modal.component.scss'],
 })
-export class BaseModalComponent  implements OnInit {
-  loading:boolean = true
-  locationId!: string
-  locationObject: undefined | Base
+export class BaseModalComponent extends AbstractLocationModalComponent implements OnInit {
   inventory: Inventory | undefined
   inventoryView: 'inventory'|'storage' = 'inventory'
   user: User
   createLocation: boolean = false
-  refreshMap!: Function
 
-  constructor(private modalCtrl: ModalController, private api: ApiService, public notifications: NotificationService, public userService: UserService) {
+  constructor(
+    protected override modalCtrl: ModalController,
+    protected override api: ApiService,
+    public override notifications: NotificationService,
+    public userService: UserService,
+  ) {
+    super(modalCtrl, api, notifications)
     this.user = userService.activeUser!
   }
 
-  async ngOnInit() {
-    await this.loadInventories();
-  }
-
-  async loadInventories() {
+  async loadData() {
     this.loading = true;
     await Promise.all([this.loadBase(), this.loadInventory()]);
     this.loading = false;
@@ -69,7 +68,7 @@ export class BaseModalComponent  implements OnInit {
   moveItemToStorage(item: InventoryItem) {
     this.api.updateItem(item.id, { inventory_id: this.locationObject!.inventory.id }).subscribe({
       next: () => {
-        this.loadInventories();
+        this.loadData();
         this.notifications.presentToast(`Moved 1x ${item.name} to storage.`)
       }
     }).add(() => {
@@ -80,15 +79,11 @@ export class BaseModalComponent  implements OnInit {
   async pickUpItemFromStorage(item: InventoryItem) {
     this.api.updateItem(item.id, { inventory_id: this.inventory!.id }).subscribe({
       next: () => {
-        this.loadInventories();
+        this.loadData();
         this.notifications.presentToast(`Picked up 1x ${item.name} from storage.`)
       }
     }).add(() => {
       // TODO: Prevent actions while transaction in progress?
     })
-  }
-
-  returnToMap() {
-    return this.modalCtrl.dismiss('cancel');
   }
 }

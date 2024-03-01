@@ -1,19 +1,18 @@
-import {Component, Injector, OnInit, ViewContainerRef} from '@angular/core';
+import {Component, Injector, OnInit, Type, ViewContainerRef} from '@angular/core';
 import * as mapboxgl from "mapbox-gl";
 import {environment} from "../../environments/environment";
 import {ActionSheetController, ModalController, ModalOptions} from "@ionic/angular";
 import {ApiService} from "../services/api.service";
 import {RealmLocation, LocationType, LocationStatus} from "../models/realm-location";
 import {Marker} from "mapbox-gl";
-import {DungeonModalComponent} from "./dungeon-modal/dungeon-modal.component";
+import {DungeonModalComponent} from "./location-modal/dungeon-modal/dungeon-modal.component";
 import {UserService} from "../services/user.service";
 import {Router} from "@angular/router"
 import {CharacterModalComponent} from "./character-modal/character-modal.component";
 import {AuthService} from "@auth0/auth0-angular";
-import {NpcModalComponent} from "./npc-modal/npc-modal.component";
+import {NpcModalComponent} from "./location-modal/npc-modal/npc-modal.component";
 import {LocationService} from "../services/location.service";
-import {BaseModalComponent} from "./base-modal/base-modal.component";
-import {BattleResultModalComponent} from "./dungeon-modal/battle-result-modal/battle-result-modal.component";
+import {BaseModalComponent} from "./location-modal/base-modal/base-modal.component";
 import {ConstructionModalComponent} from "./construction-modal/construction-modal.component";
 import {MapMarkerComponent} from "../components/map-marker/map-marker.component";
 
@@ -141,53 +140,40 @@ export class HomePage implements OnInit {
       })
     }
   }
+
   async openLocationModal(location: RealmLocation) {
     try {
-      // @ts-ignore
+      const modalComponentMap: { [key in LocationType]?: any } = {
+        [LocationType.Dungeon]: DungeonModalComponent,
+        [LocationType.Npc]: NpcModalComponent,
+        [LocationType.Base]: BaseModalComponent,
+        // Extend with other mappings as necessary
+      };
+
+      const component = modalComponentMap[location.type];
+      if (!component) {
+        throw new Error(`No modal component mapped for location type: ${location.type}`);
+      }
+
       let modalOpts: ModalOptions = {
+        component: component,
         componentProps: {
           modal: this.modal,
           refreshMap: this.loadMarkers,
-          locationType: location.type,
           locationId: location.id,
           openCharacterModal: await this.changeEquipmentForLocationFunc(location),
         },
       }
-      switch(location.type) {
-        case LocationType.Dungeon:
-          modalOpts = {
-            ...modalOpts,
-            component: DungeonModalComponent,
-            breakpoints: [0, 0.60, 0.85],
-            initialBreakpoint: 0.60,
-          }
-          break;
-        case LocationType.Npc:
-          modalOpts = {
-            ...modalOpts,
-            component: NpcModalComponent,
-          }
-          break;
-        case LocationType.Base:
-          modalOpts = {
-            ...modalOpts,
-            component: BaseModalComponent,
-          }
-          break;
-        default:
-          throw(new Error(`Could not find matching modal controller for location type ${location.type}.`))
+
+      if (location.type === LocationType.Dungeon) {
+        modalOpts = { ...modalOpts, breakpoints: [0, 0.60, 0.85], initialBreakpoint: 0.60 };
       }
+
       this.modal = await this.modalCtrl.create(modalOpts);
       await this.modal.present();
-      /*
-      addEventListener('ionBreakpointDidChange', (e: any) => {
-        const breakpoint = e.detail.breakpoint;
-        console.log('ionBreakpointDidChange', breakpoint)
-      });
-      */
-    }
-    catch (error) {
-      console.error(error)
+    } catch (error) {
+      console.error(error);
+      // TODO: display error feedback to the user
     }
   }
 

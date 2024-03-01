@@ -1,39 +1,32 @@
 import { Component, OnInit } from '@angular/core';
-import {ModalController} from "@ionic/angular";
-import {ApiService} from "../../services/api.service";
-import {Npc} from "../../models/npc";
-import {Inventory} from "../../models/inventory";
-import {TradeOffer} from "../../models/trade-offer";
-import {NotificationService} from "../../services/notification.service";
+import {Npc} from "../../../models/npc";
+import {Inventory} from "../../../models/inventory";
+import {TradeOffer} from "../../../models/trade-offer";
+import {AbstractLocationModalComponent} from "../location-modal.component";
 
 @Component({
   selector: 'app-npc-modal',
   templateUrl: './npc-modal.component.html',
   styleUrls: ['./npc-modal.component.scss'],
 })
-export class NpcModalComponent  implements OnInit {
-  loading:boolean = true
-  locationId!: string
-  locationObject: undefined | Npc
+export class NpcModalComponent extends AbstractLocationModalComponent implements OnInit {
   buyOffersFiltered: TradeOffer[] = [] // Contains npc buy offers but only the ones where the user actually has the items
-  title: string = 'NPC'
   tradingMode: 'sell'|'buy' = 'buy'
   inventory: Inventory | undefined
 
-  constructor(private modalCtrl: ModalController, private api: ApiService, public notifications: NotificationService) {}
-
-  async ngOnInit() {
+  async loadData() {
+    this.loading = true;
     await Promise.all([this.loadNpc(), this.loadInventory()]);
     this.setOfferInventoryCount();
     this.loading = false;
   }
 
   setOfferInventoryCount() {
-    this.locationObject!.buyOffers.forEach(offer => {
+    this.locationObject.buyOffers.forEach((offer: any) => {
       offer._userHas = this.inventory!.items.filter( item => item.name === offer.name ).length
     })
-    this.buyOffersFiltered = this.locationObject!.buyOffers.filter(offer => offer._userHas >= 1);
-    this.locationObject!.sellOffers.forEach(offer => {
+    this.buyOffersFiltered = this.locationObject.buyOffers.filter((offer: any) => offer._userHas >= 1);
+    this.locationObject.sellOffers.forEach((offer: any) => {
       offer._userHas = this.inventory!.items.filter( item => item.name === offer.name ).length
     })
   }
@@ -63,7 +56,7 @@ export class NpcModalComponent  implements OnInit {
   }
 
   buyOne(tradeOffer: TradeOffer) {
-    this.api.buyItem({ npcId: this.locationObject!.id, tradeOfferId: tradeOffer.id}).subscribe((data: any) => {
+    this.api.buyItem({ npcId: this.locationObject.id, tradeOfferId: tradeOffer.id}).subscribe((data: any) => {
       this.inventory = data.inventory;
       this.setOfferInventoryCount()
       this.notifications.presentToast(`Bought 1x ${tradeOffer.name} for ${tradeOffer.sellOffer} gold.`)
@@ -73,7 +66,7 @@ export class NpcModalComponent  implements OnInit {
   }
 
   sellOne(tradeOffer: TradeOffer) {
-    this.api.sellItem({ npcId: this.locationObject!.id, tradeOfferId: tradeOffer.id}).subscribe((data: any) => {
+    this.api.sellItem({ npcId: this.locationObject.id, tradeOfferId: tradeOffer.id}).subscribe((data: any) => {
       this.inventory = data.inventory;
       this.setOfferInventoryCount()
       this.notifications.presentToast(`Sold 1x ${tradeOffer.name} for ${tradeOffer.buyOffer} gold.`)
@@ -81,10 +74,4 @@ export class NpcModalComponent  implements OnInit {
       // TODO: Prevent actions while transaction in progress?
     })
   }
-
-  returnToMap() {
-    return this.modalCtrl.dismiss('cancel');
-  }
-
-  protected readonly location = location;
 }

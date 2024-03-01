@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import {ModalController} from "@ionic/angular";
-import {BattleResult} from "../../../models/battle-result";
-import {determineArticle, capitalize} from "../../../lib/util";
+import {BattleResult} from "../../../../models/battle-result";
+import {determineArticle, capitalize} from "../../../../lib/util";
 
 @Component({
   selector: 'app-battle-result-modal',
