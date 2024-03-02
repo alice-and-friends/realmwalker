@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import {RealmLocation} from "../models/realm-location";
-import {map, Observable} from "rxjs";
+import {map, Observable, tap} from "rxjs";
 import {User} from "../models/user";
 import {environment as env} from "../../environments/environment";
 import {Dungeon} from "../models/dungeon";
@@ -19,8 +19,18 @@ export class ApiService {
 
   constructor(private http: HttpClient) { }
 
-  private url = env.api.host;
+  private url: string = env.api.host;
+  public serverTime: Date = new Date()
 
+  home(): Observable<any> { // TODO: Naming could be better
+    return this.http.get<any>(this.url + '/v1/home').pipe(
+      tap(response => {
+        if (response && response.serverTime) {
+          this.serverTime = new Date(response.serverTime);
+        }
+      })
+    );
+  }
   me(): Observable <User> {
     return this.http.get<User>(this.url + '/v1/users/me');
   }
@@ -67,6 +77,7 @@ export class ApiService {
   }
 
   getLocations() {
+    console.log('getLocations');
     return this.http.get<RealmLocation[]>(this.url + '/v1/realm_locations')
       .pipe(
         map((data: any[]) => data.map((item: any) => {

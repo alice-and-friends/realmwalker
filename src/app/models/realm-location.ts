@@ -26,6 +26,7 @@ export class RealmLocation {
     shopType: ShopType | undefined,
     spooked: boolean,
   } | undefined;
+  public expiresAt: Date | undefined;
 
   constructor(data: any) {
     this.id = data.id;
@@ -40,6 +41,9 @@ export class RealmLocation {
       case LocationType.Npc:
         this.npcDetails = data.npcDetails;
         break;
+    }
+    if (data.expiresAt) {
+      this.expiresAt = new Date(data.expiresAt)
     }
   }
 }

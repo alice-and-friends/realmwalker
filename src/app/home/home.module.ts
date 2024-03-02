@@ -13,6 +13,7 @@ import {ModalHeaderComponent} from "../components/modal-header/modal-header.comp
 import {BaseModalComponent} from "./location-modal/base-modal/base-modal.component";
 import {ConstructionModalComponent} from "./construction-modal/construction-modal.component";
 import {MapMarkerComponent} from "../components/map-marker/map-marker.component";
+import {CountdownPipe} from "../countdown.pipe";
 
 
 @NgModule({
@@ -32,6 +33,7 @@ import {MapMarkerComponent} from "../components/map-marker/map-marker.component"
     BaseModalComponent,
     ConstructionModalComponent,
     MapMarkerComponent,
+    CountdownPipe,
   ]
 })
 export class HomePageModule {}

@@ -11,6 +11,8 @@ import {DomSanitizer, SafeHtml} from "@angular/platform-browser";
 export class MapMarkerComponent  implements OnInit {
   @Input() location!: RealmLocation;
   @Input() onClick?: (location: RealmLocation) => void;
+  @Input() removeMarker!: Function
+  private timeoutId: any;
   iconSize = 0
   dynamicSvg: SafeHtml = '';
 
@@ -142,9 +144,42 @@ export class MapMarkerComponent  implements OnInit {
       });
   }
 
+  setupExpirationTimer(): void {
+    if (!this.location.expiresAt) {
+      throw('this.location.expiresAt is not a Date')
+    }
+
+    const now = new Date();
+    const expiresAt = this.location.expiresAt;
+    const timeUntilExpiration = expiresAt.getTime() - now.getTime();
+
+    if (timeUntilExpiration > 0) {
+      this.timeoutId = setTimeout(() => {
+        if (this.removeMarker) {
+          console.log('remove marker (timed)')
+          this.removeMarker();
+        }
+      }, timeUntilExpiration);
+    } else {
+      // If already expired, remove immediately
+      if (this.removeMarker) {
+        console.log('remove marker (immediate)')
+        this.removeMarker();
+      }
+    }
+  }
+
   ngOnInit() {
+    if (this.location.expiresAt) {
+      this.setupExpirationTimer();
+    }
     this.iconSize = this.getIconSize()
     this.fetchSvgAndSetColor(this.getIconSrc(), this.getIconColor())
   }
 
+  ngOnDestroy(): void {
+    if (this.timeoutId) {
+      clearTimeout(this.timeoutId);
+    }
+  }
 }

@@ -1,9 +1,9 @@
-import {Component, Injector, OnInit, Type, ViewContainerRef} from '@angular/core';
+import {Component, Injector, OnInit, ViewContainerRef} from '@angular/core';
 import * as mapboxgl from "mapbox-gl";
 import {environment} from "../../environments/environment";
 import {ActionSheetController, ModalController, ModalOptions} from "@ionic/angular";
 import {ApiService} from "../services/api.service";
-import {RealmLocation, LocationType, LocationStatus} from "../models/realm-location";
+import {RealmLocation, LocationType} from "../models/realm-location";
 import {Marker} from "mapbox-gl";
 import {DungeonModalComponent} from "./location-modal/dungeon-modal/dungeon-modal.component";
 import {UserService} from "../services/user.service";
@@ -40,21 +40,23 @@ export class HomePage implements OnInit {
     private readonly modalCtrl: ModalController,
     private readonly actionSheetCtrl: ActionSheetController,
     public location: LocationService,
-
-    // new
     private injector: Injector,
     private viewContainerRef: ViewContainerRef,
   ) {
     if (!userService.loggedIn) {
-      this.router.navigate(['/launch']);
+      this.router.navigate(['/launch']); // TODO: Maybe handle this in a router guard or something like that
       return;
     }
     this.modalCtrl = modalCtrl;
   }
 
-  async ngOnInit() {
+  ngOnInit() {
     console.debug('Init home view. User location:', this.location.lat, this.location.lng);
+    this.api.home().subscribe() // Loads current game configuration. TODO: Code should be more self-describing
+    this.initializeMap()
+  }
 
+  initializeMap() {
     // Mapbox config
     (mapboxgl.accessToken as any) = environment.mapbox.accessToken;
     this.map = new mapboxgl.Map({
@@ -233,7 +235,7 @@ export class HomePage implements OnInit {
     // Create the component instance
     const componentRef = this.viewContainerRef.createComponent(MapMarkerComponent, {injector: this.injector});
     componentRef.instance.location = location;
-    componentRef.instance.onClick = this.handleMarkerClick.bind(this);;
+    componentRef.instance.onClick = this.handleMarkerClick.bind(this);
 
     const domElem = (componentRef.location.nativeElement as HTMLElement);
 
@@ -241,6 +243,10 @@ export class HomePage implements OnInit {
     let marker = new mapboxgl.Marker(domElem)
       .setLngLat([location.coordinates.lon, location.coordinates.lat])
       .addTo(this.map);
+
+    // Pass a function to the component that allows it to destroy the marker
+    componentRef.instance.removeMarker = marker.remove.bind(marker);
+
     this.mapMarkers.push(marker);
   }
 

@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {AuthService} from "@auth0/auth0-angular";
 import {UserService} from "./services/user.service";
 import {LocationService} from "./services/location.service";
+import {ApiService} from "./services/api.service";
 
 @Component({
   selector: 'app-root',
@@ -9,8 +10,9 @@ import {LocationService} from "./services/location.service";
   styleUrls: ['app.component.scss'],
 })
 export class AppComponent implements OnInit {
+  localTime: Date = new Date()
 
-  constructor(public auth: AuthService, private userService: UserService, public location: LocationService) {}
+  constructor(public auth: AuthService, private userService: UserService, public location: LocationService, public api: ApiService) {}
 
   async ngOnInit() {
     const locationServiceOperational = await this.location.init();
