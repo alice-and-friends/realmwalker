@@ -172,9 +172,6 @@ export class HomePage implements OnInit {
       if (location.type === LocationType.Dungeon) {
         modalOpts = { ...modalOpts, breakpoints: [0, 0.60, 0.85], initialBreakpoint: 0.60 };
       }
-      else if (location.type === LocationType.Runestone) {
-        modalOpts = { ...modalOpts, breakpoints: [0, 0.60, 0.85], initialBreakpoint: 0.85 };
-      }
 
       this.modal = await this.modalCtrl.create(modalOpts);
       await this.modal.present();

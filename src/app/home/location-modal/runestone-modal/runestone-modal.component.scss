@@ -1,4 +1,14 @@
+.runestone-flex-wrap {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+
 .runestone {
+  display: block;
+  margin: 10px 10px 0 10px;
+  padding: 1.5em 0.8em;
   border-style: double solid;
   border-width: 0 1px 1px 1px;
   background: #565659;
@@ -7,9 +17,12 @@
   border-radius: 20px 20px 5px 5px;
   font-family: "CabinSketch", "Roboto", sans-serif;
   text-transform: uppercase;
-  padding: 1.5em 0.8em;
   text-align: justify;
   box-shadow: -12px -19px 60px 0px rgb(5 46 0 / 50%) inset;
   line-height: 1.25em;
   font-size: 1.05em;
+}
+
+.runestone-controls {
+  padding-bottom: 10px;
 }
