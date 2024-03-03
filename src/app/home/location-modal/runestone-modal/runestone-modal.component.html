@@ -1,0 +1,23 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title slot="start">Runestone</ion-title>
+    <ion-buttons slot="end">
+      <ion-button color="medium" (click)="returnToMap()">
+        <ion-icon name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content *ngIf="locationObject && !loading">
+  <div class="padding-10">
+    <app-modal-header
+      [title]="locationObject.name"
+      icon="/assets/icon/location/runestone.svg"
+      [iconBorder]="false"
+    >
+    </app-modal-header>
+  </div>
+  <div class="padding-10 no-padding-top">
+    <p class="runestone">{{locationObject.text}}</p>
+  </div>
+</ion-content>

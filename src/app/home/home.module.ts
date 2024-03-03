@@ -14,6 +14,7 @@ import {BaseModalComponent} from "./location-modal/base-modal/base-modal.compone
 import {ConstructionModalComponent} from "./construction-modal/construction-modal.component";
 import {MapMarkerComponent} from "../components/map-marker/map-marker.component";
 import {CountdownPipe} from "../countdown.pipe";
+import {RunestoneModalComponent} from "./location-modal/runestone-modal/runestone-modal.component";
 
 
 @NgModule({
@@ -27,6 +28,7 @@ import {CountdownPipe} from "../countdown.pipe";
     HomePage,
     NpcModalComponent,
     DungeonModalComponent,
+    RunestoneModalComponent,
     CharacterModalComponent,
     BattleResultModalComponent,
     ModalHeaderComponent,

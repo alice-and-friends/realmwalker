@@ -15,6 +15,7 @@ import {LocationService} from "../services/location.service";
 import {BaseModalComponent} from "./location-modal/base-modal/base-modal.component";
 import {ConstructionModalComponent} from "./construction-modal/construction-modal.component";
 import {MapMarkerComponent} from "../components/map-marker/map-marker.component";
+import {RunestoneModalComponent} from "./location-modal/runestone-modal/runestone-modal.component";
 
 @Component({
   selector: 'app-home',
@@ -149,6 +150,7 @@ export class HomePage implements OnInit {
         [LocationType.Dungeon]: DungeonModalComponent,
         [LocationType.Npc]: NpcModalComponent,
         [LocationType.Base]: BaseModalComponent,
+        [LocationType.Runestone]: RunestoneModalComponent,
         // Extend with other mappings as necessary
       };
 
@@ -169,6 +171,9 @@ export class HomePage implements OnInit {
 
       if (location.type === LocationType.Dungeon) {
         modalOpts = { ...modalOpts, breakpoints: [0, 0.60, 0.85], initialBreakpoint: 0.60 };
+      }
+      else if (location.type === LocationType.Runestone) {
+        modalOpts = { ...modalOpts, breakpoints: [0, 0.60, 0.85], initialBreakpoint: 0.85 };
       }
 
       this.modal = await this.modalCtrl.create(modalOpts);

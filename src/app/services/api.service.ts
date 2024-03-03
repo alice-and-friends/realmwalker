@@ -11,6 +11,7 @@ import {BattleResult} from "../models/battle-result";
 import {Inventory} from "../models/inventory";
 import {Base} from "../models/base";
 import {Monster} from "../models/monster";
+import {Runestone} from "../models/runestone";
 
 @Injectable({
   providedIn: 'root'
@@ -85,6 +86,14 @@ export class ApiService {
           return model;
         }))
       );
+  }
+
+  getRunestone(id: string) {
+    return this.http.get<Runestone>(this.url + `/v1/runestones/${id}`).pipe(
+      map(data => {
+        return new Runestone(data)
+      })
+    )
   }
 
   getDungeon(id: string) {

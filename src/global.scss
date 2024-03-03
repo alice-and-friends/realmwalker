@@ -43,6 +43,16 @@
   font-weight: 600;
   src: url('./assets/fonts/Cinzel-SemiBold.ttf');
 }
+@font-face {
+  font-family: 'CabinSketch';
+  font-weight: 400;
+  src: url('./assets/fonts/CabinSketch-Regular.ttf');
+}
+@font-face {
+  font-family: 'CabinSketch';
+  font-weight: 600;
+  src: url('./assets/fonts/CabinSketch-Bold.ttf');
+}
 h1, h2, /*h3, h4, h5, h6*/ {
   font-family: "Cinzel", "Times New Roman", serif;
   font-weight: 500;
