@@ -39,7 +39,7 @@
       <ion-col>
         <ion-label>{{item.name}}</ion-label>
         <p class="detail-line compact">
-          {{item.rarity}} {{item.itemType}}<span *ngIf="item.itemType === 'weapon'">, {{item.twoHanded ? 'two-handed' : 'one-handed'}}</span>
+          {{item.rarity}} {{item.type}}<span *ngIf="item.type === 'weapon'">, {{item.twoHanded ? 'two-handed' : 'one-handed'}}</span>
         </p>
         <ion-text color="success">
           <p *ngFor="let bonus of item.bonuses" class="detail-line compact">{{bonus}}</p>

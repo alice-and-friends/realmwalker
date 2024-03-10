@@ -12,6 +12,7 @@ import {Inventory} from "../models/inventory";
 import {Base} from "../models/base";
 import {Monster} from "../models/monster";
 import {Runestone} from "../models/runestone";
+import {Item} from "../models/item";
 
 @Injectable({
   providedIn: 'root'
@@ -142,11 +143,16 @@ export class ApiService {
     );
   }
 
-  getMonsters() {
-    return this.http.get<Monster[]>(this.url + '/v1/monsters')
+  getCompendium(page: 'monsters'|'items') {
+    return this.http.get<any[]>(this.url + `/v1/compendium/${page}`)
       .pipe(
         map((data: any[]) => data.map((item: any) => {
-          return new Monster(item);
+          switch(page) {
+            case 'monsters':
+              return new Monster(item);
+            case 'items':
+              return new Item(item);
+          }
         }))
       );
   }

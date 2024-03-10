@@ -1,0 +1,35 @@
+header {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  padding: 0;
+
+  > * {
+    width: auto; /* Adjust this as needed, could be a percentage or fixed width */
+    padding-right: 10px;
+  }
+}
+
+ol {
+  margin: 0;
+  padding: 0 0.5em 0.5em;
+  columns: 3;
+  column-gap: 0.5em;
+}
+li {
+  list-style: none;
+  background-color: #2a2a2a;
+  margin: 0 0 0.5em 0;
+  padding: 0;
+
+  p {
+    margin: 0;
+    padding: 0;
+  }
+}
+
+ion-icon {
+  border: 1px solid salmon;
+  margin: 0;
+  padding: 0;
+}

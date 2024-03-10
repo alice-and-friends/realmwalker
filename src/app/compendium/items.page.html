@@ -1,0 +1,27 @@
+<ion-content [fullscreen]="true">
+  <header>
+    <div>Filter by type:</div>
+    <ion-select
+      interface="popover"
+      placeholder="all"
+      (ionChange)="applyFilter($event)"
+    >
+      <ion-select-option *ngFor="let type of itemTypes" [value]="type">{{type}}</ion-select-option>
+    </ion-select>
+  </header>
+  <ol>
+    <li *ngFor="let item of getItems()">
+      <ion-grid>
+        <ion-row>
+          <ion-col size="auto">
+            <ion-icon [src]="item.icon" color="dark" style="width: 60px; height: 60px;"></ion-icon>
+          </ion-col>
+          <ion-col>
+            <strong>{{item.name}}</strong>
+            <p>{{item.type}}</p>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </li>
+  </ol>
+</ion-content>

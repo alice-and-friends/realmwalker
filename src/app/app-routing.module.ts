@@ -23,8 +23,8 @@ const routes: Routes = [
     pathMatch: 'full'
   },
   {
-    path: 'monsters',
-    loadChildren: () => import('./monsters/monsters.module').then( m => m.MonstersPageModule)
+    path: 'compendium',
+    loadChildren: () => import('./compendium/compendium.module').then(m => m.CompendiumModule)
   },
 ];
 

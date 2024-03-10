@@ -1,7 +1,6 @@
 export class Item {
   id: string;
-  itemId: string;
-  itemType: string;
+  type: string;
   twoHanded: boolean | undefined;
   name: string;
   icon: string;
@@ -11,11 +10,10 @@ export class Item {
 
   constructor(data: any) {
     this.id = data.id;
-    this.itemId = data.itemId;
-    this.itemType = data.itemType;
+    this.type = data.type;
     this.twoHanded = data.twoHanded;
     this.name = data.name;
-    this.icon = `/assets/icon/item-${data.icon}.svg`
+    this.icon = `/assets/icon/item/${data.icon}.svg`
     this.rarity = data.rarity;
     this.equipable = data.equipable;
     this.bonuses = data.bonuses;

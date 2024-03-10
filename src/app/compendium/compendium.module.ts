@@ -4,17 +4,18 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { MonstersPageRoutingModule } from './monsters-routing.module';
+import { CompendiumRoutingModule } from './compendium-routing.module';
 
 import { MonstersPage } from './monsters.page';
+import { ItemsPage } from './items.page';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    MonstersPageRoutingModule
+    CompendiumRoutingModule
   ],
-  declarations: [MonstersPage]
+  declarations: [MonstersPage, ItemsPage]
 })
-export class MonstersPageModule {}
+export class CompendiumModule {}

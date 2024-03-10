@@ -5,7 +5,7 @@ import {Monster} from "../models/monster";
 @Component({
   selector: 'app-monsters',
   templateUrl: './monsters.page.html',
-  styleUrls: ['./monsters.page.scss'],
+  styleUrls: ['./compendium.scss'],
 })
 export class MonstersPage implements OnInit {
   monsters: any = [];
@@ -14,7 +14,7 @@ export class MonstersPage implements OnInit {
   constructor(public api: ApiService) {}
 
   ngOnInit() {
-    this.api.getMonsters().subscribe((monsters) => {
+    this.api.getCompendium('monsters').subscribe((monsters) => {
       this.monsters = monsters;
       this.levels = new Set(this.monsters.map((monster: Monster) => monster.level));
       this.classifications = new Set(this.monsters.map((monster: Monster) => monster.classification).sort());
