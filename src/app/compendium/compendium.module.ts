@@ -8,6 +8,7 @@ import { CompendiumRoutingModule } from './compendium-routing.module';
 
 import { MonstersPage } from './monsters.page';
 import { ItemsPage } from './items.page';
+import { LootPage } from './loot.page';
 
 @NgModule({
   imports: [
@@ -16,6 +17,6 @@ import { ItemsPage } from './items.page';
     IonicModule,
     CompendiumRoutingModule
   ],
-  declarations: [MonstersPage, ItemsPage]
+  declarations: [MonstersPage, ItemsPage, LootPage]
 })
 export class CompendiumModule {}

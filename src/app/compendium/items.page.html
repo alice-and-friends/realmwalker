@@ -10,18 +10,40 @@
     </ion-select>
   </header>
   <ol>
-    <li *ngFor="let item of getItems()">
+    <li
+      *ngFor="let item of getItems()"
+      [ngClass]="{'highlight-relations': item.droppedBy.length >= 15 || item.droppedBy.length === 0, 'highlight-price': !typicalPrice(item.rarity, item.value)}"
+    >
       <ion-grid>
         <ion-row>
           <ion-col size="auto">
             <ion-icon [src]="item.icon" color="dark" style="width: 60px; height: 60px;"></ion-icon>
           </ion-col>
           <ion-col>
-            <strong>{{item.name}}</strong>
-            <p>{{item.type}}</p>
+            <div class="space-between-items">
+              <span><strong>{{item.name}}</strong> #{{item.id}}</span>
+              <span>{{item.rarity}}</span>
+            </div>
+            <p *ngIf="item.value" style="color: gold">${{item.value}}</p>
+            <p *ngFor="let text of item.bonuses">{{text}}</p>
           </ion-col>
         </ion-row>
       </ion-grid>
+      <ul>
+        <li *ngFor="let monster of item.droppedBy" class="space-between-items">
+          <span>{{monster.name}} #{{monster.id}}</span>
+          <span>
+            {{monster.level}} {{monster.classification}}
+            <button (click)="nix(monster.id, item.id)">❌</button>
+          </span>
+        </li>
+        <ion-select
+          placeholder="add"
+          (ionChange)="add($event, item.id)"
+        >
+          <ion-select-option *ngFor="let monster of monsters" [value]="monster.id">{{monster.name}} #{{monster.id}}</ion-select-option>
+        </ion-select>
+      </ul>
     </li>
   </ol>
 </ion-content>

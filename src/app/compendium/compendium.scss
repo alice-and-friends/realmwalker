@@ -16,11 +16,23 @@ ol {
   columns: 3;
   column-gap: 0.5em;
 }
+ul {
+  margin: 0;
+  padding: 0 0.5em 0.5em;
+}
 li {
   list-style: none;
   background-color: #2a2a2a;
   margin: 0 0 0.5em 0;
   padding: 0;
+  -webkit-column-break-inside: avoid;
+
+  &.highlight-relations {
+    border: 3px solid darkred;
+  }
+  &.highlight-price {
+    border: 3px solid greenyellow;
+  }
 
   p {
     margin: 0;

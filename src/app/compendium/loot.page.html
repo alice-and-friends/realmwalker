@@ -1,0 +1,43 @@
+<ion-content [fullscreen]="true">
+  <ol>
+    <li *ngFor="let monster of monsters" [ngClass]="{'highlight-relations': monster.items.length >= 15}">
+      <ion-grid>
+        <ion-row>
+          <ion-col size="auto">
+            <ion-icon [src]="monster.icon" color="dark" style="width: 60px; height: 60px;"></ion-icon>
+          </ion-col>
+          <ion-col>
+            <div class="space-between-items">
+              <span><strong>{{monster.name}}</strong> #{{monster.id}}</span>
+              <span>{{monster.classification}}</span>
+            </div>
+            <div class="space-between-items">
+              <span></span>
+              <span>level {{monster.level}}</span>
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+      <ul>
+        <li *ngFor="let item of monster.items" class="space-between-items">
+          <span>
+            <span *ngIf="item.dropMaxAmount > 1">1-{{item.dropMaxAmount}}</span>
+            {{item.name}} ({{item.rarity}})
+          </span>
+          <span>
+            <button (click)="nix(monster.id, item.id)">❌</button>
+          </span>
+        </li>
+        <ion-select
+          placeholder="add"
+          (ionChange)="add($event, monster.id)"
+        >
+          <ion-select-option *ngFor="let item of items" [value]="item.id">
+            <span *ngIf="item.dropMaxAmount > 1">1-{{item.dropMaxAmount}}</span>
+            {{item.name}} ({{item.rarity}})
+          </ion-select-option>
+        </ion-select>
+      </ul>
+    </li>
+  </ol>
+</ion-content>

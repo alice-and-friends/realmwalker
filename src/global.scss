@@ -28,6 +28,7 @@
 .relative {position: relative}
 .padding-10 {padding: 10px 10px 0}
 .no-padding-top {padding-top: 0}
+.space-between-items {display: flex; justify-content: space-between}
 @font-face {
   font-family: 'Cinzel';
   font-weight: 400;
@@ -64,9 +65,11 @@ p {
   margin-top: 0.5em;
   line-height: 1.3em;
 }
-
 ion-icon.header-icon-size {
   font-size: 60px;
+}
+.sc-ion-alert-md-h {
+  --max-width: 400px !important;
 }
 
 ion-modal.floating-modal {

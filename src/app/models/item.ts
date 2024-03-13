@@ -1,3 +1,5 @@
+import {Monster} from "./monster";
+
 export class Item {
   id: string;
   type: string;
@@ -7,6 +9,9 @@ export class Item {
   rarity: string;
   equipable: boolean;
   bonuses: string[];
+  droppedBy: Monster[] | undefined;
+  value: number | undefined;
+  dropMaxAmount: number | undefined;
 
   constructor(data: any) {
     this.id = data.id;
@@ -17,5 +22,8 @@ export class Item {
     this.rarity = data.rarity;
     this.equipable = data.equipable;
     this.bonuses = data.bonuses;
+    this.droppedBy = data.droppedBy;
+    this.value = data.value;
+    this.dropMaxAmount = data.dropMaxAmount;
   }
 }
