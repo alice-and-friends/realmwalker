@@ -1,12 +1,19 @@
 import {Monster} from "./monster";
 
+export enum RarityGrade {
+  Always = 'always',
+  Common = 'common',
+  Rare = 'rare',
+  Epic = 'epic',
+  Legendary = 'legendary',
+}
 export class Item {
   id: string;
   type: string;
   twoHanded: boolean | undefined;
   name: string;
   icon: string;
-  rarity: string;
+  rarity: RarityGrade;
   equipable: boolean;
   bonuses: string[];
   droppedBy: Monster[] | undefined;
