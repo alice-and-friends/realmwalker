@@ -18,6 +18,7 @@ TBD
 ## Resources
 
 - Icons: [game-icons.net](https://game-icons.net/)
+- More icons: [uxwing.com](https://uxwing.com/)
 
 ## Further help
 
