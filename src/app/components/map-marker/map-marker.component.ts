@@ -42,7 +42,7 @@ export class MapMarkerComponent  implements OnInit {
         if (this.location.status === LocationStatus.Defeated) {
           return `${dir}/banner.svg`;
         }
-        const cleanMonsterName = getCleanMonsterName(this.location.monster!.name);
+        const cleanMonsterName = getCleanMonsterName(this.location.name);
         return `${dir}/monster/${cleanMonsterName}.svg`;
       case LocationType.LeyLine:
         return `${dir}/location/ley-line.svg`;
@@ -67,7 +67,7 @@ export class MapMarkerComponent  implements OnInit {
       case LocationType.Base:
         return 36;
       case LocationType.Dungeon:
-        const dungeonLevel = this.location.monster!.level
+        const dungeonLevel = this.location.level!
         if (dungeonLevel == 10) {
           return 100
         }

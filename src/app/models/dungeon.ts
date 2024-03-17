@@ -2,7 +2,7 @@ import {RealmLocation} from "./realm-location";
 import {Monster} from "./monster";
 
 export class Dungeon extends RealmLocation {
-  public override monster!: Monster;
+  public monster!: Monster;
 
   constructor(data: any) {
     super(data);

@@ -26,7 +26,7 @@ export class UserService {
         this.activeUser = response;
         this.loggedIn = true;
         console.debug('User service redirecting to home route')
-        //this.router.navigate(['/home'])
+        this.router.navigate(['/home'])
       },
       error: (err: any) => {
         console.error('Error on login', err)

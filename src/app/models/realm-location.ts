@@ -20,7 +20,7 @@ export class RealmLocation {
   public type: LocationType;
   public status: LocationStatus;
   public coordinates: Coordinates;
-  public monster: Monster | undefined;
+  public level: number | undefined;
   public npcDetails: {
     role: NpcRole,
     shopType: ShopType | undefined,
@@ -36,7 +36,7 @@ export class RealmLocation {
     this.coordinates = new Coordinates(data.coordinates);
     switch(this.type) {
       case LocationType.Dungeon:
-        this.monster = new Monster(data.monster);
+        this.level = data.level
         break;
       case LocationType.Npc:
         this.npcDetails = data.npcDetails;
