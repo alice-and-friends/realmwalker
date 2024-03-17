@@ -255,26 +255,6 @@ export class HomePage implements OnInit {
     this.mapMarkers.push(marker);
   }
 
-  async presentLogoutActionSheet() {
-    const actionSheet = await this.actionSheetCtrl.create({
-      header: 'Actions',
-      buttons: [
-        {
-          text: 'Log out',
-          handler: () => {
-            this.auth.logout({ logoutParams: { returnTo: document.location.origin } })
-          }
-        },
-        {
-          text: 'Cancel',
-          role: 'cancel',
-        },
-      ],
-    });
-
-    await actionSheet.present();
-  }
-
   async openSettings() {
     this.modal = await this.modalCtrl.create({
       component: SettingsPage,
@@ -282,7 +262,6 @@ export class HomePage implements OnInit {
       enterAnimation: openDrawerAnimation,
       leaveAnimation: closeDrawerAnimation,
     });
-    console.log('got this far')
     return await this.modal.present();
   }
 
