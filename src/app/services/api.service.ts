@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import {RealmLocation} from "../models/realm-location";
 import {map, Observable, tap} from "rxjs";
-import {User} from "../models/user";
+import {User, UserPreferences} from "../models/user";
 import {environment as env} from "../../environments/environment";
 import {Dungeon} from "../models/dungeon";
 import {Npc} from "../models/npc";
@@ -33,8 +33,13 @@ export class ApiService {
       })
     );
   }
-  me(): Observable <User> {
+  me(): Observable<User> {
     return this.http.get<User>(this.url + '/v1/users/me');
+  }
+  updatePreference(key: string, value: string|number|boolean): Observable<UserPreferences> {
+    return this.http.patch<UserPreferences>(this.url + '/v1/users/me/preferences', {
+      preferences: {[key]: value}},
+    )
   }
   getBase(): Observable<Base> {
     return this.http.get(this.url + '/v1/base')

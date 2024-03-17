@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {User} from "../models/user";
+import {User, UserPreferences} from "../models/user";
 import {ApiService} from "./api.service";
 import {Router} from "@angular/router";
 
@@ -44,5 +44,19 @@ export class UserService {
         console.error('Refresh user failed', err)
       }
     });
+  }
+
+  updatePreference(key: string, value: string|number|boolean) {
+    // @ts-ignore
+    this.activeUser!.preferences[key] = value; // Optimistic update
+
+    this.api.updatePreference(key, value).subscribe({
+      next: (preferences: UserPreferences) => {
+        this.activeUser!.preferences = preferences;
+      },
+      error: (err: any) => {
+        console.error('Update user preference failed', err)
+      }
+    })
   }
 }

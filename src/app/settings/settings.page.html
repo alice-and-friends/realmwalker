@@ -1,0 +1,25 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title slot="start">Settings</ion-title>
+    <ion-buttons slot="end">
+      <ion-button color="medium" (click)="close()">
+        <ion-icon name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Settings</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-list *ngIf="activeUser">
+    <ion-item>
+      <ion-checkbox [(ngModel)]="activeUser!.preferences.developer"
+                    (ionChange)="onCheckboxChange('developer', $event)">
+        Developer mode
+      </ion-checkbox>
+    </ion-item>
+  </ion-list>
+</ion-content>

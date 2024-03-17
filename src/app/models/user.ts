@@ -1,3 +1,7 @@
+
+export interface UserPreferences {
+  developer: boolean,
+}
 export interface User {
   id: number;
   email: string;
@@ -10,4 +14,5 @@ export interface User {
     toNextLevel: number,
     nextLevelProgress: number,
   };
+  preferences: UserPreferences,
 }

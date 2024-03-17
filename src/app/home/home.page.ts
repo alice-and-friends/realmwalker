@@ -1,4 +1,4 @@
-import {Component, Injector, OnInit, ViewContainerRef} from '@angular/core';
+import {Component, Injector, OnInit, ViewContainerRef, ViewEncapsulation} from '@angular/core';
 import * as mapboxgl from "mapbox-gl";
 import {environment} from "../../environments/environment";
 import {ActionSheetController, ModalController, ModalOptions} from "@ionic/angular";
@@ -16,11 +16,14 @@ import {BaseModalComponent} from "./location-modal/base-modal/base-modal.compone
 import {ConstructionModalComponent} from "./construction-modal/construction-modal.component";
 import {MapMarkerComponent} from "../components/map-marker/map-marker.component";
 import {RunestoneModalComponent} from "./location-modal/runestone-modal/runestone-modal.component";
+import {SettingsPage} from "../settings/settings.page";
+import { openDrawerAnimation, closeDrawerAnimation } from '../animations/drawer.animation';
 
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class HomePage implements OnInit {
   // General ui
@@ -270,6 +273,17 @@ export class HomePage implements OnInit {
     });
 
     await actionSheet.present();
+  }
+
+  async openSettings() {
+    this.modal = await this.modalCtrl.create({
+      component: SettingsPage,
+      cssClass: 'settings-drawer-modal',
+      enterAnimation: openDrawerAnimation,
+      leaveAnimation: closeDrawerAnimation,
+    });
+    console.log('got this far')
+    return await this.modal.present();
   }
 
 }

@@ -12,7 +12,7 @@ import {ApiService} from "./services/api.service";
 export class AppComponent implements OnInit {
   localTime: Date = new Date()
 
-  constructor(public auth: AuthService, private userService: UserService, public location: LocationService, public api: ApiService) {}
+  constructor(public auth: AuthService, public userService: UserService, public location: LocationService, public api: ApiService) {}
 
   async ngOnInit() {
     const locationServiceOperational = await this.location.init();

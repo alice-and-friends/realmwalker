@@ -26,3 +26,9 @@ ion-header {
     color: #ddd;
   }
 }
+
+ion-modal.settings-drawer-modal::part(content) {
+  width: 80%;
+  right: 0;
+  position: absolute;
+}

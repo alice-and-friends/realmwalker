@@ -26,6 +26,10 @@ const routes: Routes = [
     path: 'compendium',
     loadChildren: () => import('./compendium/compendium.module').then(m => m.CompendiumModule)
   },
+  {
+    path: 'settings',
+    loadChildren: () => import('./settings/settings.module').then( m => m.SettingsPageModule)
+  },
 ];
 
 @NgModule({

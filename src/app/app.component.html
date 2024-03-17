@@ -5,7 +5,7 @@
   <ng-template #ready>
     <ion-router-outlet></ion-router-outlet>
   </ng-template>
-  <div class="debug ion-text-right">
+  <div *ngIf="userService.activeUser?.preferences?.developer" class="debug ion-text-right">
     <span *ngIf="location.permissionError; else coordinates">permissionError=true</span>
     <ng-template #coordinates>{{location.lat}}, {{location.lng}}</ng-template>
     <div>Server time: {{api.serverTime | date:'yyyy-MM-dd HH:mm:ss'}}</div>
