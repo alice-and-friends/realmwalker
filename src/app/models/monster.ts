@@ -1,5 +1,4 @@
 export class Monster {
-  id: string
   name: string
   classification: string
   description: string
@@ -8,7 +7,6 @@ export class Monster {
   items: any
 
   constructor(data: any) {
-    this.id = data.id;
     this.name = data.name;
     this.classification = data.classification;
     this.description = data.description;
