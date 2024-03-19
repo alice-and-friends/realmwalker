@@ -13,6 +13,7 @@ export class NpcModalComponent extends AbstractLocationModalComponent implements
   buyOffersFiltered: TradeOffer[] = [] // Contains npc buy offers but only the ones where the user actually has the items
   tradingMode: 'sell'|'buy' = 'buy'
   inventory: Inventory | undefined
+  override title: string = 'NPC'
 
   async loadData() {
     this.loading = true;

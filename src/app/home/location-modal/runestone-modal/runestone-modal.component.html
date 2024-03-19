@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title slot="start"></ion-title>
+    <ion-title slot="start">Landmark</ion-title>
     <ion-buttons slot="end">
       <ion-button color="medium" (click)="returnToMap()">
         <ion-icon name="close"></ion-icon>
@@ -15,6 +15,8 @@
         [title]="locationObject.name"
         icon="/assets/icon/location/runestone.svg"
         [iconBorder]="false"
+        iconColor="medium"
+        titleColor="medium"
       >
       </app-modal-header>
     </div>

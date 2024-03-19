@@ -6,10 +6,12 @@ import {Component, Input} from '@angular/core';
   styleUrls: ['./modal-header.component.scss'],
 })
 export class ModalHeaderComponent {
+  defaultColor = 'dark'
   @Input() icon?: string
-  @Input() iconColor?: string = 'dark'
+  @Input() iconColor?: string = this.defaultColor
   @Input() iconBorder?: boolean = true
-  @Input() title?: string
+  @Input() title?: string = this.defaultColor
+  @Input() titleColor?: string
   @Input() description?: string
   @Input() quote?: string
 

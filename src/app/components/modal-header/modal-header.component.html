@@ -4,8 +4,10 @@
       <ion-icon [src]="icon" [color]="iconColor" class="header-icon-size" [ngClass]="{'portrait': iconBorder}"></ion-icon>
     </ion-col>
     <ion-col class="relative">
-      <h1 *ngIf="title" class="ion-no-margin">{{title}}</h1>
-      <p *ngIf="description" class="description">{{description}}</p>
+      <ion-text [color]="titleColor">
+        <h1 *ngIf="title" class="ion-no-margin">{{title}}</h1>
+        <p *ngIf="description" class="description">{{description}}</p>
+      </ion-text>
       <ng-content></ng-content>
     </ion-col>
   </ion-row>
