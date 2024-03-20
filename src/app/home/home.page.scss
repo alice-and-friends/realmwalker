@@ -24,6 +24,13 @@ ion-header {
   }
   ion-icon {
     color: #ddd;
+    width: 35px;
+    height: 35px;
+
+    &.menu-icon-inventory {
+      width: 31px;
+      height: 31px;
+    }
   }
 }
 

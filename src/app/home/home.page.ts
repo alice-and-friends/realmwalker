@@ -184,6 +184,10 @@ export class HomePage implements OnInit {
     }
   }
 
+  async openInventoryModal() {
+    await this.openCharacterModal()
+  }
+
   async openCharacterModal(dismissCallback:any=null) {
     try {
       this.modal = await this.modalCtrl.create({

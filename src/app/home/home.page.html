@@ -2,12 +2,9 @@
   <ion-grid>
     <ion-row class="ion-align-items-center">
       <ion-col>
-        <!--
-        <ion-chip>
-          <ion-icon src="/assets/icon/two-coins.svg" class="coin-icon"></ion-icon>
-          <ion-label>0 (+0/s)</ion-label>
-        </ion-chip>
-        -->
+        <ion-button size="small" fill="clear" (click)="openInventoryModal()">
+          <ion-icon slot="icon-only" src="/assets/icon/menu-icon-inventory.svg" class="menu-icon-inventory" color="medium"></ion-icon>
+        </ion-button>
       </ion-col>
       <ion-col *ngIf="userService.activeUser" (click)="openCharacterModal()" size="6" class="ion-text-center">
         <h1 class="player-title">{{userService.activeUser.name}}</h1>
@@ -16,7 +13,7 @@
       </ion-col>
       <ion-col class="ion-text-end">
         <ion-button size="small" fill="clear" (click)="openSettings()">
-          <ion-icon slot="icon-only" name="menu"></ion-icon>
+          <ion-icon slot="icon-only" src="/assets/icon/menu-icon-settings.svg" class="menu-icon-settings" color="medium"></ion-icon>
         </ion-button>
       </ion-col>
     </ion-row>
