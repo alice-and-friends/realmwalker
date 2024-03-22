@@ -3,6 +3,7 @@ import {ModalController} from "@ionic/angular";
 import {UserService} from "../services/user.service";
 import {User} from "../models/user";
 import {AuthService} from "@auth0/auth0-angular";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-settings',
@@ -13,7 +14,7 @@ export class SettingsPage {
   settings: any = {};
   activeUser: User | undefined;
 
-  constructor(protected modalCtrl: ModalController, public userService: UserService, private auth: AuthService) {
+  constructor(protected modalCtrl: ModalController, public userService: UserService, private auth: AuthService, private router: Router) {
     this.activeUser = userService.activeUser
   }
 
@@ -33,4 +34,8 @@ export class SettingsPage {
     this.modalCtrl.dismiss().catch((error: Error) => console.error('Error closing modal', error));
   }
 
+  goToCredits() {
+    this.modalCtrl.dismiss()
+    this.router.navigate(['/credits'])
+  }
 }

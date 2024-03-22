@@ -9,20 +9,7 @@
   </ion-toolbar>
 </ion-header>
 <ion-content>
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Settings</ion-title>
-    </ion-toolbar>
-  </ion-header>
   <ion-list *ngIf="activeUser">
-    <ion-item>
-      <ion-checkbox
-        [(ngModel)]="activeUser!.preferences.developer"
-        (ionChange)="onCheckboxChange('developer', $event)"
-      >
-        Developer mode
-      </ion-checkbox>
-    </ion-item>
     <ion-item>
       <ion-select
         [(ngModel)]="activeUser!.preferences.itemFrames"
@@ -34,9 +21,18 @@
         <ion-select-option value="Rarity">Rarity</ion-select-option>
       </ion-select>
     </ion-item>
+    <ion-item>
+      <ion-checkbox
+        [(ngModel)]="activeUser!.preferences.developer"
+        (ionChange)="onCheckboxChange('developer', $event)"
+      >
+        Developer mode
+      </ion-checkbox>
+    </ion-item>
   </ion-list>
-  <ion-button expand="block" fill="solid" color="light" (click)="logout()">Log out</ion-button>
 </ion-content>
 <ion-footer>
+  <p><a (click)="goToCredits()">Credits</a></p>
   <p>User ID: {{activeUser?.id}}</p>
+  <ion-button expand="block" fill="solid" color="light" (click)="logout()">Log out</ion-button>
 </ion-footer>

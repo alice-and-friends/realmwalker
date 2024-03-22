@@ -30,6 +30,10 @@ const routes: Routes = [
     path: 'settings',
     loadChildren: () => import('./settings/settings.module').then( m => m.SettingsPageModule)
   },
+  {
+    path: 'credits',
+    loadChildren: () => import('./pages/credits/credits.module').then( m => m.CreditsPageModule)
+  },
 ];
 
 @NgModule({
