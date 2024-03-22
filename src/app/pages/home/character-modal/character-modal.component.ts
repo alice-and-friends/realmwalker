@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import {AlertController, IonicSafeString, ModalController} from "@ionic/angular";
-import {ApiService} from "../../services/api.service";
-import {InventoryItem} from "../../models/inventory-item";
-import {UserService} from "../../services/user.service";
-import {User} from "../../models/user";
-import {formatNumber} from "@angular/common";
-import {Inventory} from "../../models/inventory";
+import {ApiService} from "../../../services/api.service";
+import {InventoryItem} from "../../../models/inventory-item";
+import {UserService} from "../../../services/user.service";
+import {User} from "../../../models/user";
+import {Inventory} from "../../../models/inventory";
 
 @Component({
   selector: 'app-character-modal',

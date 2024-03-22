@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {Npc} from "../../../models/npc";
-import {Inventory} from "../../../models/inventory";
-import {TradeOffer} from "../../../models/trade-offer";
+import {Npc} from "../../../../models/npc";
+import {Inventory} from "../../../../models/inventory";
+import {TradeOffer} from "../../../../models/trade-offer";
 import {AbstractLocationModalComponent} from "../location-modal.component";
 
 @Component({

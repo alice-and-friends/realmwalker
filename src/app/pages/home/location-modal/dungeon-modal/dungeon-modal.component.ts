@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {Dungeon} from "../../../models/dungeon";
-import {BattlePrediction} from "../../../models/battle-prediction";
+import {Dungeon} from "../../../../models/dungeon";
+import {BattlePrediction} from "../../../../models/battle-prediction";
 import {BattleResultModalComponent} from "./battle-result-modal/battle-result-modal.component";
 import {AbstractLocationModalComponent} from "../location-modal.component";
 

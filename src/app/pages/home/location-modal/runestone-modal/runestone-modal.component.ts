@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {AbstractLocationModalComponent} from "../location-modal.component";
-import {Runestone} from "../../../models/runestone";
+import {Runestone} from "../../../../models/runestone";
 
 @Component({
   selector: 'app-runestone-modal',

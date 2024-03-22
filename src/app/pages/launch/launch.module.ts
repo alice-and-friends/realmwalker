@@ -7,8 +7,6 @@ import { IonicModule } from '@ionic/angular';
 import { LaunchPageRoutingModule } from './launch-routing.module';
 
 import { LaunchPage } from './launch.page';
-import {AuthService} from "@auth0/auth0-angular";
-import {UserService} from "../services/user.service";
 
 @NgModule({
   imports: [

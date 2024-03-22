@@ -9,13 +9,13 @@ import { DungeonModalComponent } from "./location-modal/dungeon-modal/dungeon-mo
 import {CharacterModalComponent} from "./character-modal/character-modal.component";
 import {BattleResultModalComponent} from "./location-modal/dungeon-modal/battle-result-modal/battle-result-modal.component";
 import {NpcModalComponent} from "./location-modal/npc-modal/npc-modal.component";
-import {ModalHeaderComponent} from "../components/modal-header/modal-header.component";
+import {ModalHeaderComponent} from "../../components/modal-header/modal-header.component";
 import {BaseModalComponent} from "./location-modal/base-modal/base-modal.component";
 import {ConstructionModalComponent} from "./construction-modal/construction-modal.component";
-import {MapMarkerComponent} from "../components/map-marker/map-marker.component";
-import {CountdownPipe} from "../countdown.pipe";
+import {MapMarkerComponent} from "../../components/map-marker/map-marker.component";
+import {CountdownPipe} from "../../countdown.pipe";
 import {RunestoneModalComponent} from "./location-modal/runestone-modal/runestone-modal.component";
-import {ItemIconComponent} from "../components/item-icon/item-icon.component";
+import {ItemIconComponent} from "../../components/item-icon/item-icon.component";
 
 
 @NgModule({

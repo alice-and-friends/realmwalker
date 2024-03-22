@@ -1,23 +1,23 @@
 import {Component, Injector, OnInit, ViewContainerRef, ViewEncapsulation} from '@angular/core';
 import * as mapboxgl from "mapbox-gl";
-import {environment} from "../../environments/environment";
+import {environment} from "../../../environments/environment";
 import {ActionSheetController, ModalController, ModalOptions} from "@ionic/angular";
-import {ApiService} from "../services/api.service";
-import {RealmLocation, LocationType} from "../models/realm-location";
+import {ApiService} from "../../services/api.service";
+import {RealmLocation, LocationType} from "../../models/realm-location";
 import {Marker} from "mapbox-gl";
 import {DungeonModalComponent} from "./location-modal/dungeon-modal/dungeon-modal.component";
-import {UserService} from "../services/user.service";
+import {UserService} from "../../services/user.service";
 import {Router} from "@angular/router"
 import {CharacterModalComponent} from "./character-modal/character-modal.component";
 import {AuthService} from "@auth0/auth0-angular";
 import {NpcModalComponent} from "./location-modal/npc-modal/npc-modal.component";
-import {LocationService} from "../services/location.service";
+import {LocationService} from "../../services/location.service";
 import {BaseModalComponent} from "./location-modal/base-modal/base-modal.component";
 import {ConstructionModalComponent} from "./construction-modal/construction-modal.component";
-import {MapMarkerComponent} from "../components/map-marker/map-marker.component";
+import {MapMarkerComponent} from "../../components/map-marker/map-marker.component";
 import {RunestoneModalComponent} from "./location-modal/runestone-modal/runestone-modal.component";
 import {SettingsPage} from "../settings/settings.page";
-import { openDrawerAnimation, closeDrawerAnimation } from '../animations/drawer.animation';
+import { openDrawerAnimation, closeDrawerAnimation } from '../../animations/drawer.animation';
 
 @Component({
   selector: 'app-home',

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import {ModalController} from "@ionic/angular";
-import {UserService} from "../services/user.service";
-import {User} from "../models/user";
+import {UserService} from "../../services/user.service";
+import {User} from "../../models/user";
 import {AuthService} from "@auth0/auth0-angular";
 import {Router} from "@angular/router";
 

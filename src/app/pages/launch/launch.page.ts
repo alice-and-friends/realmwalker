@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {AuthService} from "@auth0/auth0-angular";
-import {UserService} from "../services/user.service";
-import {LocationService} from "../services/location.service";
+import {UserService} from "../../services/user.service";
+import {LocationService} from "../../services/location.service";
 
 @Component({
   selector: 'app-launch',

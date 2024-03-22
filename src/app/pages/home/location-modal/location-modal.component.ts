@@ -1,7 +1,7 @@
 import { Directive } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import {ApiService} from "../../services/api.service";
-import {NotificationService} from "../../services/notification.service";
+import {ApiService} from "../../../services/api.service";
+import {NotificationService} from "../../../services/notification.service";
 
 @Directive() // Using @Directive() since Angular doesn't allow @Component on abstract classes
 export abstract class AbstractLocationModalComponent {

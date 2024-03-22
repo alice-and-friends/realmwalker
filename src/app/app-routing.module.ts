@@ -6,12 +6,12 @@ import {locationGuard} from "./location.guard";
 const routes: Routes = [
   {
     path: 'home',
-    loadChildren: () => import('./home/home.module').then( m => m.HomePageModule),
+    loadChildren: () => import('./pages/home/home.module').then( m => m.HomePageModule),
     canActivate: [AuthGuard, locationGuard],
   },
   {
     path: 'launch',
-    loadChildren: () => import('./launch/launch.module').then( m => m.LaunchPageModule)
+    loadChildren: () => import('./pages/launch/launch.module').then( m => m.LaunchPageModule)
   },
   {
     path: 'callback',
@@ -24,11 +24,11 @@ const routes: Routes = [
   },
   {
     path: 'compendium',
-    loadChildren: () => import('./compendium/compendium.module').then(m => m.CompendiumModule)
+    loadChildren: () => import('./pages/compendium/compendium.module').then(m => m.CompendiumModule)
   },
   {
     path: 'settings',
-    loadChildren: () => import('./settings/settings.module').then( m => m.SettingsPageModule)
+    loadChildren: () => import('./pages/settings/settings.module').then( m => m.SettingsPageModule)
   },
   {
     path: 'credits',

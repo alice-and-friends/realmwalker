@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {ApiService} from "../services/api.service";
-import {Monster} from "../models/monster";
+import {ApiService} from "../../services/api.service";
+import {Monster} from "../../models/monster";
 
 @Component({
   selector: 'app-monsters',

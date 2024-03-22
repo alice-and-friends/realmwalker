@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import {ModalController} from "@ionic/angular";
-import {ApiService} from "../../../services/api.service";
-import {Base} from "../../../models/base";
-import {Inventory} from "../../../models/inventory";
-import {NotificationService} from "../../../services/notification.service";
-import {UserService} from "../../../services/user.service";
-import {User} from "../../../models/user";
-import {InventoryItem} from "../../../models/inventory-item";
+import {ApiService} from "../../../../services/api.service";
+import {Base} from "../../../../models/base";
+import {Inventory} from "../../../../models/inventory";
+import {NotificationService} from "../../../../services/notification.service";
+import {UserService} from "../../../../services/user.service";
+import {User} from "../../../../models/user";
+import {InventoryItem} from "../../../../models/inventory-item";
 import {AbstractLocationModalComponent} from "../location-modal.component";
 
 @Component({
