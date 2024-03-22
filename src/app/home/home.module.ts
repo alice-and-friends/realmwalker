@@ -15,6 +15,7 @@ import {ConstructionModalComponent} from "./construction-modal/construction-moda
 import {MapMarkerComponent} from "../components/map-marker/map-marker.component";
 import {CountdownPipe} from "../countdown.pipe";
 import {RunestoneModalComponent} from "./location-modal/runestone-modal/runestone-modal.component";
+import {ItemIconComponent} from "../components/item-icon/item-icon.component";
 
 
 @NgModule({
@@ -36,6 +37,7 @@ import {RunestoneModalComponent} from "./location-modal/runestone-modal/runeston
     ConstructionModalComponent,
     MapMarkerComponent,
     CountdownPipe,
+    ItemIconComponent,
   ]
 })
 export class HomePageModule {}

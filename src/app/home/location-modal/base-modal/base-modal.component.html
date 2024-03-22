@@ -38,7 +38,7 @@
   <ion-grid *ngIf="inventoryView === 'inventory'; else storage" class="inventory-list no-padding-top">
     <ion-row *ngFor="let item of inventory?.items" class="inventory-list-item">
       <ion-col size="auto">
-        <ion-icon [src]="item.icon" color="dark" class="inventory-item-icon"></ion-icon>
+        <app-item-icon [item]="item" class="inventory-item-icon"></app-item-icon>
       </ion-col>
       <ion-col>
         <ion-label>{{item.name}}</ion-label>
@@ -71,7 +71,7 @@
     <ion-grid class="inventory-list no-padding-top">
       <ion-row *ngFor="let item of locationObject.inventory.items" class="inventory-list-item">
         <ion-col size="auto">
-          <ion-icon [src]="item.icon" color="dark" class="inventory-item-icon"></ion-icon>
+          <app-item-icon [item]="item" class="inventory-item-icon"></app-item-icon>
         </ion-col>
         <ion-col>
           <ion-label>{{item.name}}</ion-label>

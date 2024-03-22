@@ -190,3 +190,11 @@ ion-modal.floating-modal {
   font-size: 0.7em;
   align-items: center;
 }
+
+:root {
+  --item-color-common: #ffffff;
+  --item-color-uncommon: #6CBC94;
+  --item-color-rare: #6D9EEB;
+  --item-color-epic: #AC71D4;
+  --item-color-legendary: #FFE599;
+}

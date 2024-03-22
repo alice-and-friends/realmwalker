@@ -37,6 +37,7 @@ export class ApiService {
     return this.http.get<User>(this.url + '/v1/users/me');
   }
   updatePreference(key: string, value: string|number|boolean): Observable<UserPreferences> {
+    console.log(key, value)
     return this.http.patch<UserPreferences>(this.url + '/v1/users/me/preferences', {
       preferences: {[key]: value}},
     )

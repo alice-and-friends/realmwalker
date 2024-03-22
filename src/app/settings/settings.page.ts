@@ -21,6 +21,10 @@ export class SettingsPage {
     this.userService.updatePreference(settingKey, event.detail.checked);
   }
 
+  onSelectChange(settingKey: string, event: any) {
+    this.userService.updatePreference(settingKey, event.detail.value);
+  }
+
   logout() {
     this.auth.logout({ logoutParams: { returnTo: document.location.origin } })
   }

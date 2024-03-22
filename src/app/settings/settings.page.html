@@ -16,10 +16,23 @@
   </ion-header>
   <ion-list *ngIf="activeUser">
     <ion-item>
-      <ion-checkbox [(ngModel)]="activeUser!.preferences.developer"
-                    (ionChange)="onCheckboxChange('developer', $event)">
+      <ion-checkbox
+        [(ngModel)]="activeUser!.preferences.developer"
+        (ionChange)="onCheckboxChange('developer', $event)"
+      >
         Developer mode
       </ion-checkbox>
+    </ion-item>
+    <ion-item>
+      <ion-select
+        [(ngModel)]="activeUser!.preferences.itemFrames"
+        (ionChange)="onSelectChange('itemFrames', $event)"
+        label="Item frames"
+        interface="popover"
+      >
+        <ion-select-option value="None">None</ion-select-option>
+        <ion-select-option value="Rarity">Rarity</ion-select-option>
+      </ion-select>
     </ion-item>
   </ion-list>
   <ion-button expand="block" fill="solid" color="light" (click)="logout()">Log out</ion-button>

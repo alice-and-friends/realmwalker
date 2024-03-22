@@ -1,0 +1,9 @@
+.item-frame {
+  border: 1px solid white;
+  padding: 1px;
+
+  &.frame-color-uncommon {border-color: var(--item-color-uncommon)}
+  &.frame-color-rare {border-color: var(--item-color-rare)}
+  &.frame-color-epic {border-color: var(--item-color-epic)}
+  &.frame-color-legendary {border-color: var(--item-color-legendary)}
+}

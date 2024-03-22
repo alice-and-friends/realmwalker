@@ -1,6 +1,6 @@
-
 export interface UserPreferences {
   developer: boolean,
+  itemFrames: string,
 }
 export interface User {
   id: number;

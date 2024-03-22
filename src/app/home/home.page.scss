@@ -39,3 +39,7 @@ ion-modal.settings-drawer-modal::part(content) {
   right: 0;
   position: absolute;
 }
+
+app-item-icon {
+  display: grid;
+}

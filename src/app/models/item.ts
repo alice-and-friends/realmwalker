@@ -3,6 +3,7 @@ import {Monster} from "./monster";
 export enum RarityGrade {
   Always = 'always',
   Common = 'common',
+  Uncommon = 'uncommon',
   Rare = 'rare',
   Epic = 'epic',
   Legendary = 'legendary',

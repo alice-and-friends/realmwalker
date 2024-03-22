@@ -34,7 +34,7 @@
     </ion-row>
     <ion-row *ngFor="let item of inventoryItems" class="inventory-list-item">
       <ion-col size="auto">
-        <ion-icon [src]="item.icon" color="dark" class="inventory-item-icon"></ion-icon>
+        <app-item-icon [item]="item" class="inventory-item-icon"></app-item-icon>
       </ion-col>
       <ion-col>
         <ion-label>{{item.name}}</ion-label>
