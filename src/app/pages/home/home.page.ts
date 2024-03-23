@@ -55,7 +55,7 @@ export class HomePage implements OnInit {
   }
 
   ngOnInit() {
-    console.debug('Init home view. User location:', this.location.lat, this.location.lng);
+    console.debug('Init home view. User location:', this.location.latitude, this.location.longitude);
     this.api.home().subscribe() // Loads current game configuration. TODO: Code should be more self-describing
     this.initializeMap()
   }
@@ -69,7 +69,7 @@ export class HomePage implements OnInit {
       zoom: 12,
       maxZoom: 18,
       // minZoom: 8,
-      center: [this.location.lng, this.location.lat],
+      center: [this.location.longitude, this.location.latitude],
       attributionControl: false,
       // pitch: 60
     });
@@ -93,13 +93,13 @@ export class HomePage implements OnInit {
     geolocate.on("error", () => {
       // Fallback solution taken from here: https://github.com/mapbox/mapbox-gl-js/issues/9680
       console.warn('geolocate failed, going with flyTo fallback')
-      if (this.location.lat && this.location.lng) {
+      if (this.location.latitude && this.location.longitude) {
         // @ts-ignore
         this.map.flyTo(
           {
             center: [
-              this.location.lng,
-              this.location.lat
+              this.location.longitude,
+              this.location.latitude
             ],
             zoom: 15,
             bearing: 0
@@ -113,7 +113,7 @@ export class HomePage implements OnInit {
     );
     this.map.on('load', () => {
       setTimeout(() => {
-        console.log('trigger geolocate', this.location.lat, this.location.lng)
+        console.log('trigger geolocate', this.location.latitude, this.location.longitude)
         geolocate.trigger()
       }, 1000)
     })
@@ -250,7 +250,7 @@ export class HomePage implements OnInit {
 
     // Use this domElem as the element for the Mapbox marker
     let marker = new mapboxgl.Marker(domElem)
-      .setLngLat([location.coordinates.lon, location.coordinates.lat])
+      .setLngLat([location.coordinates.longitude, location.coordinates.latitude])
       .addTo(this.map);
 
     // Pass a function to the component that allows it to destroy the marker

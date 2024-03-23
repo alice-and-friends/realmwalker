@@ -8,8 +8,8 @@ import {Capacitor} from "@capacitor/core";
 export class LocationService {
   private wait: any
   public permissionError: boolean | undefined
-  public lat: any;
-  public lng: any;
+  public latitude: any;
+  public longitude: any;
   public location: Position | undefined;
   public positionOptions:PositionOptions = {
     enableHighAccuracy: true,
@@ -26,15 +26,15 @@ export class LocationService {
       await this.requestPermissions()
     }
     await this.testPermissions();
-    return !!this.lat && !!this.lng;
+    return !!this.latitude && !!this.longitude;
   }
 
   private async testPermissions() {
     console.debug('Testing location permissions...')
     try {
       const { coords } = await Geolocation.getCurrentPosition(this.positionOptions)
-      this.lat = coords.latitude;
-      this.lng = coords.longitude;
+      this.latitude = coords.latitude;
+      this.longitude = coords.longitude;
     }
     catch(err) {
       console.error(err)
@@ -79,9 +79,9 @@ export class LocationService {
             return
           }
           this.ngZone.run(() => {
-            this.lat = position.coords.latitude;
-            this.lng = position.coords.longitude;
-            console.debug(`Position changed to ${this.lat}, ${this.lng}`)
+            this.latitude = position.coords.latitude;
+            this.longitude = position.coords.longitude;
+            console.debug(`Position changed to ${this.latitude}, ${this.longitude}`)
           })
         }
       )

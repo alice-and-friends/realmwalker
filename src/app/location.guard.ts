@@ -6,7 +6,7 @@ export const locationGuard = () => {
   const location = inject(LocationService);
   const router = inject(Router);
 
-  if (location.lat && location.lng) {
+  if (location.latitude && location.longitude) {
     return true;
   }
 

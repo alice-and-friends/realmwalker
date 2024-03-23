@@ -7,7 +7,7 @@
   </ng-template>
   <div *ngIf="userService.activeUser?.preferences?.developer" class="debug ion-text-right">
     <span *ngIf="location.permissionError; else coordinates">permissionError=true</span>
-    <ng-template #coordinates>{{location.lat}}, {{location.lng}}</ng-template>
+    <ng-template #coordinates>{{location.latitude}}, {{location.longitude}}</ng-template>
     <div>Server time: {{api.serverTime | date:'yyyy-MM-dd HH:mm:ss'}}</div>
     <div>Local time: {{localTime | date:'yyyy-MM-dd HH:mm:ss'}}</div>
   </div>

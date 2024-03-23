@@ -43,8 +43,8 @@ export class RealmwalkerApiInterceptor implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
     if (this.requestShouldBeIntercepted(req)) {
-      if (!!this.location.lat && !!this.location.lng) {
-        const geoLocation = `${this.location.lat} ${this.location.lng}`;
+      if (!!this.location.latitude && !!this.location.longitude) {
+        const geoLocation = `${this.location.latitude} ${this.location.longitude}`;
         req = req.clone({
           setHeaders: { Geolocation: `${geoLocation}` }
         });

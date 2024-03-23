@@ -16,7 +16,7 @@ export class AppComponent implements OnInit {
 
   async ngOnInit() {
     const locationServiceOperational = await this.location.init();
-    console.debug('Location service reports operational:', locationServiceOperational, 'Initial position:', this.location.lat, this.location.lng)
+    console.debug('Location service reports operational:', locationServiceOperational, 'Initial position:', this.location.latitude, this.location.longitude)
     if (locationServiceOperational) {
       this.location.track();
       this.userService.login();
