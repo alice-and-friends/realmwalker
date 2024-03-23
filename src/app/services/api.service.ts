@@ -13,6 +13,7 @@ import {Base} from "../models/base";
 import {Monster} from "../models/monster";
 import {Runestone} from "../models/runestone";
 import {Item} from "../models/item";
+import {LeyLine} from "../models/ley-line";
 
 @Injectable({
   providedIn: 'root'
@@ -84,7 +85,6 @@ export class ApiService {
   }
 
   getLocations() {
-    console.log('getLocations');
     return this.http.get<RealmLocation[]>(this.url + '/v1/realm_locations')
       .pipe(
         map((data: any[]) => data.map((item: any) => {
@@ -98,6 +98,21 @@ export class ApiService {
     return this.http.get<Runestone>(this.url + `/v1/runestones/${id}`).pipe(
       map(data => {
         return new Runestone(data)
+      })
+    )
+  }
+
+  getLeyLine(id: string) {
+    return this.http.get<LeyLine>(this.url + `/v1/ley_lines/${id}`).pipe(
+      map(data => {
+        return new LeyLine(data)
+      })
+    )
+  }
+  captureLeyLine(id: string) {
+    return this.http.post<LeyLine>(this.url + `/v1/ley_lines/${id}/capture`, {}).pipe(
+      map(data => {
+        return new LeyLine(data)
       })
     )
   }

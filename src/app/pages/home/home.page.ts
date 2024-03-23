@@ -18,6 +18,7 @@ import {MapMarkerComponent} from "../../components/map-marker/map-marker.compone
 import {RunestoneModalComponent} from "./location-modal/runestone-modal/runestone-modal.component";
 import {SettingsPage} from "../settings/settings.page";
 import { openDrawerAnimation, closeDrawerAnimation } from '../../animations/drawer.animation';
+import {LeyLineModalComponent} from "./location-modal/ley-line-modal/ley-line-modal.component";
 
 @Component({
   selector: 'app-home',
@@ -154,6 +155,7 @@ export class HomePage implements OnInit {
         [LocationType.Npc]: NpcModalComponent,
         [LocationType.Base]: BaseModalComponent,
         [LocationType.Runestone]: RunestoneModalComponent,
+        [LocationType.LeyLine]: LeyLineModalComponent,
         // Extend with other mappings as necessary
       };
 
@@ -168,11 +170,15 @@ export class HomePage implements OnInit {
           modal: this.modal,
           refreshMap: this.loadMarkers,
           locationId: location.id,
-          openCharacterModal: await this.changeEquipmentForLocationFunc(location),
+          openCharacterModal: this.changeEquipmentForLocationFunc(location),
         },
       }
 
       if (location.type === LocationType.Dungeon) {
+        modalOpts = { ...modalOpts, breakpoints: [0, 0.60, 0.85], initialBreakpoint: 0.60 };
+      }
+
+      if (location.type === LocationType.LeyLine) {
         modalOpts = { ...modalOpts, breakpoints: [0, 0.60, 0.85], initialBreakpoint: 0.60 };
       }
 
