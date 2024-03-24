@@ -3,7 +3,16 @@
     <ion-row class="ion-align-items-center">
       <ion-col>
         <ion-button size="small" fill="clear" (click)="openInventoryModal()">
-          <ion-icon slot="icon-only" src="/assets/icon/menu-icon-inventory.svg" class="menu-icon-inventory" color="medium"></ion-icon>
+          <div class="button-column">
+            <ion-icon slot="icon-only" src="/assets/icon/menu-icon-inventory.svg" class="menu-icon-inventory" color="medium"></ion-icon>
+            <ion-label>Inventory</ion-label>
+          </div>
+        </ion-button>
+        <ion-button size="small" fill="clear" (click)="openJournal()">
+          <div class="button-column">
+            <ion-icon slot="icon-only" src="/assets/icon/menu-icon-journal.svg" class="menu-icon-journal" color="medium"></ion-icon>
+            <ion-label>Journal</ion-label>
+          </div>
         </ion-button>
       </ion-col>
       <ion-col *ngIf="userService.activeUser" (click)="openCharacterModal()" size="6" class="ion-text-center">
@@ -13,7 +22,10 @@
       </ion-col>
       <ion-col class="ion-text-end">
         <ion-button size="small" fill="clear" (click)="openSettings()">
-          <ion-icon slot="icon-only" src="/assets/icon/menu-icon-settings.svg" class="menu-icon-settings" color="medium"></ion-icon>
+          <div class="button-column">
+            <ion-icon slot="icon-only" src="/assets/icon/menu-icon-settings.svg" class="menu-icon-settings" color="medium"></ion-icon>
+            <ion-label>Settings</ion-label>
+          </div>
         </ion-button>
       </ion-col>
     </ion-row>

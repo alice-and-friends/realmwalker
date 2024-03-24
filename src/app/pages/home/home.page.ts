@@ -194,6 +194,10 @@ export class HomePage implements OnInit {
     await this.openCharacterModal()
   }
 
+  async openJournal() {
+    await this.openCharacterModal()
+  }
+
   async openCharacterModal(dismissCallback:any=null) {
     try {
       this.modal = await this.modalCtrl.create({
