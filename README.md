@@ -7,9 +7,21 @@
 | Browser       | Run `ionic serve` for a dev server. Navigate to `http://localhost:8100/`.                                                                  |
 | iOS simulator | Run `ionic capacitor run ios -l --external` for a dev server. [Ionic iOS documentation](https://ionicframework.com/docs/v6/developing/ios) |
 
-## Code scaffolding
+## Debugging against device
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+```bash
+# Generate ssl certificate
+mkcert localhost 127.0.0.1 ::1 192.168.x.x
+
+# Run server
+ionic serve --ssl --external
+
+# Run app
+ionic capacitor run android -l --ssl --external --host=192.168.x.x
+
+# DevTools
+chrome://inspect/#devices
+```
 
 ## Build
 

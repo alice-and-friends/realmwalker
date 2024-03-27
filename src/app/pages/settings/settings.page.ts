@@ -4,6 +4,9 @@ import {UserService} from "../../services/user.service";
 import {User} from "../../models/user";
 import {AuthService} from "@auth0/auth0-angular";
 import {Router} from "@angular/router";
+import {environment as env} from "../../../environments/environment";
+import {Browser} from "@capacitor/browser";
+import {Capacitor} from "@capacitor/core";
 
 @Component({
   selector: 'app-settings',
@@ -13,6 +16,7 @@ import {Router} from "@angular/router";
 export class SettingsPage {
   settings: any = {};
   activeUser: User | undefined;
+  platform = Capacitor.getPlatform();
 
   constructor(protected modalCtrl: ModalController, public userService: UserService, private auth: AuthService, private router: Router) {
     this.activeUser = userService.activeUser
@@ -27,7 +31,28 @@ export class SettingsPage {
   }
 
   logout() {
-    this.auth.logout({ logoutParams: { returnTo: document.location.origin } })
+    if (this.platform === 'web') {
+      this.auth.logout({ logoutParams: { returnTo: document.location.origin } })
+    }
+    else {
+      const returnTo = `${env.auth.appId}://${env.auth.domain}/capacitor/${env.auth.appId}/callback`;
+
+      this.auth
+        .logout({
+          logoutParams: {
+            returnTo,
+          },
+          async openUrl(url: string) {
+            await Browser.open({ url });
+          }
+        })
+        .subscribe({
+          next: () => {
+            this.userService.logout()
+            this.close()
+          }
+        });
+    }
   }
 
   close() {
@@ -35,7 +60,7 @@ export class SettingsPage {
   }
 
   goToCredits() {
-    this.modalCtrl.dismiss()
+    this.close()
     this.router.navigate(['/credits'])
   }
 }

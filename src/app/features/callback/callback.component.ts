@@ -8,6 +8,8 @@ export class CallbackComponent  implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    console.log('you reached the callback component')
+  }
 
 }

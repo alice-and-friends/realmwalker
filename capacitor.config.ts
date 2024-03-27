@@ -1,10 +1,9 @@
 import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'io.geobox.game',
-  appName: 'geobox',
+  appId: 'app.realmwalker',
+  appName: 'RealmWalker',
   webDir: 'www',
-  bundledWebRuntime: false
 };
 
 export default config;

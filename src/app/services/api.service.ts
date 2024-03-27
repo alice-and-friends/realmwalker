@@ -35,6 +35,7 @@ export class ApiService {
     );
   }
   me(): Observable<User> {
+    console.log('me')
     return this.http.get<User>(this.url + '/v1/users/me');
   }
   updatePreference(key: string, value: string|number|boolean): Observable<UserPreferences> {
