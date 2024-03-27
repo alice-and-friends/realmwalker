@@ -1,7 +1,7 @@
 <ion-header class="map-toolbar">
   <ion-grid>
     <ion-row class="ion-align-items-center">
-      <ion-col>
+      <ion-col *ngIf="userService.activeUser">
         <ion-button size="small" fill="clear" (click)="openInventoryModal()">
           <div class="button-column">
             <ion-icon slot="icon-only" src="/assets/icon/menu-icon-inventory.svg" class="menu-icon-inventory" color="medium"></ion-icon>
@@ -15,10 +15,9 @@
           </div>
         </ion-button>
       </ion-col>
-      <ion-col *ngIf="userService.activeUser" (click)="openCharacterModal()" size="6" class="ion-text-center">
+      <ion-col *ngIf="userService.activeUser" (click)="openCharacterModal()" class="ion-text-center">
         <h1 class="player-title">{{userService.activeUser.name}}</h1>
         <p>Level {{userService.activeUser.xpLevelReport.level}}</p>
-        <ion-progress-bar color="secondary" [value]="userService.activeUser.xpLevelReport.nextLevelProgress/100"></ion-progress-bar>
       </ion-col>
       <ion-col class="ion-text-end">
         <ion-button size="small" fill="clear" (click)="openSettings()">
@@ -30,6 +29,11 @@
       </ion-col>
     </ion-row>
   </ion-grid>
+  <ion-progress-bar
+    *ngIf="userService.activeUser"
+    color="secondary"
+    [value]="userService.activeUser.xpLevelReport.nextLevelProgress/100">
+  </ion-progress-bar>
 </ion-header>
 
 <div class="map" id="map"></div>
