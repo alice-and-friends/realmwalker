@@ -1,0 +1,13 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title slot="start">Journal</ion-title>
+    <ion-buttons slot="end">
+      <ion-button color="medium" (click)="cancel()">
+        <ion-icon name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content *ngIf="journal">
+  <p>You have discovered {{journal.runestones.discoveredCount}}/{{journal.runestones.undiscoveredCount + journal.runestones.discoveredCount}} runestones.</p>
+</ion-content>

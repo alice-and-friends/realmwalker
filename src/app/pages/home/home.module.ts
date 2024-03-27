@@ -17,6 +17,7 @@ import {CountdownPipe} from "../../countdown.pipe";
 import {RunestoneModalComponent} from "./location-modal/runestone-modal/runestone-modal.component";
 import {ItemIconComponent} from "../../components/item-icon/item-icon.component";
 import {LeyLineModalComponent} from "./location-modal/ley-line-modal/ley-line-modal.component";
+import {JournalModalComponent} from "./journal-modal/journal-modal.component";
 
 
 @NgModule({
@@ -37,6 +38,7 @@ import {LeyLineModalComponent} from "./location-modal/ley-line-modal/ley-line-mo
     BaseModalComponent,
     LeyLineModalComponent,
     ConstructionModalComponent,
+    JournalModalComponent,
     MapMarkerComponent,
     CountdownPipe,
     ItemIconComponent,

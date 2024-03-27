@@ -14,6 +14,7 @@ import {Monster} from "../models/monster";
 import {Runestone} from "../models/runestone";
 import {Item} from "../models/item";
 import {LeyLine} from "../models/ley-line";
+import {Journal} from "../models/journal";
 
 @Injectable({
   providedIn: 'root'
@@ -86,19 +87,22 @@ export class ApiService {
   }
 
   getLocations() {
-    return this.http.get<RealmLocation[]>(this.url + '/v1/realm_locations')
-      .pipe(
-        map((data: any[]) => data.map((item: any) => {
-          const model = new RealmLocation(item);
-          return model;
-        }))
-      );
+    return this.http.get<RealmLocation[]>(this.url + '/v1/realm_locations').pipe(
+      map((items: object[]) => items.map(item => new RealmLocation(item)))
+    );
   }
 
   getRunestone(id: string) {
     return this.http.get<Runestone>(this.url + `/v1/runestones/${id}`).pipe(
       map(data => {
         return new Runestone(data)
+      })
+    )
+  }
+  getJournal() {
+    return this.http.get(this.url + `/v1/journal/runestones`).pipe(
+      map(data => {
+        return new Journal({runestones: data})
       })
     )
   }

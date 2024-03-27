@@ -103,5 +103,4 @@ export class CharacterModalComponent  implements OnInit {
       if (this.dismissCallback) this.dismissCallback()
     });
   }
-
 }

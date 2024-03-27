@@ -19,6 +19,7 @@ import {RunestoneModalComponent} from "./location-modal/runestone-modal/runeston
 import {SettingsPage} from "../settings/settings.page";
 import { openDrawerAnimation, closeDrawerAnimation } from '../../animations/drawer.animation';
 import {LeyLineModalComponent} from "./location-modal/ley-line-modal/ley-line-modal.component";
+import {JournalModalComponent} from "./journal-modal/journal-modal.component";
 
 @Component({
   selector: 'app-home',
@@ -194,8 +195,16 @@ export class HomePage implements OnInit {
     await this.openCharacterModal()
   }
 
-  async openJournal() {
-    await this.openCharacterModal()
+  async openJournalModal() {
+    try {
+      this.modal = await this.modalCtrl.create({
+        component: JournalModalComponent,
+      });
+      await this.modal.present();
+    }
+    catch (error) {
+      console.error(error)
+    }
   }
 
   async openCharacterModal(dismissCallback:any=null) {
