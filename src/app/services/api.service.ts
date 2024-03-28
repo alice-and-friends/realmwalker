@@ -92,8 +92,15 @@ export class ApiService {
     );
   }
 
-  getRunestone(id: string) {
-    return this.http.get<Runestone>(this.url + `/v1/runestones/${id}`).pipe(
+  getRunestone(locationId: string) {
+    return this.http.get<Runestone>(this.url + `/v1/runestones/${locationId}`).pipe(
+      map(data => {
+        return new Runestone(data)
+      })
+    )
+  }
+  addRunestoneToJournal(locationId: string) {
+    return this.http.post<Runestone>(this.url + `/v1/runestones/${locationId}/add_to_journal`, {}).pipe(
       map(data => {
         return new Runestone(data)
       })

@@ -28,7 +28,8 @@ export const environment = {
     },
   },
   api: {
-    host: 'https://192.168.1.8:3001/api'
+    host: 'https://localhost:3001/api',
+    // host: 'https://192.168.1.8:3001/api',
   },
   config: {
     mapRefreshRate: 0,

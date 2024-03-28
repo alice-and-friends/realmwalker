@@ -1,10 +1,10 @@
-import { Directive } from '@angular/core';
+import {Directive, OnInit} from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import {ApiService} from "../../../services/api.service";
 import {NotificationService} from "../../../services/notification.service";
 
 @Directive() // Using @Directive() since Angular doesn't allow @Component on abstract classes
-export abstract class AbstractLocationModalComponent {
+export abstract class AbstractLocationModalComponent implements OnInit {
   modal!: HTMLIonModalElement
   loading:boolean = true
   locationId!: string
@@ -19,7 +19,7 @@ export abstract class AbstractLocationModalComponent {
   ) {}
 
   async ngOnInit() {
-    await this.loadData();
+    this.loadData();
   }
 
   returnToMap() {

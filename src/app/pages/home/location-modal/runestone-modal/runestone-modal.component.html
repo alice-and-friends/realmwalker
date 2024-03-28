@@ -21,7 +21,17 @@
     </div>
     <p class="runestone">{{locationObject.text}}</p>
     <div class="padding-10 runestone-controls">
-      <ion-button expand="block" fill="solid" color="dark" (click)="returnToMap()">Journey onwards</ion-button>
+      <div *ngIf="!locationObject.discovered; else discovered">
+        <p>&nbsp;<!-- keep this to prevent layout jumps when discovering --></p>
+        <ion-button expand="block" fill="solid" color="success" (click)="addToJournal()">Add to Journal</ion-button>
+      </div>
+      <ng-template #discovered>
+        <p class="ion-text-center">
+          <ion-text color="success"><ion-icon name="checkmark-sharp"></ion-icon></ion-text>
+          <span>&nbsp;Saved to Journal</span>
+        </p>
+        <ion-button expand="block" fill="solid" color="dark" (click)="returnToMap()">Journey onwards</ion-button>
+      </ng-template>
     </div>
   </div>
 </ion-content>
