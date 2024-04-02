@@ -47,13 +47,11 @@ export class AppComponent implements OnInit {
               .pipe(mergeMap(() => Browser.close()))
               .subscribe({
                 next: (a: any) => {
-                  console.log('beep boop beep', a)
                   this.userService.login();
                 }
               });
           } else {
             Browser.close();
-            console.log(30)
           }
         }
         else {

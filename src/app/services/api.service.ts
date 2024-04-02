@@ -15,6 +15,7 @@ import {Runestone} from "../models/runestone";
 import {Item} from "../models/item";
 import {LeyLine} from "../models/ley-line";
 import {Journal} from "../models/journal";
+import {RealmEvent} from "../models/realm-event";
 
 @Injectable({
   providedIn: 'root'
@@ -26,17 +27,27 @@ export class ApiService {
   private url: string = env.api.host;
   public serverTime: Date = new Date()
 
-  home(): Observable<any> { // TODO: Naming could be better
+  home(): Observable<{ serverTime: Date, events: { active: RealmEvent[], upcoming: RealmEvent[] }, locations: RealmLocation[] }> {
     return this.http.get<any>(this.url + '/v1/home').pipe(
       tap(response => {
+        // Update server time
         if (response && response.serverTime) {
           this.serverTime = new Date(response.serverTime);
         }
+      }),
+      map(response => {
+        return {
+          serverTime: this.serverTime,
+          events: {
+            active: response.events.active.map((event: any) => new RealmEvent(event)),
+            upcoming: response.events.upcoming.map((event: any) => new RealmEvent(event)),
+          },
+          locations: response.locations.map((location: any) => new RealmLocation(location)),
+        };
       })
     );
   }
   me(): Observable<User> {
-    console.log('me')
     return this.http.get<User>(this.url + '/v1/users/me');
   }
   updatePreference(key: string, value: string|number|boolean): Observable<UserPreferences> {

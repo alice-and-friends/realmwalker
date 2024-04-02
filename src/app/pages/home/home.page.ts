@@ -35,7 +35,7 @@ export class HomePage implements OnInit {
   // Map config
   map: mapboxgl.Map | undefined;
   mapMarkers: Marker[] = []
-  loadMarkers: any
+  loadRealmData: any
   timer: any
 
   constructor(
@@ -58,7 +58,6 @@ export class HomePage implements OnInit {
 
   ngOnInit() {
     console.debug('Init home view. User location:', this.location.latitude, this.location.longitude);
-    this.api.home().subscribe() // Loads current game configuration. TODO: Code should be more self-describing
     this.initializeMap()
   }
 
@@ -121,20 +120,20 @@ export class HomePage implements OnInit {
     })
 
     // Add markers to the map.
-    this.loadMarkers = () => {
-      this.api.getLocations().subscribe((data: RealmLocation[]) => {
+    this.loadRealmData = () => {
+      this.api.home().subscribe((data: any) => {
         this.mapMarkers.forEach((marker) => marker.remove())
         this.mapMarkers = []
-        data.forEach(location => {
+        data.locations.forEach((location: RealmLocation) => {
           this.addMarker(location);
         });
         console.debug('Load markers completed.')
       })
     }
-    this.loadMarkers();
+    this.loadRealmData();
     if (environment.config.mapRefreshRate) {
       // Refresh map every n seconds
-      this.timer = setInterval(this.loadMarkers, environment.config.mapRefreshRate * 1000);
+      this.timer = setInterval(this.loadRealmData, environment.config.mapRefreshRate * 1000);
     }
   }
 
@@ -169,7 +168,7 @@ export class HomePage implements OnInit {
         component: component,
         componentProps: {
           modal: this.modal,
-          refreshMap: this.loadMarkers,
+          refreshMap: this.loadRealmData,
           locationId: location.id,
           openCharacterModal: this.changeEquipmentForLocationFunc(location),
         },
@@ -235,7 +234,7 @@ export class HomePage implements OnInit {
             const modalOpts: ModalOptions = {
               component: BaseModalComponent,
               componentProps: {
-                refreshMap: this.loadMarkers,
+                refreshMap: this.loadRealmData,
                 createLocation: true, // This tells the modal controller that it needs to create a new base
               },
             }
