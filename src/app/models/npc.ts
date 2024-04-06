@@ -81,7 +81,7 @@ export class Npc extends RealmLocation {
     this.gender = data.gender
     this.role = data.role
     this.shopType = data.shopType
-    this.portrait = `/assets/icon/npc-${data.portrait}.svg`
+    this.portrait = `/assets/icon/portrait/${data.portrait}.svg`
     this.spooked = data.spooked
     this.greeting = randomElement(this.greetingOptions(this.species, this.role, this.shopType, this.spooked))
     this.buyOffers = data.buyOffers.map((item: any) => new TradeOffer(item))
