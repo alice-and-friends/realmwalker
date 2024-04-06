@@ -20,6 +20,7 @@ import {SettingsPage} from "../settings/settings.page";
 import { openDrawerAnimation, closeDrawerAnimation } from '../../animations/drawer.animation';
 import {LeyLineModalComponent} from "./location-modal/ley-line-modal/ley-line-modal.component";
 import {JournalModalComponent} from "./journal-modal/journal-modal.component";
+import {RealmEvent} from "../../models/realm-event";
 
 @Component({
   selector: 'app-home',
@@ -32,11 +33,14 @@ export class HomePage implements OnInit {
   presentingElement: any = null;
   modal: HTMLIonModalElement | undefined
 
-  // Map config
+  // Map
   map: mapboxgl.Map | undefined;
   mapMarkers: Marker[] = []
   loadRealmData: any
   timer: any
+
+  // Events
+  activeEvents: RealmEvent[] = []
 
   constructor(
     public api: ApiService,
@@ -122,6 +126,10 @@ export class HomePage implements OnInit {
     // Add markers to the map.
     this.loadRealmData = () => {
       this.api.home().subscribe((data: any) => {
+        // Events
+        this.activeEvents = data.events.active;
+
+        // Map
         this.mapMarkers.forEach((marker) => marker.remove())
         this.mapMarkers = []
         data.locations.forEach((location: RealmLocation) => {
@@ -133,7 +141,7 @@ export class HomePage implements OnInit {
     this.loadRealmData();
     if (environment.config.mapRefreshRate) {
       // Refresh map every n seconds
-      this.timer = setInterval(this.loadRealmData, environment.config.mapRefreshRate * 1000);
+      this.timer = setInterval(this.loadRealmData, environment.config.mapRefreshRate * 1_000);
     }
   }
 

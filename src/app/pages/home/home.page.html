@@ -34,12 +34,13 @@
     color="secondary"
     [value]="userService.activeUser.xpLevelReport.nextLevelProgress/100">
   </ion-progress-bar>
+  <app-events-toolbar *ngIf="activeEvents.length" [active]="activeEvents"></app-events-toolbar>
 </ion-header>
 
 <div class="map" id="map"></div>
 
-<ion-fab *ngIf="userService.activeUser?.base === null" slot="fixed" vertical="center" horizontal="start" class="flight-toolbar">
-  <ion-fab-button id="open-build-menu" (click)="openConstructionModal()" size="small">
+<ion-fab *ngIf="userService.activeUser?.base === null" slot="fixed" vertical="center" horizontal="start">
+  <ion-fab-button (click)="openConstructionModal()" size="small">
     <ion-icon name="construct-sharp"></ion-icon>
   </ion-fab-button>
 </ion-fab>

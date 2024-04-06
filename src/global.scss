@@ -71,6 +71,12 @@ ion-icon.header-icon-size {
 .sc-ion-alert-md-h {
   --max-width: 400px !important;
 }
+.fab-horizontal-start {
+  left: 0 !important;
+}
+.fab-horizontal-end {
+  right: 0 !important;
+}
 
 ion-modal.floating-modal {
   --background: transparent;

@@ -1,0 +1,5 @@
+<ion-fab slot="fixed" vertical="top" horizontal="end">
+  <ion-fab-button *ngFor="let event of active" (click)="showEventDetails(event)" size="small" color="light">
+    <ion-icon [src]="event.icon" class="event-{{event.slug}}" color="dark"></ion-icon>
+  </ion-fab-button>
+</ion-fab>

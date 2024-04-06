@@ -18,6 +18,7 @@ import {RunestoneModalComponent} from "./location-modal/runestone-modal/runeston
 import {ItemIconComponent} from "../../components/item-icon/item-icon.component";
 import {LeyLineModalComponent} from "./location-modal/ley-line-modal/ley-line-modal.component";
 import {JournalModalComponent} from "./journal-modal/journal-modal.component";
+import {EventsToolbarComponent} from "../../components/events-toolbar/events-toolbar.component";
 
 
 @NgModule({
@@ -42,6 +43,7 @@ import {JournalModalComponent} from "./journal-modal/journal-modal.component";
     MapMarkerComponent,
     CountdownPipe,
     ItemIconComponent,
+    EventsToolbarComponent,
   ]
 })
 export class HomePageModule {}

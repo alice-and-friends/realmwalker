@@ -1,0 +1,21 @@
+ion-fab {
+  top: 100%;
+  margin-top: 4px;
+  margin-right: 2px;
+}
+
+ion-fab-button {
+  box-shadow: 0 0 2px 1px var(--ion-color-dark);
+  border-radius: 50%;
+  width: 38px;
+  height: 38px;
+
+  ion-icon {
+    width: 30px;
+    height: 30px;
+
+    &.event-full-moon {
+
+    }
+  }
+}
