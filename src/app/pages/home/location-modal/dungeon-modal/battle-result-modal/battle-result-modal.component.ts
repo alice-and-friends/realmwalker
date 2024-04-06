@@ -14,8 +14,7 @@ export class BattleResultModalComponent {
   dismissParentModal!: any
   openCharacterModal!: any
 
-  constructor(private modalCtrl: ModalController) {
-  }
+  constructor(private modalCtrl: ModalController) { }
 
   async returnToMap() {
     await this.modalCtrl.dismiss('cancel');

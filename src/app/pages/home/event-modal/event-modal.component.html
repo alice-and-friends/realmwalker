@@ -1,0 +1,13 @@
+<div class="ion-padding ion-text-center">
+  <div>
+    <small class="supertitle">Event</small>
+    <h1>{{event.name}}</h1>
+    <ion-icon color="dark" [src]="event.icon" class="header-icon-size"></ion-icon>
+  </div>
+  <div class="ion-margin-top">
+    <p class="quote-box ion-no-margin">{{event.description}}</p>
+  </div>
+  <div class="ion-margin-top">
+    <ion-button expand="block" fill="solid" color="dark" size="fill" (click)="close()">Close</ion-button>
+  </div>
+</div>

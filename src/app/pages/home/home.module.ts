@@ -19,6 +19,7 @@ import {ItemIconComponent} from "../../components/item-icon/item-icon.component"
 import {LeyLineModalComponent} from "./location-modal/ley-line-modal/ley-line-modal.component";
 import {JournalModalComponent} from "./journal-modal/journal-modal.component";
 import {EventsToolbarComponent} from "../../components/events-toolbar/events-toolbar.component";
+import {EventModalComponent} from "./event-modal/event-modal.component";
 
 
 @NgModule({
@@ -44,6 +45,7 @@ import {EventsToolbarComponent} from "../../components/events-toolbar/events-too
     CountdownPipe,
     ItemIconComponent,
     EventsToolbarComponent,
+    EventModalComponent,
   ]
 })
 export class HomePageModule {}
