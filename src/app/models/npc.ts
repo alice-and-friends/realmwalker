@@ -18,16 +18,13 @@ export enum Gender {
 }
 export enum NpcRole {
   Shopkeeper = 'shopkeeper',
+  Castle = 'castle',
 }
 export enum ShopType {
   Armorer = 'armorer',
   Jeweller = 'jeweller',
   Magic = 'magic',
-}
-interface NpcPropMap {
-  [key: string]: {
-    [key: string]: any[];
-  };
+  Castle = 'castle',
 }
 enum Greeting {
   GENERAL_1 = "Hello, how can I be of service?",
@@ -44,6 +41,7 @@ enum Greeting {
   SHOP_6 = "Good day! What can I show you?",
   SHOP_7 = "Salutations, weary wanderer! Let my wares breathe life into your journey.",
   SHOP_8 = "You gonna buy anything or what?",
+  ARMORER_1 = "Ah, a traveler! Welcome to my forge.",
   JEWELLER_1 = "Greetings, adventurer! Prepare to be enchanted by my treasures.",
   JEWELLER_2 = "Greetings, kindred spirit! Explore the treasures of my shop.",
   JEWELLER_3 = "Well met, fellow traveler of realms! Behold, my array of treasures.",
@@ -89,13 +87,13 @@ export class Npc extends RealmLocation {
   }
 
   greetingOptions(species: string, role:string, shopType:string|undefined, spooked:boolean|undefined): string[] {
-    if (role !== 'shopkeeper') {
+    if (!shopType) {
       return [
         Greeting.GENERAL_1, Greeting.GENERAL_2, Greeting.GENERAL_3, Greeting.GENERAL_4,
         Greeting.GENERAL_5, Greeting.GENERAL_6,
       ]
     }
-    if (this.spooked) {
+    if (spooked) {
       if (['troll', 'giant'].includes(species)) {
         return [Greeting.SHOP_SIMPLE_SPOOKED_1, Greeting.SHOP_SIMPLE_SPOOKED_2, Greeting.SHOP_SIMPLE_SPOOKED_3]
       } else if (['goblin'].includes(species)) {
@@ -109,8 +107,14 @@ export class Npc extends RealmLocation {
     switch(shopType) {
       case 'armorer':
         return [
-          Greeting.GENERAL_1, Greeting.GENERAL_4, Greeting.SHOP_2,
-          Greeting.SHOP_3, Greeting.SHOP_3, Greeting.SHOP_6
+          Greeting.GENERAL_1, Greeting.GENERAL_4,
+          Greeting.SHOP_2, Greeting.SHOP_3, Greeting.SHOP_4, Greeting.SHOP_6,
+          Greeting.ARMORER_1,
+        ]
+      case 'castle':
+        return [
+          Greeting.GENERAL_1, Greeting.GENERAL_4,
+          Greeting.SHOP_1, Greeting.SHOP_2,
         ]
       case 'jeweller':
         return [

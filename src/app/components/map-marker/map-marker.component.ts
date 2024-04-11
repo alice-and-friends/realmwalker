@@ -38,6 +38,8 @@ export class MapMarkerComponent  implements OnInit {
     switch (this.location.type) {
       case LocationType.Base:
         return `${dir}/location/base.svg`;
+      case LocationType.Castle:
+        return `${dir}/location/castle.svg`;
       case LocationType.Dungeon:
         if (this.location.status === LocationStatus.Defeated) {
           return `${dir}/banner.svg`;
@@ -65,7 +67,14 @@ export class MapMarkerComponent  implements OnInit {
 
     switch (this.location.type) {
       case LocationType.Base:
-        return 36;
+        return defaultSize + 10;
+      case LocationType.Npc:
+        if (this.location.npcDetails?.shopType === ShopType.Castle) {
+          return defaultSize + 10;
+        }
+        else {
+          return defaultSize;
+        }
       case LocationType.Dungeon:
         const dungeonLevel = this.location.level!
         if (dungeonLevel == 10) {
@@ -105,6 +114,8 @@ export class MapMarkerComponent  implements OnInit {
         switch (shopType) {
           case ShopType.Armorer:
             return '#989aa2'
+          case ShopType.Castle:
+            return '#7f8279'
           case ShopType.Jeweller:
             return '#3880ff'
           case ShopType.Magic:

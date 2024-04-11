@@ -6,7 +6,7 @@
     <ion-col class="relative">
       <ion-text [color]="titleColor">
         <h1 *ngIf="title" class="ion-no-margin">{{title}}</h1>
-        <p *ngIf="description" class="description">{{description}}</p>
+        <p *ngIf="description && description !== 'castle'" class="description">{{description}}</p>
       </ion-text>
       <ng-content></ng-content>
     </ion-col>

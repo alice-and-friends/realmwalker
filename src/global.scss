@@ -80,6 +80,8 @@ ion-icon.header-icon-size {
 
 ion-modal.floating-modal {
   --background: transparent;
+  --box-shadow: none;
+
   ion-backdrop {
     visibility: visible !important;
     z-index:0;

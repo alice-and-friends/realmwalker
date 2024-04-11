@@ -3,16 +3,17 @@ import {Coordinates} from "./coordinates";
 import {Monster} from "./monster";
 
 export enum LocationType {
-  Dungeon = 'Dungeon',
-  Npc = 'Npc',
   Base = 'Base',
+  Castle = 'Castle',
+  Dungeon = 'Dungeon',
   LeyLine = 'LeyLine',
+  Npc = 'Npc',
   Runestone = 'Runestone',
 }
 export enum LocationStatus {
-  Expired = 'expired',
   Active = 'active',
   Defeated = 'defeated',
+  Expired = 'expired',
 }
 export class RealmLocation {
   public id: string;

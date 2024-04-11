@@ -9,14 +9,13 @@ import {Monster} from "../../models/monster";
 })
 export class MonstersPage implements OnInit {
   monsters: any = [];
-  levels: Set<number> = new Set()
+  levels: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
   classifications: Set<string> = new Set()
   constructor(public api: ApiService) {}
 
   ngOnInit() {
     this.api.getCompendium('monsters').subscribe((monsters) => {
       this.monsters = monsters;
-      this.levels = new Set(this.monsters.map((monster: Monster) => monster.level));
       this.classifications = new Set(this.monsters.map((monster: Monster) => monster.classification).sort());
     })
   }
