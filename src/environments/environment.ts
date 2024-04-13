@@ -32,7 +32,7 @@ export const environment = {
     // host: 'https://192.168.1.8:3001/api',
   },
   config: {
-    mapRefreshRate: 0,
+    mapRefreshRate: 0, // Every n seconds
   },
 };
 

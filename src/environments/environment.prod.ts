@@ -15,6 +15,6 @@ export const environment = {
     host: ''
   },
   config: {
-    mapRefreshRate: 10,
+    mapRefreshRate: 6, // Every n seconds
   },
 };
