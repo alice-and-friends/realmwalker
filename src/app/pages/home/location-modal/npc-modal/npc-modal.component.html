@@ -38,7 +38,7 @@
 
   <ng-template #openForBusiness>
     <div *ngIf="tradingMode === 'buy'; else sell">
-      <p *ngIf="!buyOffersFiltered.length" class="ion-text-center">Nothing for sale.</p>
+      <p *ngIf="!locationObject.sellOffers.length" class="ion-text-center">Nothing for sale.</p>
       <ion-grid class="inventory-list no-padding-top">
         <ion-row *ngFor="let offer of locationObject.sellOffers" class="inventory-list-item">
           <ion-col size="auto">
