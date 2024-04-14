@@ -9,14 +9,15 @@ import { CompendiumRoutingModule } from './compendium-routing.module';
 import { MonstersPage } from './monsters.page';
 import { ItemsPage } from './items.page';
 import { LootPage } from './loot.page';
+import {EquipmentPage} from "./equipment.page";
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    CompendiumRoutingModule
+    CompendiumRoutingModule,
   ],
-  declarations: [MonstersPage, ItemsPage, LootPage]
+  declarations: [MonstersPage, ItemsPage, LootPage, EquipmentPage]
 })
 export class CompendiumModule {}

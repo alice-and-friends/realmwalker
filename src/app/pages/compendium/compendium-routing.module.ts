@@ -4,24 +4,29 @@ import { Routes, RouterModule } from '@angular/router';
 import { MonstersPage } from './monsters.page';
 import { ItemsPage } from './items.page';
 import {LootPage} from "./loot.page";
+import {EquipmentPage} from "./equipment.page";
 
 const routes: Routes = [
   {
     path: '',
     redirectTo: 'items',
-    pathMatch: 'full'
+    pathMatch: 'full',
   },
   {
     path: 'monsters',
-    component: MonstersPage
+    component: MonstersPage,
   },
   {
     path: 'items',
-    component: ItemsPage
+    component: ItemsPage,
   },
   {
     path: 'loot',
-    component: LootPage
+    component: LootPage,
+  },
+  {
+    path: 'equipment',
+    component: EquipmentPage,
   },
 ];
 

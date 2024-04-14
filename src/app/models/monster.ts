@@ -1,6 +1,7 @@
 import {slug} from "../lib/util";
 
 export class Monster {
+  id: number
   name: string
   slug: string
   classification: string
@@ -10,6 +11,7 @@ export class Monster {
   items: any
 
   constructor(data: any) {
+    this.id = data.id;
     this.name = data.name;
     this.slug = slug(data.name)
     this.classification = data.classification;
