@@ -3,7 +3,7 @@ export interface UserPreferences {
   itemFrames: string,
 }
 export interface User {
-  id: number;
+  id: string;
   email: string;
   name: string;
   base: null|object;
