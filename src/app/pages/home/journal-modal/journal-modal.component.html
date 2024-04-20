@@ -9,5 +9,19 @@
   </ion-toolbar>
 </ion-header>
 <ion-content *ngIf="journal">
-  <p>You have discovered {{journal.runestones.discoveredCount}}/{{journal.runestones.undiscoveredCount + journal.runestones.discoveredCount}} runestones.</p>
+  <div class="padding-10 ion-text-center">
+    <p>
+      You have discovered {{journal.runestones.discoveredCount}}/{{journal.runestones.undiscoveredCount + journal.runestones.discoveredCount}} runestones.
+    </p>
+  </div>
+  <ion-grid class="rw-list">
+    <ion-row *ngFor="let runestone of journal.runestones.discoveredRunestones" class="rw-list-item">
+      <ion-col size="auto">
+        <ion-icon src="assets/icon/location/runestone.svg" class="rw-list-item-icon"></ion-icon>
+      </ion-col>
+      <ion-col>
+        <ion-label>{{runestone.name}}</ion-label>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>

@@ -20,7 +20,7 @@
     </div>
     <div class="ornate-frame-bottom"></div>
   </div>
-  <ion-grid *ngIf="inventoryItems?.length" class="inventory-list">
+  <ion-grid *ngIf="inventoryItems?.length" class="rw-list">
     <ion-row class="ion-align-items-center">
       <ion-col>
         <h1>Inventory</h1>
@@ -32,9 +32,9 @@
         </ion-chip>
       </ion-col>
     </ion-row>
-    <ion-row *ngFor="let item of inventoryItems" class="inventory-list-item">
+    <ion-row *ngFor="let item of inventoryItems" class="rw-list-item">
       <ion-col size="auto">
-        <app-item-icon [item]="item" class="inventory-item-icon"></app-item-icon>
+        <app-item-icon [item]="item"></app-item-icon>
       </ion-col>
       <ion-col>
         <ion-label>{{item.name}}</ion-label>

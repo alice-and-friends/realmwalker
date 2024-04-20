@@ -9,14 +9,14 @@ import {UserService} from "../../services/user.service";
   styleUrls: ['./item-icon.component.scss'],
 })
 export class ItemIconComponent  implements OnInit {
-  cssClass: string = ''
+  cssClass: string = 'rw-list-item-icon'
   @Input() item!: Item | InventoryItem
 
   constructor(private userService: UserService) {}
 
   ngOnInit() {
     if (this.userService.activeUser?.preferences.itemFrames == 'Rarity') {
-      this.cssClass = `item-frame frame-color-${this.item.rarity}`
+      this.cssClass += ` item-frame frame-color-${this.item.rarity}`
     }
   }
 }

@@ -168,15 +168,18 @@ ion-modal.floating-modal {
   ion-icon { fill: #ffbf54 }
 }
 
-.inventory-list {
+.rw-list {
+  padding-left: 5px;
+  padding-right: 5px;
 
-  .inventory-list-item {
+  .rw-list-item {
     width: 100%;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     margin-top: 0.1em;
     align-items: center;
 
-    .inventory-item-icon {
+    .rw-list-item-icon {
+      display: block;
       font-size: 40px;
       margin-right: 6px;
     }
