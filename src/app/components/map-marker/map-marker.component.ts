@@ -2,6 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {LocationStatus, LocationType, RealmLocation} from "../../models/realm-location";
 import {ShopType} from "../../models/npc";
 import {DomSanitizer, SafeHtml} from "@angular/platform-browser";
+import {UserService} from "../../services/user.service";
 
 @Component({
   selector: 'app-map-marker',
@@ -16,7 +17,7 @@ export class MapMarkerComponent  implements OnInit {
   iconSize = 0
   dynamicSvg: SafeHtml = '';
 
-  constructor(private sanitizer: DomSanitizer) {}
+  constructor(private sanitizer: DomSanitizer, public userService: UserService) {}
 
   handleClick(): void {
     if (this.onClick) {

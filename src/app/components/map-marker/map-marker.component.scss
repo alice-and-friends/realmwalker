@@ -7,14 +7,20 @@
   cursor: pointer;
   padding: 0;
 
+  .marker-digit,
   .marker-timer {
     display: inline-block;
-    margin-bottom: 2px;
-    padding: 3px 6px;
     border-radius: 10px;
     text-align: center;
     line-height: 1em;
     white-space: nowrap;
+  }
+  .marker-digit {
+    color: var(--ion-color-danger);
+  }
+  .marker-timer {
+    padding: 3px 6px;
+    margin: 1px 0;
     color: #eee;
     background: rgba(0, 0, 0, 0.3);
   }

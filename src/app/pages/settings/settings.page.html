@@ -23,6 +23,14 @@
     </ion-item>
     <ion-item>
       <ion-checkbox
+        [(ngModel)]="activeUser!.preferences.dungeonLevels"
+        (ionChange)="onCheckboxChange('dungeonLevels', $event)"
+      >
+        Levels on map
+      </ion-checkbox>
+    </ion-item>
+    <ion-item>
+      <ion-checkbox
         [(ngModel)]="activeUser!.preferences.developer"
         (ionChange)="onCheckboxChange('developer', $event)"
       >

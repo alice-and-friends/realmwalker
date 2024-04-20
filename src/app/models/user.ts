@@ -1,6 +1,7 @@
 export interface UserPreferences {
   developer: boolean,
   itemFrames: string,
+  dungeonLevels: boolean,
 }
 export interface User {
   id: string;
