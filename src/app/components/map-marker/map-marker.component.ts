@@ -25,6 +25,12 @@ export class MapMarkerComponent  implements OnInit {
     }
   }
 
+  getDigit(): any {
+    if (this.location.status === LocationStatus.Active && this.userService.activeUser?.preferences?.dungeonLevels) {
+      return this.location.level;
+    }
+  }
+
   getIconSrc(): string {
     const dir: string = '/assets/icon';
 

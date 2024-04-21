@@ -1,5 +1,5 @@
 <div (click)="handleClick()" class="{{getMarkerClass()}}">
-  <div *ngIf="location.level && userService.activeUser?.preferences?.dungeonLevels" class="marker-digit">{{location.level}}</div>
+  <div *ngIf="getDigit()" class="marker-digit">{{getDigit()}}</div>
   <div *ngIf="location.expiresAt" class="marker-timer">{{location.expiresAt | countdown}}</div>
   <div class="marker-graphics" [ngStyle]="{'width.px': iconSize, 'height.px': iconSize}">
     <div class="marker-icon" [innerHTML]="dynamicSvg"></div>
