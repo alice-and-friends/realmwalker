@@ -186,6 +186,13 @@ ion-modal.floating-modal {
   }
 }
 
+.rw-flex-stack {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+
 .detail-line {
   font-size: 0.8em;
   margin: 0.5em 0;

@@ -9,18 +9,18 @@
   </ion-toolbar>
 </ion-header>
 <ion-content *ngIf="locationObject && !loading">
-  <div class="runestone-flex-wrap">
-    <div class="padding-10">
-      <app-modal-header
-        title="Ley Line"
-        icon="/assets/icon/location/ley-line.svg"
-        [iconBorder]="false"
-      >
-      </app-modal-header>
-    </div>
-    <p class="runestone">{{locationObject.text}}</p>
-    <div class="padding-10 runestone-controls">
-      <ion-button expand="block" fill="solid" color="dark" (click)="returnToMap()">Journey onwards</ion-button>
-    </div>
+  <!--<div class="rw-flex-stack">-->
+  <div class="padding-10">
+    <app-modal-header
+      title="Ley Line"
+      icon="/assets/icon/location/ley-line.svg"
+      [iconBorder]="false"
+    >
+    </app-modal-header>
   </div>
+  <p class="runestone">{{locationObject.text}}</p>
+  <div class="padding-10 runestone-controls">
+    <ion-button expand="block" fill="solid" color="dark" (click)="returnToMap()">Journey onwards</ion-button>
+  </div>
+  <!--</div>-->
 </ion-content>
