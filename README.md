@@ -30,7 +30,8 @@ TBD
 ## Resources
 
 - Icons: [game-icons.net](https://game-icons.net/)
-- More icons: [uxwing.com](https://uxwing.com/)
+- More icons: [ionic.io](https://ionic.io/ionicons/)
+- Even more icons: [uxwing.com](https://uxwing.com/)
 
 ## Further help
 
