@@ -4,10 +4,11 @@ import {UserService} from "./services/user.service";
 import {LocationService} from "./services/location.service";
 import {ApiService} from "./services/api.service";
 import {App} from "@capacitor/app";
-import {mergeMap} from "rxjs";
+import {filter, mergeMap} from "rxjs";
 import {Browser} from "@capacitor/browser";
 import {environment as env} from "../environments/environment";
-import {Router} from "@angular/router";
+import {NavigationEnd, Router} from "@angular/router";
+import {AnalyticsService} from "./services/analytics.service";
 
 @Component({
   selector: 'app-root',
@@ -18,10 +19,26 @@ export class AppComponent implements OnInit {
   localTime: Date = new Date()
   callbackUri = `${env.auth.appId}://${env.auth.domain}/capacitor/${env.auth.appId}/callback`;
 
-  constructor(public auth: AuthService, public userService: UserService, public location: LocationService, public api: ApiService, private ngZone: NgZone, private router: Router) {}
+  constructor(
+    public analytics: AnalyticsService,
+    public api: ApiService,
+    public auth: AuthService,
+    public location: LocationService,
+    public userService: UserService,
+    private ngZone: NgZone,
+    private router: Router
+  ) {}
 
   async ngOnInit() {
-    const locationServiceOperational = await this.location.init();
+    // Analytics
+    this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd)
+    ).subscribe((event: any) => {
+      this.analytics.trackPageView(event.urlAfterRedirects);
+    });
+
+    // Location Service
+    const locationServiceOperational = await this.location.init(); // TODO: Could we make the service self-initialize, same as AnalyticsService?
     console.log('Location service reports operational:', locationServiceOperational, 'Initial position:', this.location.latitude, this.location.longitude)
     if (locationServiceOperational) {
       await this.location.track();

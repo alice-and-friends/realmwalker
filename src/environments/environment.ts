@@ -11,6 +11,9 @@ const cacheLocation: CacheLocation = 'localstorage'
 
 export const environment = {
   production: false,
+  googleAnalytics: {
+    trackingId: 'G-DVEFFNQGV8',
+  },
   mapbox: {
     accessToken: 'pk.eyJ1IjoiYWxpY2VjeWFuIiwiYSI6ImNsZ3FyenlwNjBzcTczb21yZHBzdnhkYmUifQ.fRSbavjs74FfwfMunA6qSg'
   },
