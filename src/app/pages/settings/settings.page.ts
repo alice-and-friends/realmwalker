@@ -35,7 +35,7 @@ export class SettingsPage {
       this.auth.logout({ logoutParams: { returnTo: document.location.origin } })
     }
     else {
-      const returnTo = `${env.auth.appId}://${env.auth.domain}/capacitor/${env.auth.appId}/callback`;
+      const returnTo = `${env.auth0.appId}://${env.auth0.domain}/capacitor/${env.auth0.appId}/callback`;
 
       this.auth
         .logout({

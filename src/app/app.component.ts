@@ -17,7 +17,7 @@ import {AnalyticsService} from "./services/analytics.service";
 })
 export class AppComponent implements OnInit {
   localTime: Date = new Date()
-  callbackUri = `${env.auth.appId}://${env.auth.domain}/capacitor/${env.auth.appId}/callback`;
+  callbackUri = `${env.auth0.appId}://${env.auth0.domain}/capacitor/${env.auth0.appId}/callback`;
 
   constructor(
     public analytics: AnalyticsService,

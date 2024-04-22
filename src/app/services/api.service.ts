@@ -24,7 +24,7 @@ export class ApiService {
 
   constructor(private http: HttpClient) { }
 
-  private url: string = env.api.host;
+  private url: string = env.realmwalkerApi.host;
   public serverTime: Date = new Date()
 
   home(): Observable<{ serverTime: Date, events: { active: RealmEvent[], upcoming: RealmEvent[] }, locations: RealmLocation[] }> {

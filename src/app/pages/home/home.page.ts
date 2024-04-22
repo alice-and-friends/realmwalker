@@ -1,6 +1,6 @@
 import {Component, Injector, OnInit, ViewContainerRef, ViewEncapsulation} from '@angular/core';
 import * as mapboxgl from "mapbox-gl";
-import {environment} from "../../../environments/environment";
+import {environment as env} from "../../../environments/environment";
 import {ActionSheetController, ModalController, ModalOptions} from "@ionic/angular";
 import {ApiService} from "../../services/api.service";
 import {RealmLocation, LocationType} from "../../models/realm-location";
@@ -67,7 +67,7 @@ export class HomePage implements OnInit {
 
   initializeMap() {
     // Mapbox config
-    (mapboxgl.accessToken as any) = environment.mapbox.accessToken;
+    (mapboxgl.accessToken as any) = env.mapbox.accessToken;
     this.map = new mapboxgl.Map({
       container: 'map',
       style: 'mapbox://styles/alicecyan/clgs324md001m01qye8obgx8p',
@@ -139,9 +139,9 @@ export class HomePage implements OnInit {
       })
     }
     this.loadRealmData();
-    if (environment.config.mapRefreshRate) {
+    if (env.realmWalker.mapRefreshRate) {
       // Refresh map every n seconds
-      this.timer = setInterval(this.loadRealmData, environment.config.mapRefreshRate * 1_000);
+      this.timer = setInterval(this.loadRealmData, env.realmWalker.mapRefreshRate * 1_000);
     }
   }
 

@@ -25,7 +25,7 @@ import {LocationService} from "./services/location.service";
     AppRoutingModule,
     HttpClientModule,
     AuthModule.forRoot({
-      ...env.auth,
+      ...env.auth0,
       httpInterceptor: {
         /**
          * Here we define which API endpoints should include Authorization headers.
@@ -33,7 +33,7 @@ import {LocationService} from "./services/location.service";
          * Read more: https://auth0.com/blog/complete-guide-to-angular-user-authentication/#Protecting-Routes
          */
         allowedList: [
-          `${env.api.host}/*`, // This applies Auth headers for all calls to our internal API
+          `${env.realmwalkerApi.host}/*`, // This applies Auth headers for all calls to our internal API
         ],
 
       },

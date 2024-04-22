@@ -21,7 +21,7 @@ export class LaunchPage {
     }
 
     const platform = Capacitor.getPlatform();
-    console.log(env.auth.authorizationParams.redirect_uri)
+    console.log(env.auth0.authorizationParams.redirect_uri)
 
     if (platform === 'web') {
       // Call web-specific login handler

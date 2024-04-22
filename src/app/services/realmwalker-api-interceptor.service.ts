@@ -18,10 +18,10 @@ export class RealmwalkerApiInterceptor implements HttpInterceptor {
   constructor(private notification: NotificationService, private userService: UserService, public location: LocationService) {}
 
   requestShouldBeIntercepted(req: HttpRequest<any>) {
-    return req.url!.includes(env.api.host);
+    return req.url!.includes(env.realmwalkerApi.host);
   }
   responseShouldBeIntercepted(event: HttpResponse<any>) {
-    return event.url!.includes(env.api.host);
+    return event.url!.includes(env.realmwalkerApi.host);
   }
 
   handleError(errorResponse: HttpErrorResponse) {
