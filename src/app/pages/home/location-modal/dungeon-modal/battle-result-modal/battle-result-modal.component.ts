@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import {ModalController} from "@ionic/angular";
 import {BattleResult} from "../../../../../models/battle-result";
 import {determineArticle, capitalize} from "../../../../../lib/util";
+import {ModalService} from "../../../../../services/modal.service";
 
 @Component({
   selector: 'app-battle-result-modal',
@@ -9,20 +9,20 @@ import {determineArticle, capitalize} from "../../../../../lib/util";
   styleUrls: ['./battle-result-modal.component.scss'],
 })
 export class BattleResultModalComponent {
+  modal!: HTMLIonModalElement
   monsterName!: string
   data!: BattleResult
   dismissParentModal!: any
   openCharacterModal!: any
 
-  constructor(private modalCtrl: ModalController) { }
+  constructor(private modalService: ModalService) { }
 
   async returnToMap() {
-    await this.modalCtrl.dismiss('cancel');
-    return this.dismissParentModal()
+    await this.modalService.dismissAll();
   }
 
   async viewInventory() {
-    await this.modalCtrl.dismiss('cancel');
+    await this.modalService.dismissAll();
     return this.openCharacterModal()
   }
 

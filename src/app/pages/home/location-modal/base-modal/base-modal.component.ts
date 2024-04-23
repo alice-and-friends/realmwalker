@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import {ModalController} from "@ionic/angular";
 import {ApiService} from "../../../../services/api.service";
 import {Base} from "../../../../models/base";
 import {Inventory} from "../../../../models/inventory";
@@ -9,6 +8,7 @@ import {User} from "../../../../models/user";
 import {InventoryItem} from "../../../../models/inventory-item";
 import {AbstractLocationModalComponent} from "../location-modal.component";
 import {AnalyticsService} from "../../../../services/analytics.service";
+import {ModalService} from "../../../../services/modal.service";
 
 @Component({
   selector: 'app-base-modal',
@@ -23,12 +23,12 @@ export class BaseModalComponent extends AbstractLocationModalComponent implement
 
   constructor(
     public override analytics: AnalyticsService,
-    protected override modalCtrl: ModalController,
+    protected override modalService: ModalService,
     protected override api: ApiService,
     public override notifications: NotificationService,
     public userService: UserService,
   ) {
-    super(analytics, modalCtrl, api, notifications)
+    super(analytics, modalService, api, notifications)
     this.user = userService.activeUser!
   }
 

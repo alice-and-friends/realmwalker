@@ -14,8 +14,8 @@ export class LocationService {
   public positionOptions:PositionOptions = {
     enableHighAccuracy: true,
     // Note for future self: If you encounter a lot of issues with timeouts, try removing the two lines below (timeout and maximumAge)
-    timeout: 10 * 1000,
-    maximumAge: 30 * 1000,
+    timeout: 10 * 1_000,
+    maximumAge: 30 * 1_000,
   }
 
   constructor(public ngZone: NgZone) { }

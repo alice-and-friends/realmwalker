@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {ApiService} from "../../../services/api.service";
 import {Journal} from "../../../models/journal";
-import {ModalController} from "@ionic/angular";
+import {ModalService} from "../../../services/modal.service";
 
 @Component({
   selector: 'app-journal-modal',
@@ -11,7 +11,7 @@ import {ModalController} from "@ionic/angular";
 export class JournalModalComponent  implements OnInit {
   journal?: Journal
 
-  constructor(private api: ApiService, private modalCtrl: ModalController) { }
+  constructor(private api: ApiService, private modalService: ModalService) { }
 
   ngOnInit() {
     this.api.getJournal().subscribe((data: any) => {
@@ -20,6 +20,6 @@ export class JournalModalComponent  implements OnInit {
   }
 
   cancel() {
-    this.modalCtrl.dismiss().catch((error) => console.error('Error closing modal', error));
+    this.modalService.dismiss()
   }
 }

@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import {ModalController} from "@ionic/angular";
 import {UserService} from "../../services/user.service";
 import {User} from "../../models/user";
 import {AuthService} from "@auth0/auth0-angular";
@@ -8,6 +7,7 @@ import {environment as env} from "../../../environments/environment";
 import {Browser} from "@capacitor/browser";
 import {Capacitor} from "@capacitor/core";
 import {AnalyticsService} from "../../services/analytics.service";
+import {ModalService} from "../../services/modal.service";
 
 @Component({
   selector: 'app-settings',
@@ -21,7 +21,7 @@ export class SettingsPage {
 
   constructor(
     public userService: UserService,
-    protected modalCtrl: ModalController,
+    protected modalService: ModalService,
     private analytics: AnalyticsService,
     private auth: AuthService,
     private router: Router
@@ -65,7 +65,7 @@ export class SettingsPage {
   }
 
   close() {
-    this.modalCtrl.dismiss().catch((error: Error) => console.error('Error closing modal', error));
+    this.modalService.dismiss()
   }
 
   goToCredits() {

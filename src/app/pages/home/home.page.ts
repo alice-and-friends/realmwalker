@@ -1,7 +1,6 @@
 import {Component, Injector, OnInit, ViewContainerRef, ViewEncapsulation} from '@angular/core';
 import * as mapboxgl from "mapbox-gl";
 import {environment as env} from "../../../environments/environment";
-import {ActionSheetController, ModalController, ModalOptions} from "@ionic/angular";
 import {ApiService} from "../../services/api.service";
 import {RealmLocation, LocationType} from "../../models/realm-location";
 import {Marker} from "mapbox-gl";
@@ -22,6 +21,8 @@ import {LeyLineModalComponent} from "./location-modal/ley-line-modal/ley-line-mo
 import {JournalModalComponent} from "./journal-modal/journal-modal.component";
 import {RealmEvent} from "../../models/realm-event";
 import {AnalyticsService} from "../../services/analytics.service";
+import {ModalOptions} from "@ionic/angular";
+import {ModalService} from "../../services/modal.service";
 
 @Component({
   selector: 'app-home',
@@ -49,17 +50,15 @@ export class HomePage implements OnInit {
     public userService: UserService,
     private router: Router,
     public auth: AuthService,
-    private readonly modalCtrl: ModalController,
-    private readonly actionSheetCtrl: ActionSheetController,
     public location: LocationService,
     private injector: Injector,
     private viewContainerRef: ViewContainerRef,
+    private modalService: ModalService,
   ) {
     if (!userService.loggedIn) {
       this.router.navigate(['/launch']); // TODO: Maybe handle this in a router guard or something like that
       return;
     }
-    this.modalCtrl = modalCtrl;
   }
 
   ngOnInit() {
@@ -147,59 +146,50 @@ export class HomePage implements OnInit {
     }
   }
 
-  changeEquipmentForLocationFunc(location: RealmLocation) {
-    return async () => {
-      if (this.modal) {
-        await this.modalCtrl.dismiss();
-      }
-      await this.openCharacterModal(() => {
-        this.openLocationModal(location)
-      })
-    }
-  }
-
   async openLocationModal(location: RealmLocation) {
     this.analytics.events.viewLocation({location: location})
 
-    try {
-      const modalComponentMap: { [key in LocationType]?: any } = {
-        [LocationType.Dungeon]: DungeonModalComponent,
-        [LocationType.Npc]: NpcModalComponent,
-        [LocationType.Base]: BaseModalComponent,
-        [LocationType.Runestone]: RunestoneModalComponent,
-        [LocationType.LeyLine]: LeyLineModalComponent,
-        // Extend with other mappings as necessary
-      };
+    const modalComponentMap: { [key in LocationType]?: any } = {
+      [LocationType.Dungeon]: DungeonModalComponent,
+      [LocationType.Npc]: NpcModalComponent,
+      [LocationType.Base]: BaseModalComponent,
+      [LocationType.Runestone]: RunestoneModalComponent,
+      [LocationType.LeyLine]: LeyLineModalComponent,
+      // Extend with other mappings as necessary
+    };
 
-      const component = modalComponentMap[location.type];
-      if (!component) {
-        throw new Error(`No modal component mapped for location type: ${location.type}`);
-      }
-
-      let modalOpts: ModalOptions = {
-        component: component,
-        componentProps: {
-          modal: this.modal,
-          refreshMap: this.loadRealmData,
-          locationId: location.id,
-          openCharacterModal: this.changeEquipmentForLocationFunc(location),
-        },
-      }
-
-      if (location.type === LocationType.Dungeon) {
-        modalOpts = { ...modalOpts, breakpoints: [0, 0.60, 0.85], initialBreakpoint: 0.60 };
-      }
-
-      if (location.type === LocationType.LeyLine) {
-        modalOpts = { ...modalOpts, breakpoints: [0, 0.60, 0.85], initialBreakpoint: 0.60 };
-      }
-
-      this.modal = await this.modalCtrl.create(modalOpts);
-      await this.modal.present();
-    } catch (error) {
-      console.error(error);
-      // TODO: display error feedback to the user
+    const component = modalComponentMap[location.type];
+    if (!component) {
+      throw new Error(`No modal component mapped for location type: ${location.type}`);
     }
+
+    let modalOpts: ModalOptions = {
+      component: component,
+      componentProps: {
+        modal: this.modal,
+        refreshMap: this.loadRealmData,
+        locationId: location.id,
+        openCharacterModal: async () => {
+          if (this.modal) {
+            await this.modalService.dismiss();
+          }
+          await this.openCharacterModal(() => {
+            this.openLocationModal(location)
+          })
+        },
+      },
+    }
+
+    if (location.type === LocationType.Dungeon) {
+      modalOpts = { ...modalOpts, breakpoints: [0, 0.60, 0.85], initialBreakpoint: 0.60 };
+    }
+
+    if (location.type === LocationType.LeyLine) {
+      modalOpts = { ...modalOpts, breakpoints: [0, 0.60, 0.85], initialBreakpoint: 0.60 };
+    }
+
+    this.modal = await this.modalService.new(modalOpts);
+    await this.modal.present();
   }
 
   async openInventoryModal() {
@@ -207,59 +197,42 @@ export class HomePage implements OnInit {
   }
 
   async openJournalModal() {
-    try {
-      this.modal = await this.modalCtrl.create({
-        component: JournalModalComponent,
-      });
-      await this.modal.present();
-    }
-    catch (error) {
-      console.error(error)
-    }
+    this.modal = await this.modalService.new({ component: JournalModalComponent });
+    await this.modal.present();
   }
 
   async openCharacterModal(dismissCallback:any=null) {
-    try {
-      this.modal = await this.modalCtrl.create({
-        component: CharacterModalComponent,
-        componentProps: {
-          dismissCallback: dismissCallback
-        },
-      });
-      await this.modal.present();
-    }
-    catch (error) {
-      console.error(error)
-    }
+    this.modal = await this.modalService.new({
+      component: CharacterModalComponent,
+      componentProps: {
+        dismissCallback: dismissCallback
+      },
+    });
+    await this.modal.present();
   }
 
   async openConstructionModal() {
-    try {
-      this.modal = await this.modalCtrl.create({
-        component: ConstructionModalComponent,
-        cssClass: 'floating-modal',
-        showBackdrop: true,
-        backdropDismiss: false,
-        componentProps: {
-          openBaseModal: async () => {
-            await this.modalCtrl.dismiss();
-            const modalOpts: ModalOptions = {
-              component: BaseModalComponent,
-              componentProps: {
-                refreshMap: this.loadRealmData,
-                createLocation: true, // This tells the modal controller that it needs to create a new base
-              },
-            }
-            this.modal = await this.modalCtrl.create(modalOpts);
-            await this.modal.present();
+    this.modal = await this.modalService.new({
+      component: ConstructionModalComponent,
+      cssClass: 'floating-modal',
+      showBackdrop: true,
+      backdropDismiss: false,
+      componentProps: {
+        openBaseModal: async () => {
+          await this.modal?.dismiss();
+          const modalOpts: ModalOptions = {
+            component: BaseModalComponent,
+            componentProps: {
+              refreshMap: this.loadRealmData,
+              createLocation: true, // This tells the modal controller that it needs to create a new base
+            },
           }
+          this.modal = await this.modalService.new(modalOpts);
+          await this.modal.present();
         }
-      });
-      await this.modal.present();
-    }
-    catch (error) {
-      console.error(error)
-    }
+      }
+    });
+    await this.modal.present();
   }
 
   async handleMarkerClick(location: RealmLocation) {
@@ -290,12 +263,12 @@ export class HomePage implements OnInit {
   }
 
   async openSettings() {
-    this.modal = await this.modalCtrl.create({
+    this.modal = await this.modalService.new({
       component: SettingsPage,
       cssClass: 'settings-drawer-modal',
       enterAnimation: openDrawerAnimation,
       leaveAnimation: closeDrawerAnimation,
     });
-    return await this.modal.present();
+    await this.modal.present();
   }
 }

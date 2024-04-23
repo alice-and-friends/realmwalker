@@ -41,7 +41,7 @@ export class DungeonModalComponent extends AbstractLocationModalComponent implem
         this.battleResult = battleResult;
 
         // Display battle results
-        this.battleResultModal = await this.modalCtrl.create({
+        this.battleResultModal = await this.modalService.new({
           component: BattleResultModalComponent,
           cssClass: 'floating-modal',
           showBackdrop: true,

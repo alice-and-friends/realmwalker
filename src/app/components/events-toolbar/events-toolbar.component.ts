@@ -1,7 +1,7 @@
 import {Component, Input} from '@angular/core';
 import {RealmEvent} from "../../models/realm-event";
-import {ModalController} from "@ionic/angular";
 import {EventModalComponent} from "../../pages/home/event-modal/event-modal.component";
+import {ModalService} from "../../services/modal.service";
 
 @Component({
   selector: 'app-events-toolbar',
@@ -12,24 +12,19 @@ export class EventsToolbarComponent {
   @Input() active!: RealmEvent[];
   modal: HTMLIonModalElement | undefined
 
-  constructor(private modalCtrl: ModalController) { }
+  constructor(private modalService: ModalService) { }
 
   async openEventModal(event: RealmEvent) {
-    try {
-      this.modal = await this.modalCtrl.create({
-        component: EventModalComponent,
-        cssClass: 'floating-modal',
-        showBackdrop: true,
-        backdropDismiss: false,
-        componentProps: {
-          event: event,
-        }
-      });
-      await this.modal.present();
-    }
-    catch (error) {
-      console.error(error)
-    }
+    this.modal = await this.modalService.new({
+      component: EventModalComponent,
+      cssClass: 'floating-modal',
+      showBackdrop: true,
+      backdropDismiss: false,
+      componentProps: {
+        event: event,
+      }
+    });
+    await this.modal.present();
   }
 
   showEventDetails(event: RealmEvent) {

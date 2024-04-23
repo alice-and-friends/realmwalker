@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import {AlertController, IonicSafeString, ModalController} from "@ionic/angular";
+import {AlertController, IonicSafeString} from "@ionic/angular";
 import {ApiService} from "../../../services/api.service";
 import {InventoryItem} from "../../../models/inventory-item";
 import {UserService} from "../../../services/user.service";
 import {User} from "../../../models/user";
 import {Inventory} from "../../../models/inventory";
+import {ModalService} from "../../../services/modal.service";
 
 @Component({
   selector: 'app-character-modal',
@@ -18,7 +19,7 @@ export class CharacterModalComponent  implements OnInit {
   dismissCallback: any
 
   constructor(
-    private modalCtrl: ModalController,
+    private modalService: ModalService,
     private alertController:AlertController,
     private api: ApiService,
     public userService: UserService
@@ -99,7 +100,7 @@ export class CharacterModalComponent  implements OnInit {
   }
 
   cancel() {
-    this.modalCtrl.dismiss('cancel').then(r => {
+    this.modalService.dismiss().then((r: any) => {
       if (this.dismissCallback) this.dismissCallback()
     });
   }

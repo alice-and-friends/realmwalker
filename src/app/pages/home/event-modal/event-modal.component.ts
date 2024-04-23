@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import {RealmEvent} from "../../../models/realm-event";
-import {ModalController} from "@ionic/angular";
+import {ModalService} from "../../../services/modal.service";
 
 @Component({
   selector: 'app-event-modal',
@@ -10,9 +10,9 @@ import {ModalController} from "@ionic/angular";
 export class EventModalComponent {
   event!: RealmEvent
 
-  constructor(private modalCtrl: ModalController) { }
+  constructor(private modalService: ModalService) { }
 
   async close() {
-    await this.modalCtrl.dismiss('cancel');
+    await this.modalService.dismiss();
   }
 }

@@ -1,8 +1,8 @@
 import {Directive, OnInit} from '@angular/core';
-import { ModalController } from '@ionic/angular';
 import {ApiService} from "../../../services/api.service";
 import {NotificationService} from "../../../services/notification.service";
 import {AnalyticsService} from "../../../services/analytics.service";
+import {ModalService} from "../../../services/modal.service";
 
 @Directive() // Using @Directive() since Angular doesn't allow @Component on abstract classes
 export abstract class AbstractLocationModalComponent implements OnInit {
@@ -15,7 +15,7 @@ export abstract class AbstractLocationModalComponent implements OnInit {
 
   constructor(
     public analytics: AnalyticsService,
-    protected modalCtrl: ModalController,
+    protected modalService: ModalService,
     protected api: ApiService,
     public notifications: NotificationService,
   ) {}
@@ -25,7 +25,7 @@ export abstract class AbstractLocationModalComponent implements OnInit {
   }
 
   returnToMap() {
-    this.modalCtrl.dismiss().catch((error) => console.error('Error closing modal', error));
+    this.modalService.dismiss()
   }
 
   abstract loadData(): void;
