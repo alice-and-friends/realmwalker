@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import {ModalController} from "@ionic/angular";
+import {AnalyticsService} from "../../../services/analytics.service";
 
 @Component({
   selector: 'app-battle-result-modal',
@@ -14,9 +15,10 @@ export class ConstructionModalComponent {
   cancelAction = 'Maybe later'
   openBaseModal!: Function
 
-  constructor(private modalCtrl: ModalController) {}
+  constructor(private analytics: AnalyticsService, private modalCtrl: ModalController) {}
 
   constructBase() {
+    this.analytics.events.buildBase()
     this.openBaseModal();
   }
 

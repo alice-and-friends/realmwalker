@@ -1,12 +1,35 @@
 import { Injectable } from '@angular/core';
 import { environment as env } from '../../environments/environment';
+import {Capacitor} from "@capacitor/core";
+import {RealmLocation} from "../models/realm-location";
+import {Monster} from "../models/monster";
+
+
+interface AnalyticsEventParams {
+  platform?: string,
+  value?: number;
+  method?: string;
+
+  locationId?: string;
+  locationName?: string;
+  locationLevel?: string|number|undefined;
+  locationType?: string|number|undefined;
+
+  monsterId?: string|number;
+  monsterName?: string;
+  monsterLevel?: string|number|undefined;
+}
 
 @Injectable({
   providedIn: 'root'
 })
 export class AnalyticsService {
+  platform: string = ''
+  events: AnalyticsEvents;
 
   constructor() {
+    this.platform = Capacitor.getPlatform();
+    this.events = new AnalyticsEvents(this);
     this.initGA();
   }
 
@@ -26,14 +49,59 @@ export class AnalyticsService {
       });
     }
   }
-
+  public setUserId(userId: number|string): void {
+    window.gtag('config', env.googleAnalytics.trackingId, {
+      'user_id': userId,
+    });
+  }
   public trackPageView(url: string): void {
     window.gtag('config', env.googleAnalytics.trackingId, {
       'page_path': url,
     });
   }
+  public trackEvent(eventName: string, eventParams: AnalyticsEventParams = {}): void {
+    const snakeCase = /^[a-z0-9]+(_[a-z0-9]+)*$/;
+    if (!snakeCase.test(eventName)) {
+      console.error('Invalid event name: ' + eventName);
+      return;
+    }
 
-  public trackEvent(eventName: string, eventParams: any): void {
+    eventParams.platform = this.platform;
     window.gtag('event', eventName, eventParams);
+  }
+}
+
+class AnalyticsEvents {
+  constructor(private analytics: AnalyticsService) {}
+
+  login(): void {
+    this.analytics.trackEvent('log_in');
+  }
+  logout(): void {
+    this.analytics.trackEvent('log_out');
+  }
+  viewLocation(params: { location: RealmLocation }): void {
+    this.analytics.trackEvent('view_location', {
+      locationId: params.location.id,
+      locationType: params.location.type,
+      locationName: params.location.name,
+      locationLevel: params.location.level,
+    });
+  }
+  battle(params: { location: RealmLocation, monster: Monster }): void {
+    this.analytics.trackEvent('battle', {
+      locationId: params.location.id,
+      locationName: params.location.name,
+      locationLevel: params.location.level,
+      monsterId: params.monster.id,
+      monsterName: params.monster.name,
+      monsterLevel: params.monster.level,
+    });
+  }
+  buildBase(): void {
+    this.analytics.trackEvent('build_base');
+  }
+  collectRunestone(): void {
+    this.analytics.trackEvent('collect_runestone');
   }
 }

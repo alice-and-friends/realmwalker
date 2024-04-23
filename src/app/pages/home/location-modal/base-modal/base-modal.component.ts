@@ -8,6 +8,7 @@ import {UserService} from "../../../../services/user.service";
 import {User} from "../../../../models/user";
 import {InventoryItem} from "../../../../models/inventory-item";
 import {AbstractLocationModalComponent} from "../location-modal.component";
+import {AnalyticsService} from "../../../../services/analytics.service";
 
 @Component({
   selector: 'app-base-modal',
@@ -21,12 +22,13 @@ export class BaseModalComponent extends AbstractLocationModalComponent implement
   createLocation: boolean = false
 
   constructor(
+    public override analytics: AnalyticsService,
     protected override modalCtrl: ModalController,
     protected override api: ApiService,
     public override notifications: NotificationService,
     public userService: UserService,
   ) {
-    super(modalCtrl, api, notifications)
+    super(analytics, modalCtrl, api, notifications)
     this.user = userService.activeUser!
   }
 

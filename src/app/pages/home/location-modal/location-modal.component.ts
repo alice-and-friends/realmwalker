@@ -2,6 +2,7 @@ import {Directive, OnInit} from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import {ApiService} from "../../../services/api.service";
 import {NotificationService} from "../../../services/notification.service";
+import {AnalyticsService} from "../../../services/analytics.service";
 
 @Directive() // Using @Directive() since Angular doesn't allow @Component on abstract classes
 export abstract class AbstractLocationModalComponent implements OnInit {
@@ -13,6 +14,7 @@ export abstract class AbstractLocationModalComponent implements OnInit {
   refreshMap!: Function
 
   constructor(
+    public analytics: AnalyticsService,
     protected modalCtrl: ModalController,
     protected api: ApiService,
     public notifications: NotificationService,

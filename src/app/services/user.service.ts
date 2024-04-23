@@ -2,17 +2,21 @@ import { Injectable } from '@angular/core';
 import {User, UserPreferences} from "../models/user";
 import {ApiService} from "./api.service";
 import {Router} from "@angular/router";
-import {AuthService} from "@auth0/auth0-angular";
+import {AnalyticsService} from "./analytics.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-
   public loggedIn = false;
   public activeUser: User | undefined;
 
-  constructor(private api: ApiService, private router: Router, private auth: AuthService) {}
+  constructor(private api: ApiService, private router: Router, private analytics: AnalyticsService) {}
+
+  setActiveUser(userObject: User) {
+    this.activeUser = userObject
+    this.analytics.setUserId(userObject.id)
+  }
 
   logout() {
     this.activeUser = undefined;
@@ -24,8 +28,7 @@ export class UserService {
     console.info('User service starting login procedure')
     this.api.me().subscribe({
       next: (response: any) => {
-        console.log('API returned user object')
-        this.activeUser = response;
+        this.setActiveUser(response);
         this.loggedIn = true;
         console.debug('User service redirecting to home route')
         this.router.navigate(['/home'])

@@ -21,7 +21,6 @@ import {RealmEvent} from "../models/realm-event";
   providedIn: 'root'
 })
 export class ApiService {
-
   constructor(private http: HttpClient) { }
 
   private url: string = env.realmwalkerApi.host;

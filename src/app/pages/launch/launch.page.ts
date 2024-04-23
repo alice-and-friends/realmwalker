@@ -5,6 +5,7 @@ import {LocationService} from "../../services/location.service";
 import {Browser} from "@capacitor/browser";
 import { environment as env } from '../../../environments/environment';
 import {Capacitor} from "@capacitor/core";
+import {AnalyticsService} from "../../services/analytics.service";
 
 @Component({
   selector: 'app-launch',
@@ -12,9 +13,11 @@ import {Capacitor} from "@capacitor/core";
   styleUrls: ['./launch.page.scss'],
 })
 export class LaunchPage {
-  constructor(public auth: AuthService, public userService: UserService, public location: LocationService) { }
+  constructor(private analytics: AnalyticsService, public auth: AuthService, public userService: UserService, public location: LocationService) { }
 
   handleLogin(): void {
+    this.analytics.events.login()
+
     if (!this.location.permissionsGranted()) {
       alert("Unable to log in. Please check location permissions.");
       return;

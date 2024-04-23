@@ -34,6 +34,7 @@ export class DungeonModalComponent extends AbstractLocationModalComponent implem
   }
 
   battle() {
+    this.analytics.events.battle({location: this.locationObject, monster: this.locationObject.monster})
     this.loading = true
     this.api.battle(this.locationId)
       .subscribe(async (battleResult: any) => {

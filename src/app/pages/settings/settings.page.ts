@@ -7,6 +7,7 @@ import {Router} from "@angular/router";
 import {environment as env} from "../../../environments/environment";
 import {Browser} from "@capacitor/browser";
 import {Capacitor} from "@capacitor/core";
+import {AnalyticsService} from "../../services/analytics.service";
 
 @Component({
   selector: 'app-settings',
@@ -18,7 +19,13 @@ export class SettingsPage {
   activeUser: User | undefined;
   platform = Capacitor.getPlatform();
 
-  constructor(protected modalCtrl: ModalController, public userService: UserService, private auth: AuthService, private router: Router) {
+  constructor(
+    public userService: UserService,
+    protected modalCtrl: ModalController,
+    private analytics: AnalyticsService,
+    private auth: AuthService,
+    private router: Router
+  ) {
     this.activeUser = userService.activeUser
   }
 
@@ -31,6 +38,8 @@ export class SettingsPage {
   }
 
   logout() {
+    this.analytics.events.logout()
+
     if (this.platform === 'web') {
       this.auth.logout({ logoutParams: { returnTo: document.location.origin } })
     }

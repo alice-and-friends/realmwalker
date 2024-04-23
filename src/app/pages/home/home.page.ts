@@ -21,6 +21,7 @@ import { openDrawerAnimation, closeDrawerAnimation } from '../../animations/draw
 import {LeyLineModalComponent} from "./location-modal/ley-line-modal/ley-line-modal.component";
 import {JournalModalComponent} from "./journal-modal/journal-modal.component";
 import {RealmEvent} from "../../models/realm-event";
+import {AnalyticsService} from "../../services/analytics.service";
 
 @Component({
   selector: 'app-home',
@@ -43,6 +44,7 @@ export class HomePage implements OnInit {
   activeEvents: RealmEvent[] = []
 
   constructor(
+    private analytics: AnalyticsService,
     public api: ApiService,
     public userService: UserService,
     private router: Router,
@@ -157,6 +159,8 @@ export class HomePage implements OnInit {
   }
 
   async openLocationModal(location: RealmLocation) {
+    this.analytics.events.viewLocation({location: location})
+
     try {
       const modalComponentMap: { [key in LocationType]?: any } = {
         [LocationType.Dungeon]: DungeonModalComponent,

@@ -19,6 +19,7 @@ export class RunestoneModalComponent extends AbstractLocationModalComponent impl
   }
 
   addToJournal() {
+    this.analytics.events.collectRunestone();
     this.locationObject!.discovered = true; // Optimistic update
     this.api.addRunestoneToJournal(this.locationId).subscribe({
       next: (data: Runestone) => {
