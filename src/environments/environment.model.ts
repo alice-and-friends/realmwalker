@@ -6,6 +6,7 @@ export interface GoogleAnalyticsConfig {
 
 export interface MapboxConfig {
   accessToken: string;
+  style: string;
 }
 
 export interface Auth0AuthorizationParams {

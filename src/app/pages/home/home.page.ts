@@ -72,7 +72,7 @@ export class HomePage implements OnInit {
     (mapboxgl.accessToken as any) = env.mapbox.accessToken;
     this.map = new mapboxgl.Map({
       container: 'map',
-      style: 'mapbox://styles/alicecyan/clgs324md001m01qye8obgx8p',
+      style: env.mapbox.style,
       zoom: 12,
       maxZoom: 18,
       // minZoom: 8,

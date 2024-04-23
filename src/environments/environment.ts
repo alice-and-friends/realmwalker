@@ -12,7 +12,8 @@ export const environment: RealmWalkerEnvironment = {
     trackingId: 'G-DVEFFNQGV8',
   },
   mapbox: {
-    accessToken: 'pk.eyJ1IjoiYWxpY2VjeWFuIiwiYSI6ImNsZ3FyenlwNjBzcTczb21yZHBzdnhkYmUifQ.fRSbavjs74FfwfMunA6qSg'
+    accessToken: 'pk.eyJ1IjoiYWxpY2VjeWFuIiwiYSI6ImNsZ3FyenlwNjBzcTczb21yZHBzdnhkYmUifQ.fRSbavjs74FfwfMunA6qSg',
+    style: 'mapbox://styles/alicecyan/clgs324md001m01qye8obgx8p',
   },
   auth0: {
     appId: 'app.realmwalker',
@@ -24,7 +25,7 @@ export const environment: RealmWalkerEnvironment = {
     authorizationParams: {
       audience: 'dev-realmwalker',
       redirect_uri: platform === 'web' ? window.location.origin : `${config.appId}://dev-realmwalker.eu.auth0.com/capacitor/${config.appId}/callback`,
-      scope: 'openid profile email offline_access'
+      scope: 'openid profile email offline_access',
     },
   },
   realmwalkerApi: {
