@@ -6,7 +6,7 @@ export interface GoogleAnalyticsConfig {
 
 export interface MapboxConfig {
   accessToken: string;
-  style: string;
+  styleUrl: string;
 }
 
 export interface Auth0AuthorizationParams {
@@ -31,6 +31,10 @@ export interface RealmWalkerAPIConfig {
 
 export interface RealmWalkerConfig {
   mapRefreshRate: number;
+  zoom: number;
+  minZoom?: number;
+  maxZoom?: number;
+  pitch?: number;
 }
 
 export interface RealmWalkerEnvironment {

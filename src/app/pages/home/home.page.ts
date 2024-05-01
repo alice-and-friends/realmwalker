@@ -1,4 +1,4 @@
-import {Component, Injector, OnInit, ViewContainerRef, ViewEncapsulation} from '@angular/core';
+import {Component, Injector, OnDestroy, OnInit, ViewContainerRef, ViewEncapsulation} from '@angular/core';
 import * as mapboxgl from "mapbox-gl";
 import {environment as env} from "../../../environments/environment";
 import {ApiService} from "../../services/api.service";
@@ -23,6 +23,7 @@ import {RealmEvent} from "../../models/realm-event";
 import {AnalyticsService} from "../../services/analytics.service";
 import {ModalOptions} from "@ionic/angular";
 import {ModalService} from "../../services/modal.service";
+import {MapService} from "../../services/map.service";
 
 @Component({
   selector: 'app-home',
@@ -30,7 +31,7 @@ import {ModalService} from "../../services/modal.service";
   styleUrls: ['home.page.scss'],
   encapsulation: ViewEncapsulation.None,
 })
-export class HomePage implements OnInit {
+export class HomePage implements OnInit, OnDestroy {
   // General ui
   presentingElement: any = null;
   modal: HTMLIonModalElement | undefined
@@ -38,22 +39,24 @@ export class HomePage implements OnInit {
   // Map
   map: mapboxgl.Map | undefined;
   mapMarkers: Marker[] = []
-  loadRealmData: any
+  // loadRealmData: any
   timer: any
 
-  // Events
+  // Realm data
   activeEvents: RealmEvent[] = []
+  locations: RealmLocation[] = []
 
   constructor(
-    private analytics: AnalyticsService,
     public api: ApiService,
-    public userService: UserService,
-    private router: Router,
     public auth: AuthService,
     public location: LocationService,
+    public mapService: MapService,
+    public userService: UserService,
+    private router: Router,
+    private analytics: AnalyticsService,
     private injector: Injector,
-    private viewContainerRef: ViewContainerRef,
     private modalService: ModalService,
+    private viewContainerRef: ViewContainerRef,
   ) {
     if (!userService.loggedIn) {
       this.router.navigate(['/launch']); // TODO: Maybe handle this in a router guard or something like that
@@ -63,15 +66,62 @@ export class HomePage implements OnInit {
 
   ngOnInit() {
     console.debug('Init home view. User location:', this.location.latitude, this.location.longitude);
-    this.initializeMap()
+
+    this.loadRealmData();
+
+    let userLocation: [number, number] = [this.location.longitude, this.location.latitude]
+    this.mapService.initializeMap('mapContainer', userLocation, 10).then((map: any) => {
+      this.map = map;
+      console.log('Map is fully loaded');
+
+      this.applyMarkers();
+
+      if (env.realmWalker.mapRefreshRate) {
+        // Refresh map every n seconds
+        this.timer = setInterval(this.loadRealmData.bind(this), env.realmWalker.mapRefreshRate * 1_000);
+      }
+
+    }).catch(error => {
+      console.error('Error initializing map:', error);
+    });
   }
 
+  loadRealmData() {
+    this.api.home().subscribe((data: any) => {
+      this.activeEvents = data.events.active;
+      this.locations = data.locations
+
+      if (this.mapAvailable()) {
+        this.applyMarkers();
+      }
+    })
+  }
+
+  applyMarkers() {
+    if (!this.mapAvailable()) return;
+
+    this.mapService.clearAllMarkers();
+    this.locations.forEach((location: RealmLocation) => {
+      this.addMarker(location);
+    });
+    console.debug('Load markers completed.')
+  }
+
+  mapAvailable(): boolean {
+    return this.map instanceof mapboxgl.Map
+  }
+
+  ngOnDestroy(): void {
+    this.mapService.clearAllMarkers(); // Clean up markers when component is destroyed
+  }
+
+  /*
   initializeMap() {
     // Mapbox config
     (mapboxgl.accessToken as any) = env.mapbox.accessToken;
     this.map = new mapboxgl.Map({
       container: 'map',
-      style: env.mapbox.style,
+      style: env.mapbox.styleUrl,
       zoom: 12,
       maxZoom: 18,
       // minZoom: 8,
@@ -145,6 +195,7 @@ export class HomePage implements OnInit {
       this.timer = setInterval(this.loadRealmData, env.realmWalker.mapRefreshRate * 1_000);
     }
   }
+  */
 
   async openLocationModal(location: RealmLocation) {
     this.analytics.events.viewLocation({location: location})
@@ -240,7 +291,7 @@ export class HomePage implements OnInit {
   }
 
   addMarker(location: any) {
-    if (!(this.map instanceof mapboxgl.Map)) {
+    if (!this.mapAvailable()) {
       throw('this.map is not an instance of mapboxgl.Map')
     }
 
@@ -249,17 +300,9 @@ export class HomePage implements OnInit {
     componentRef.instance.location = location;
     componentRef.instance.onClick = this.handleMarkerClick.bind(this);
 
-    const domElem = (componentRef.location.nativeElement as HTMLElement);
+    const domElement = (componentRef.location.nativeElement as HTMLElement);
 
-    // Use this domElem as the element for the Mapbox marker
-    let marker = new mapboxgl.Marker(domElem)
-      .setLngLat([location.coordinates.longitude, location.coordinates.latitude])
-      .addTo(this.map);
-
-    // Pass a function to the component that allows it to destroy the marker
-    componentRef.instance.removeMarker = marker.remove.bind(marker);
-
-    this.mapMarkers.push(marker);
+    this.mapService.addMarker(location.coordinates.latitude, location.coordinates.longitude, domElement)
   }
 
   async openSettings() {

@@ -35,6 +35,7 @@ export class LocationService {
       const { coords } = await Geolocation.getCurrentPosition(this.positionOptions)
       this.latitude = coords.latitude;
       this.longitude = coords.longitude;
+      console.debug('Location permissions good ✅')
     }
     catch(err) {
       console.error(err)

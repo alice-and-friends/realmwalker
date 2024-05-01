@@ -13,6 +13,7 @@ import {RealmwalkerApiInterceptor} from "./services/realmwalker-api-interceptor.
 import {NotificationService} from "./services/notification.service";
 import {UserService} from "./services/user.service";
 import {LocationService} from "./services/location.service";
+import {MapService} from "./services/map.service";
 
 @NgModule({
   declarations: [AppComponent],
@@ -50,7 +51,7 @@ import {LocationService} from "./services/location.service";
       provide: HTTP_INTERCEPTORS,
       useClass: RealmwalkerApiInterceptor,
       multi: true,
-      deps: [NotificationService, UserService, LocationService]
+      deps: [NotificationService, UserService, LocationService, MapService]
     },
   ],
   bootstrap: [AppComponent],

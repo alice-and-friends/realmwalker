@@ -13,7 +13,7 @@ export const environment: RealmWalkerEnvironment = {
   },
   mapbox: {
     accessToken: 'pk.eyJ1IjoiYWxpY2VjeWFuIiwiYSI6ImNsZ3FyenlwNjBzcTczb21yZHBzdnhkYmUifQ.fRSbavjs74FfwfMunA6qSg',
-    style: 'mapbox://styles/alicecyan/clgs324md001m01qye8obgx8p',
+    styleUrl: 'mapbox://styles/alicecyan/clgs324md001m01qye8obgx8p',
   },
   auth0: {
     appId: 'app.realmwalker',
@@ -33,5 +33,7 @@ export const environment: RealmWalkerEnvironment = {
   },
   realmWalker: {
     mapRefreshRate: 0, // Every n seconds
+    zoom: 15.5,
+    minZoom: 10,
   },
 };
