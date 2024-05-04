@@ -122,7 +122,7 @@ export class MapMarkerComponent  implements OnInit {
           case ShopType.Armorer:
             return '#989aa2'
           case ShopType.Castle:
-            return '#7f8279'
+            return '#3880ff'
           case ShopType.Jeweller:
             return '#3880ff'
           case ShopType.Magic:
@@ -151,7 +151,9 @@ export class MapMarkerComponent  implements OnInit {
         if (svgElement) {
           if (fillColor) {
             svgElement.querySelectorAll('path').forEach(path => {
-              path.setAttribute('fill', fillColor);
+              if (!path.getAttribute('fill')) { // Only set fill color if it's not already set
+                path.setAttribute('fill', fillColor);
+              }
             });
           }
           const serializer = new XMLSerializer();

@@ -14,9 +14,11 @@ export class ItemsPage implements OnInit {
   itemTypes: any = new Set()
   lines: string[] = []
   standardPriceRange: any = {
-    'common': [1, 150],
+    'always': [1, 500],
+    'very_common': [1, 500],
+    'common': [1, 500],
     'uncommon': [100, 10_000],
-    'rare': [1_000, 50_000],
+    'rare': [500, 50_000],
     'epic': [50_000, 100_000],
   }
 
