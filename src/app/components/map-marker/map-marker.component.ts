@@ -45,8 +45,6 @@ export class MapMarkerComponent  implements OnInit {
     switch (this.location.type) {
       case LocationType.Base:
         return `${dir}/location/base.svg`;
-      case LocationType.Castle:
-        return `${dir}/location/castle.svg`;
       case LocationType.Dungeon:
         if (this.location.status === LocationStatus.Defeated) {
           return `${dir}/banner.svg`;
@@ -58,6 +56,8 @@ export class MapMarkerComponent  implements OnInit {
       case LocationType.Npc:
         const shopType = this.location.npcDetails!.shopType!;
         if (Object.values(ShopType).includes(shopType)) {
+          if (shopType == 'alchemist') return `${dir}/location/observatory.svg`;
+          if (shopType == 'druid') return `${dir}/location/treehouse.svg`;
           return `${dir}/location/${shopType.toLowerCase()}.svg`;
         }
         break; // Break here if shopType doesn't match known types
@@ -76,8 +76,14 @@ export class MapMarkerComponent  implements OnInit {
       case LocationType.Base:
         return defaultSize + 10;
       case LocationType.Npc:
+        if (this.location.npcDetails?.shopType === ShopType.Alchemist) {
+          return defaultSize + 6;
+        }
         if (this.location.npcDetails?.shopType === ShopType.Castle) {
           return defaultSize + 10;
+        }
+        if (this.location.npcDetails?.shopType === ShopType.Druid) {
+          return defaultSize + 11;
         }
         else {
           return defaultSize;
@@ -123,6 +129,8 @@ export class MapMarkerComponent  implements OnInit {
             return '#989aa2'
           case ShopType.Castle:
             return '#3880ff'
+          case ShopType.Equipment:
+            return '#9b7466'
           case ShopType.Jeweller:
             return '#3880ff'
           case ShopType.Magic:

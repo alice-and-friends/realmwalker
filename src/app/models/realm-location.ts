@@ -4,7 +4,6 @@ import {Monster} from "./monster";
 
 export enum LocationType {
   Base = 'Base',
-  Castle = 'Castle',
   Dungeon = 'Dungeon',
   LeyLine = 'LeyLine',
   Npc = 'Npc',

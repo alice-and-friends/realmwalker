@@ -1,4 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
+import {UserService} from "../../services/user.service";
 
 @Component({
   selector: 'app-modal-header',
@@ -15,10 +16,14 @@ export class ModalHeaderComponent implements OnInit {
   @Input() description?: string
   @Input() quote?: string
 
-  constructor() { }
+  constructor(private userService: UserService) { }
 
   ngOnInit(): void {
     this.iconColor = this.iconColor || this.defaultColor;
     this.titleColor = this.titleColor || this.defaultColor;
+    if (this.quote) {
+      let userName = this.userService.activeUser!.name;
+      this.quote = this.quote.replace('%user_name%', userName)
+    }
   }
 }

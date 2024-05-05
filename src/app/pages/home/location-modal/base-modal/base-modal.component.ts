@@ -18,19 +18,7 @@ import {ModalService} from "../../../../services/modal.service";
 export class BaseModalComponent extends AbstractLocationModalComponent implements OnInit {
   inventory: Inventory | undefined
   inventoryView: 'inventory'|'storage' = 'inventory'
-  user: User
   createLocation: boolean = false
-
-  constructor(
-    public override analytics: AnalyticsService,
-    protected override modalService: ModalService,
-    protected override api: ApiService,
-    public override notifications: NotificationService,
-    public userService: UserService,
-  ) {
-    super(analytics, modalService, api, notifications)
-    this.user = userService.activeUser!
-  }
 
   async loadData() {
     this.loading = true;
