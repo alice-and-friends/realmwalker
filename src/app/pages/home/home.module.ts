@@ -20,6 +20,7 @@ import {LeyLineModalComponent} from "./location-modal/ley-line-modal/ley-line-mo
 import {JournalModalComponent} from "./journal-modal/journal-modal.component";
 import {EventsToolbarComponent} from "../../components/events-toolbar/events-toolbar.component";
 import {EventModalComponent} from "./event-modal/event-modal.component";
+import {RenewableModalComponent} from "./location-modal/renewable-modal/renewable-modal.component";
 
 
 @NgModule({
@@ -46,6 +47,7 @@ import {EventModalComponent} from "./event-modal/event-modal.component";
     ItemIconComponent,
     EventsToolbarComponent,
     EventModalComponent,
+    RenewableModalComponent,
   ]
 })
 export class HomePageModule {}

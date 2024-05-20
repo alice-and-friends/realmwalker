@@ -31,7 +31,9 @@ export class UserService {
         this.setActiveUser(response);
         this.loggedIn = true;
         console.debug('User service redirecting to home route')
-        this.router.navigate(['/home'])
+        if(!this.router.url.includes('compendium')) {
+          this.router.navigate(['/home'])
+        }
       },
       error: (err: any) => {
         console.error('Error on login', err)

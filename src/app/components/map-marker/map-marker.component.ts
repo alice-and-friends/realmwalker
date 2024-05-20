@@ -3,6 +3,7 @@ import {LocationStatus, LocationType, RealmLocation} from "../../models/realm-lo
 import {ShopType} from "../../models/npc";
 import {DomSanitizer, SafeHtml} from "@angular/platform-browser";
 import {UserService} from "../../services/user.service";
+import {RenewableType} from "../../models/renewable";
 
 @Component({
   selector: 'app-map-marker',
@@ -54,13 +55,21 @@ export class MapMarkerComponent  implements OnInit {
       case LocationType.LeyLine:
         return `${dir}/location/ley-line.svg`;
       case LocationType.Npc:
-        const shopType = this.location.npcDetails!.shopType!;
+        const shopType: ShopType = this.location.shopType!;
         if (Object.values(ShopType).includes(shopType)) {
-          if (shopType == 'alchemist') return `${dir}/location/observatory.svg`;
-          if (shopType == 'druid') return `${dir}/location/treehouse.svg`;
-          return `${dir}/location/${shopType.toLowerCase()}.svg`;
+          if (shopType == ShopType.Alchemist) return `${dir}/location/observatory.svg`;
+          if (shopType == ShopType.Druid) return `${dir}/location/treehouse.svg`;
+          return `${dir}/location/${shopType}.svg`;
         }
         break; // Break here if shopType doesn't match known types
+      case LocationType.Renewable:
+        const renewableType: RenewableType = this.location.renewableType!;
+        if (Object.values(RenewableType).includes(renewableType)) {
+          if (renewableType == RenewableType.Mine) return `${dir}/location/mine.svg`;
+          if (renewableType == RenewableType.FlowerForest) return `${dir}/location/flower_forest.svg`;
+          return `${dir}/location/${renewableType}.svg`;
+        }
+        break; // Break here if renewableType doesn't match known types
       case LocationType.Runestone:
         return `${dir}/location/runestone.svg`;
     }
@@ -76,13 +85,13 @@ export class MapMarkerComponent  implements OnInit {
       case LocationType.Base:
         return defaultSize + 10;
       case LocationType.Npc:
-        if (this.location.npcDetails?.shopType === ShopType.Alchemist) {
+        if (this.location.shopType === ShopType.Alchemist) {
           return defaultSize + 6;
         }
-        if (this.location.npcDetails?.shopType === ShopType.Castle) {
+        if (this.location.shopType === ShopType.Castle) {
           return defaultSize + 10;
         }
-        if (this.location.npcDetails?.shopType === ShopType.Druid) {
+        if (this.location.shopType === ShopType.Druid) {
           return defaultSize + 11;
         }
         else {
@@ -106,6 +115,10 @@ export class MapMarkerComponent  implements OnInit {
         return 40;
       case LocationType.Runestone:
         return defaultSize + 5
+      case LocationType.Renewable:
+        if (this.location.renewableType === RenewableType.Mine) {
+          return defaultSize + 6;
+        }
     }
 
     return defaultSize;
@@ -123,7 +136,7 @@ export class MapMarkerComponent  implements OnInit {
       case LocationType.LeyLine:
         return ''
       case LocationType.Npc:
-        const shopType = this.location.npcDetails!.shopType!;
+        const shopType = this.location.shopType!;
         switch (shopType) {
           case ShopType.Armorer:
             return '#989aa2'

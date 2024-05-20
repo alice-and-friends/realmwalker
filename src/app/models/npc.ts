@@ -1,7 +1,6 @@
 import {RealmLocation} from "./realm-location";
 import {randomElement} from "../lib/util";
 import {TradeOffer} from "./trade-offer";
-import {UserService} from "../services/user.service";
 
 export enum Species {
   Human = 'human',
@@ -95,16 +94,16 @@ enum Greeting {
 export class Npc extends RealmLocation {
   public species: Species
   public gender: Gender
-  public role: NpcRole
-  public shopType: ShopType | undefined
   public jobTitle: string
   public buyOffers: TradeOffer[]
   public sellOffers: TradeOffer[]
   public portrait: string
-  public spooked: boolean
+  public override role!: NpcRole;
+  public override shopType!: ShopType;
+  public override spooked!: boolean
   public greeting: (userName: any) => any
-  constructor(data: any) {
-    super(data);
+  constructor(data: any, timeDiff: number) {
+    super(data, timeDiff);
     this.species = data.species
     this.gender = data.gender
     this.role = data.role

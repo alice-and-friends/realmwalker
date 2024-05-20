@@ -8,7 +8,8 @@
   <div *ngIf="userService.activeUser?.preferences?.developer" class="debug">
     <span *ngIf="location.permissionError; else coordinates">permissionError=true</span>
     <ng-template #coordinates>{{location.latitude}}, {{location.longitude}}</ng-template>
-    <div>Server time: {{api.serverTime | date:'yyyy-MM-dd HH:mm:ss'}}</div>
-    <div>Local time: {{localTime | date:'yyyy-MM-dd HH:mm:ss'}}</div>
+    <div>Server time: {{serverTime | date:'yyyy-MM-dd HH:mm:ss' : 'UTC'}}</div>
+    <div>Local time: {{clientTime | date:'yyyy-MM-dd HH:mm:ss'}}</div>
+    <div>TimeDiff: {{api.timeDifference}}ms</div>
   </div>
 </ion-app>

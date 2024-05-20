@@ -5,8 +5,8 @@ export class Runestone extends RealmLocation {
   text: string
   discovered: boolean
 
-  constructor(data: any) {
-    super(data);
+  constructor(data: any, timeDiff: number) {
+    super(data, timeDiff);
     this.runestoneId = data.runestoneId
     this.text = data.text
     this.discovered = data.discovered

@@ -1,10 +1,10 @@
-import {Component, NgZone, OnInit} from '@angular/core';
+import {Component, NgZone, OnDestroy, OnInit} from '@angular/core';
 import {AuthService} from "@auth0/auth0-angular";
 import {UserService} from "./services/user.service";
 import {LocationService} from "./services/location.service";
 import {ApiService} from "./services/api.service";
 import {App} from "@capacitor/app";
-import {filter, mergeMap} from "rxjs";
+import {filter, mergeMap, Subscription} from "rxjs";
 import {Browser} from "@capacitor/browser";
 import {environment as env} from "../environments/environment";
 import {NavigationEnd, Router} from "@angular/router";
@@ -15,8 +15,11 @@ import {AnalyticsService} from "./services/analytics.service";
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss'],
 })
-export class AppComponent implements OnInit {
-  localTime: Date = new Date()
+export class AppComponent implements OnInit, OnDestroy {
+  serverTime?: Date;
+  clientTime?: Date;
+  private serverTimeSub?: Subscription;
+  private clientTimeSub?: Subscription;
   callbackUri = `${env.auth0.appId}://${env.auth0.domain}/capacitor/${env.auth0.appId}/callback`;
 
   constructor(
@@ -30,6 +33,14 @@ export class AppComponent implements OnInit {
   ) {}
 
   async ngOnInit() {
+    // Time keeping
+    this.serverTimeSub = this.api.serverTime$.subscribe(time => {
+      this.serverTime = time;
+    });
+    this.clientTimeSub = this.api.clientTime$.subscribe(time => {
+      this.clientTime = time;
+    });
+
     // Analytics
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd)
@@ -76,5 +87,14 @@ export class AppComponent implements OnInit {
         }
       });
     });
+  }
+
+  ngOnDestroy() {
+    if (this.serverTimeSub) {
+      this.serverTimeSub.unsubscribe();
+    }
+    if (this.clientTimeSub) {
+      this.clientTimeSub.unsubscribe();
+    }
   }
 }

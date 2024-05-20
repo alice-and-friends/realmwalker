@@ -1,12 +1,13 @@
 import {NpcRole, ShopType} from "./npc";
 import {Coordinates} from "./coordinates";
-import {Monster} from "./monster";
+import {RenewableType} from "./renewable";
 
 export enum LocationType {
   Base = 'Base',
   Dungeon = 'Dungeon',
   LeyLine = 'LeyLine',
   Npc = 'Npc',
+  Renewable = 'Renewable',
   Runestone = 'Runestone',
 }
 export enum LocationStatus {
@@ -21,14 +22,13 @@ export class RealmLocation {
   public status: LocationStatus;
   public coordinates: Coordinates;
   public level: number | undefined;
-  public npcDetails: {
-    role: NpcRole,
-    shopType: ShopType | undefined,
-    spooked: boolean,
-  } | undefined;
+  public role: NpcRole | undefined;
+  public shopType: ShopType | undefined;
+  public renewableType: RenewableType | undefined;
+  public spooked: boolean | undefined;
   public expiresAt: Date | undefined;
 
-  constructor(data: any) {
+  constructor(data: any, timeDiff: number) {
     this.id = data.id;
     this.name = data.name;
     this.type = data.type;
@@ -39,7 +39,12 @@ export class RealmLocation {
         this.level = data.level
         break;
       case LocationType.Npc:
-        this.npcDetails = data.npcDetails;
+        this.role = data.role;
+        this.shopType = data.shopType;
+        this.spooked = data.spooked;
+        break;
+      case LocationType.Renewable:
+        this.renewableType = data.renewableType;
         break;
     }
     if (data.expiresAt) {

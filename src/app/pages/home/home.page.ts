@@ -24,6 +24,7 @@ import {AnalyticsService} from "../../services/analytics.service";
 import {ModalOptions} from "@ionic/angular";
 import {ModalService} from "../../services/modal.service";
 import {MapService} from "../../services/map.service";
+import {RenewableModalComponent} from "./location-modal/renewable-modal/renewable-modal.component";
 
 @Component({
   selector: 'app-home',
@@ -201,11 +202,12 @@ export class HomePage implements OnInit, OnDestroy {
     this.analytics.events.viewLocation({location: location})
 
     const modalComponentMap: { [key in LocationType]?: any } = {
-      [LocationType.Dungeon]: DungeonModalComponent,
-      [LocationType.Npc]: NpcModalComponent,
       [LocationType.Base]: BaseModalComponent,
-      [LocationType.Runestone]: RunestoneModalComponent,
+      [LocationType.Dungeon]: DungeonModalComponent,
       [LocationType.LeyLine]: LeyLineModalComponent,
+      [LocationType.Npc]: NpcModalComponent,
+      [LocationType.Renewable]: RenewableModalComponent,
+      [LocationType.Runestone]: RunestoneModalComponent,
       // Extend with other mappings as necessary
     };
 

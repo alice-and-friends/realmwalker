@@ -3,6 +3,6 @@
   <div *ngIf="location.expiresAt" class="marker-timer">{{location.expiresAt | countdown}}</div>
   <div class="marker-graphics" [ngStyle]="{'width.px': iconSize, 'height.px': iconSize}">
     <div class="marker-icon" [innerHTML]="dynamicSvg"></div>
-    <ion-icon *ngIf="location.npcDetails?.spooked" src="/assets/icon/location/spooked-npc.svg" color="dark" slot="start" class="marker-icon addon-icon"></ion-icon>
+    <ion-icon *ngIf="location.spooked" src="/assets/icon/location/spooked-npc.svg" color="dark" slot="start" class="marker-icon addon-icon"></ion-icon>
   </div>
 </div>
