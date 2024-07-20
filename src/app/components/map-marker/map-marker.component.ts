@@ -119,6 +119,9 @@ export class MapMarkerComponent  implements OnInit {
         if (this.location.renewableType === RenewableType.Mine) {
           return defaultSize + 6;
         }
+        else {
+          return defaultSize + 4
+        }
     }
 
     return defaultSize;
@@ -143,7 +146,7 @@ export class MapMarkerComponent  implements OnInit {
           case ShopType.Castle:
             return '#3880ff'
           case ShopType.Equipment:
-            return '#9b7466'
+            return '#79655d'
           case ShopType.Jeweller:
             return '#3880ff'
           case ShopType.Magic:
