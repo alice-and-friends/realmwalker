@@ -32,6 +32,7 @@ TBD
 - Icons: [game-icons.net](https://game-icons.net/)
 - More icons: [ionic.io](https://ionic.io/ionicons/)
 - Even more icons: [uxwing.com](https://uxwing.com/)
+- Sounds: [zapsplat.com](https://www.zapsplat.com/sound-effect-category/game-sounds/)
 
 ## Further help
 
