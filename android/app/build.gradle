@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     namespace "app.realmwalker"
-    compileSdkVersion rootProject.ext.compileSdkVersion
+    compileSdk rootProject.ext.compileSdkVersion
     defaultConfig {
         applicationId "app.realmwalker"
         minSdkVersion rootProject.ext.minSdkVersion
