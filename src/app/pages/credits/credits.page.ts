@@ -11,6 +11,6 @@ export class CreditsPage {
   constructor(public router: Router) { }
 
   close() {
-    this.router.navigate(['/home'])
+    void this.router.navigate(['/home'])
   }
 }

@@ -59,7 +59,7 @@ export class LaunchPage {
       .subscribe({
         next: (response: any) => {
           console.log(1, this.auth.isAuthenticated$)
-          // this.router.navigate(['/home'])
+          // void this.router.navigate(['/home'])
         },
         error: (err: any) => {
           console.error(err)

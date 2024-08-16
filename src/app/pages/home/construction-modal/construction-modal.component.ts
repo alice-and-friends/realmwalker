@@ -23,6 +23,6 @@ export class ConstructionModalComponent {
   }
 
   cancel() {
-    this.modalService.dismiss();
+    void this.modalService.dismiss();
   }
 }

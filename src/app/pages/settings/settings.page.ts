@@ -70,11 +70,11 @@ export class SettingsPage {
   }
 
   close() {
-    this.modalService.dismiss()
+    void this.modalService.dismiss()
   }
 
   goToCredits() {
     this.close()
-    this.router.navigate(['/credits'])
+    void this.router.navigate(['/credits'])
   }
 }

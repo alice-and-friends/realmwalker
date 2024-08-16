@@ -21,7 +21,7 @@ export class UserService {
   logout() {
     this.activeUser = undefined;
     this.loggedIn = false;
-    this.router.navigate(['/launch'])
+    void this.router.navigate(['/launch'])
   }
 
   login() {
@@ -32,7 +32,7 @@ export class UserService {
         this.loggedIn = true;
         console.debug('User service redirecting to home route')
         if(!this.router.url.includes('compendium')) {
-          this.router.navigate(['/home'])
+          void this.router.navigate(['/home'])
         }
       },
       error: (err: any) => {

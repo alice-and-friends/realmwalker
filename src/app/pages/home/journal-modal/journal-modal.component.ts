@@ -20,6 +20,6 @@ export class JournalModalComponent  implements OnInit {
   }
 
   cancel() {
-    this.modalService.dismiss()
+    void this.modalService.dismiss()
   }
 }

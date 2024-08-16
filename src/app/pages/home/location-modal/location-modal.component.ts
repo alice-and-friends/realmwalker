@@ -31,7 +31,7 @@ export abstract class AbstractLocationModalComponent implements OnInit {
   }
 
   returnToMap() {
-    this.modalService.dismiss()
+    void this.modalService.dismiss()
   }
 
   abstract loadData(): void;
