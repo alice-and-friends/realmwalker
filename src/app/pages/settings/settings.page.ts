@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {UserService} from "../../services/user.service";
 import {User} from "../../models/user";
 import {AuthService} from "@auth0/auth0-angular";
@@ -8,6 +8,7 @@ import {Browser} from "@capacitor/browser";
 import {Capacitor} from "@capacitor/core";
 import {AnalyticsService} from "../../services/analytics.service";
 import {ModalService} from "../../services/modal.service";
+import {SoundAsset, SoundService} from "../../services/sound.service";
 
 @Component({
   selector: 'app-settings',
@@ -24,12 +25,16 @@ export class SettingsPage {
     protected modalService: ModalService,
     private analytics: AnalyticsService,
     private auth: AuthService,
-    private router: Router
+    private router: Router,
+    private soundService: SoundService,
   ) {
     this.activeUser = userService.activeUser
   }
 
   onCheckboxChange(settingKey: string, event: any) {
+    if (settingKey === 'sound' && event.detail.checked) {
+      void this.soundService.playSound(SoundAsset.Click);
+    }
     this.userService.updatePreference(settingKey, event.detail.checked);
   }
 

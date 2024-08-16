@@ -1,12 +1,13 @@
-import { Injectable } from '@angular/core';
-import {ToastController, ToastOptions} from "@ionic/angular";
+import {Injectable} from '@angular/core';
+import {ToastController} from "@ionic/angular";
+import {SoundAsset, SoundService} from "./sound.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class NotificationService {
 
-  constructor(private toastController: ToastController) { }
+  constructor(private toastController: ToastController, private soundService: SoundService) { }
 
   async presentToast(
     message: string,
@@ -15,6 +16,10 @@ export class NotificationService {
       position?: 'top' | 'bottom' | 'middle';
     } = {}
   ) {
+    if (params.error) {
+      void this.soundService.playSound(SoundAsset.Error)
+    }
+
     const opts = params.error
       ? {
         message: message,

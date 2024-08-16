@@ -5,9 +5,11 @@
   <ng-template #ready>
     <ion-router-outlet></ion-router-outlet>
   </ng-template>
+  <div *ngIf="location.permissionError" class="debug">
+    <div>permissionError=true</div>
+  </div>
   <div *ngIf="userService.activeUser?.preferences?.developer" class="debug">
-    <span *ngIf="location.permissionError; else coordinates">permissionError=true</span>
-    <ng-template #coordinates>{{location.latitude}}, {{location.longitude}}</ng-template>
+    <div>{{location.latitude}}, {{location.longitude}}</div>
     <div>Server time: {{serverTime | date:'yyyy-MM-dd HH:mm:ss' : 'UTC'}}</div>
     <div>Local time: {{clientTime | date:'yyyy-MM-dd HH:mm:ss'}}</div>
     <div>TimeDiff: {{api.timeDifference}}ms</div>

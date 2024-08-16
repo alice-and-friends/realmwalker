@@ -55,5 +55,6 @@ import {MapService} from "./services/map.service";
     },
   ],
   bootstrap: [AppComponent],
+  exports: [],
 })
 export class AppModule {}

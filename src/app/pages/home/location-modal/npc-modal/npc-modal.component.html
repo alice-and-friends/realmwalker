@@ -68,6 +68,7 @@
               fill="solid"
               (click)="buyOne(offer)"
               [disabled]="inventory!.gold < offer.sellOffer"
+              [app-sound]="SoundAsset.Trade"
             >Buy</ion-button>
           </ion-col>
         </ion-row>
@@ -102,6 +103,7 @@
               fill="solid"
               (click)="sellOne(offer)"
               [disabled]="!offer._userHas"
+              [app-sound]="SoundAsset.Trade"
             >
               {{offer._userHas ? 'Sell (1)' : 'Sell'}}
             </ion-button>

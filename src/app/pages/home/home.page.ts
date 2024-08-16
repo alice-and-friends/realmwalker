@@ -25,6 +25,7 @@ import {ModalOptions} from "@ionic/angular";
 import {ModalService} from "../../services/modal.service";
 import {MapService} from "../../services/map.service";
 import {RenewableModalComponent} from "./location-modal/renewable-modal/renewable-modal.component";
+import {SoundAsset} from "../../services/sound.service";
 
 @Component({
   selector: 'app-home',
@@ -36,6 +37,7 @@ export class HomePage implements OnInit, OnDestroy {
   // General ui
   presentingElement: any = null;
   modal: HTMLIonModalElement | undefined
+  SoundAsset = SoundAsset;
 
   // Map
   map: mapboxgl.Map | undefined;

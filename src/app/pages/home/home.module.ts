@@ -21,6 +21,7 @@ import {JournalModalComponent} from "./journal-modal/journal-modal.component";
 import {EventsToolbarComponent} from "../../components/events-toolbar/events-toolbar.component";
 import {EventModalComponent} from "./event-modal/event-modal.component";
 import {RenewableModalComponent} from "./location-modal/renewable-modal/renewable-modal.component";
+import {DirectivesModule} from "../../directives/directives.module";
 
 
 @NgModule({
@@ -29,6 +30,7 @@ import {RenewableModalComponent} from "./location-modal/renewable-modal/renewabl
     FormsModule,
     IonicModule,
     HomePageRoutingModule,
+    DirectivesModule,
   ],
   declarations: [
     HomePage,

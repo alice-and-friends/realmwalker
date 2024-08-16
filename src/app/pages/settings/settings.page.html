@@ -11,6 +11,15 @@
 <ion-content>
   <ion-list *ngIf="activeUser">
     <ion-item>
+      <ion-checkbox
+        [(ngModel)]="activeUser!.preferences.sound"
+        (ionChange)="onCheckboxChange('sound', $event)"
+        [app-sound]="false"
+      >
+        Sound
+      </ion-checkbox>
+    </ion-item>
+    <ion-item>
       <ion-select
         [(ngModel)]="activeUser!.preferences.itemFrames"
         (ionChange)="onSelectChange('itemFrames', $event)"

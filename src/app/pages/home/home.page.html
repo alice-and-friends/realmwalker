@@ -15,7 +15,7 @@
           </div>
         </ion-button>
       </ion-col>
-      <ion-col *ngIf="userService.activeUser" (click)="openCharacterModal()" class="ion-text-center">
+      <ion-col *ngIf="userService.activeUser" (click)="openCharacterModal()" [app-sound]="SoundAsset.Click" class="ion-text-center">
         <h1 class="player-title">{{userService.activeUser.name}}</h1>
         <p>Level {{userService.activeUser.xpLevelReport.level}}</p>
       </ion-col>

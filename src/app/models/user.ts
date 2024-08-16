@@ -1,4 +1,6 @@
 export interface UserPreferences {
+  sound: boolean,
+  music: boolean,
   developer: boolean,
   itemFrames: string,
   dungeonLevels: boolean,

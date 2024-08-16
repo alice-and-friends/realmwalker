@@ -3,6 +3,7 @@ import {Npc} from "../../../../models/npc";
 import {Inventory} from "../../../../models/inventory";
 import {TradeOffer} from "../../../../models/trade-offer";
 import {AbstractLocationModalComponent} from "../location-modal.component";
+import {SoundAsset} from "../../../../services/sound.service";
 
 @Component({
   selector: 'app-npc-modal',
@@ -75,4 +76,6 @@ export class NpcModalComponent extends AbstractLocationModalComponent implements
       // TODO: Prevent actions while transaction in progress?
     })
   }
+
+    protected readonly SoundAsset = SoundAsset;
 }
