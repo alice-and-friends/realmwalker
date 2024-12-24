@@ -6,6 +6,7 @@ import {Browser} from "@capacitor/browser";
 import { environment as env } from '../../../environments/environment';
 import {Capacitor} from "@capacitor/core";
 import {AnalyticsService} from "../../services/analytics.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-launch',
@@ -13,7 +14,7 @@ import {AnalyticsService} from "../../services/analytics.service";
   styleUrls: ['./launch.page.scss'],
 })
 export class LaunchPage {
-  constructor(private analytics: AnalyticsService, public auth: AuthService, public userService: UserService, public location: LocationService) { }
+  constructor(private analytics: AnalyticsService, public auth: AuthService, public userService: UserService, public location: LocationService, private router: Router) { }
 
   handleLogin(): void {
     this.analytics.events.login()
@@ -59,7 +60,7 @@ export class LaunchPage {
       .subscribe({
         next: (response: any) => {
           console.log(1, this.auth.isAuthenticated$)
-          // void this.router.navigate(['/home'])
+          void this.router.navigate(['/home'])
         },
         error: (err: any) => {
           console.error(err)
