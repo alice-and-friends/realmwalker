@@ -67,6 +67,31 @@ export class HomePage implements OnInit, OnDestroy {
     }
   }
 
+  mapAvailable(): boolean {
+    return this.map instanceof mapboxgl.Map
+  }
+
+  applyMarkers() {
+    if (!this.mapAvailable()) return;
+
+    this.mapService.clearAllMarkers();
+    this.locations.forEach((location: RealmLocation) => {
+      this.addMarker(location);
+    });
+    console.debug('Load markers completed.')
+  }
+
+  loadRealmData() {
+    this.api.home().subscribe((data: any) => {
+      this.activeEvents = data.events.active;
+      this.locations = data.locations
+
+      if (this.mapAvailable()) {
+        this.applyMarkers();
+      }
+    })
+  }
+
   ngOnInit() {
     console.debug('Init home view. User location:', this.location.latitude, this.location.longitude);
 
@@ -87,31 +112,6 @@ export class HomePage implements OnInit, OnDestroy {
     }).catch(error => {
       console.error('Error initializing map:', error);
     });
-  }
-
-  loadRealmData() {
-    this.api.home().subscribe((data: any) => {
-      this.activeEvents = data.events.active;
-      this.locations = data.locations
-
-      if (this.mapAvailable()) {
-        this.applyMarkers();
-      }
-    })
-  }
-
-  applyMarkers() {
-    if (!this.mapAvailable()) return;
-
-    this.mapService.clearAllMarkers();
-    this.locations.forEach((location: RealmLocation) => {
-      this.addMarker(location);
-    });
-    console.debug('Load markers completed.')
-  }
-
-  mapAvailable(): boolean {
-    return this.map instanceof mapboxgl.Map
   }
 
   ngOnDestroy(): void {
@@ -222,7 +222,7 @@ export class HomePage implements OnInit, OnDestroy {
       component: component,
       componentProps: {
         modal: this.modal,
-        refreshMap: this.loadRealmData,
+        refreshMap: () => this.loadRealmData(),
         locationId: location.id,
         openCharacterModal: async () => {
           if (this.modal) {
