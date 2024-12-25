@@ -48,7 +48,7 @@ export class MapMarkerComponent  implements OnInit {
         return `${dir}/location/base.svg`;
       case LocationType.Dungeon:
         if (this.location.status === LocationStatus.Defeated) {
-          return `${dir}/banner.svg`;
+          return `${dir}/location/battle-site.svg`;
         }
         const cleanMonsterName = getCleanMonsterName(this.location.name);
         return `${dir}/monster/${cleanMonsterName}.svg`;

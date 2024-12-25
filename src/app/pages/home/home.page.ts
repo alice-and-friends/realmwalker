@@ -1,9 +1,9 @@
 import {Component, Injector, OnDestroy, OnInit, ViewContainerRef, ViewEncapsulation} from '@angular/core';
 import * as mapboxgl from "mapbox-gl";
+import {Marker} from "mapbox-gl";
 import {environment as env} from "../../../environments/environment";
 import {ApiService} from "../../services/api.service";
-import {RealmLocation, LocationType} from "../../models/realm-location";
-import {Marker} from "mapbox-gl";
+import {LocationStatus, LocationType, RealmLocation} from "../../models/realm-location";
 import {DungeonModalComponent} from "./location-modal/dungeon-modal/dungeon-modal.component";
 import {UserService} from "../../services/user.service";
 import {Router} from "@angular/router"
@@ -16,7 +16,7 @@ import {ConstructionModalComponent} from "./construction-modal/construction-moda
 import {MapMarkerComponent} from "../../components/map-marker/map-marker.component";
 import {RunestoneModalComponent} from "./location-modal/runestone-modal/runestone-modal.component";
 import {SettingsPage} from "../settings/settings.page";
-import { openDrawerAnimation, closeDrawerAnimation } from '../../animations/drawer.animation';
+import {closeDrawerAnimation, openDrawerAnimation} from '../../animations/drawer.animation';
 import {LeyLineModalComponent} from "./location-modal/ley-line-modal/ley-line-modal.component";
 import {JournalModalComponent} from "./journal-modal/journal-modal.component";
 import {RealmEvent} from "../../models/realm-event";
@@ -26,6 +26,7 @@ import {ModalService} from "../../services/modal.service";
 import {MapService} from "../../services/map.service";
 import {RenewableModalComponent} from "./location-modal/renewable-modal/renewable-modal.component";
 import {SoundAsset} from "../../services/sound.service";
+import {BattleSiteModalComponent} from "./location-modal/battle-site-modal/battle-site-modal.component";
 
 @Component({
   selector: 'app-home',
@@ -205,7 +206,16 @@ export class HomePage implements OnInit, OnDestroy {
 
     const modalComponentMap: { [key in LocationType]?: any } = {
       [LocationType.Base]: BaseModalComponent,
-      [LocationType.Dungeon]: DungeonModalComponent,
+      [LocationType.Dungeon]: (() => {
+        switch(location.status) {
+          case LocationStatus.Active:
+            return DungeonModalComponent;
+          case LocationStatus.Defeated:
+            return BattleSiteModalComponent;
+          default:
+            return false;
+        }
+      })(),
       [LocationType.LeyLine]: LeyLineModalComponent,
       [LocationType.Npc]: NpcModalComponent,
       [LocationType.Renewable]: RenewableModalComponent,

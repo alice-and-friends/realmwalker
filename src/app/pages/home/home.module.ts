@@ -22,7 +22,7 @@ import {EventsToolbarComponent} from "../../components/events-toolbar/events-too
 import {EventModalComponent} from "./event-modal/event-modal.component";
 import {RenewableModalComponent} from "./location-modal/renewable-modal/renewable-modal.component";
 import {DirectivesModule} from "../../directives/directives.module";
-
+import {BattleSiteModalComponent} from "./location-modal/battle-site-modal/battle-site-modal.component";
 
 @NgModule({
   imports: [
@@ -50,6 +50,7 @@ import {DirectivesModule} from "../../directives/directives.module";
     EventsToolbarComponent,
     EventModalComponent,
     RenewableModalComponent,
+    BattleSiteModalComponent,
   ]
 })
 export class HomePageModule {}

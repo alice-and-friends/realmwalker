@@ -8,11 +8,13 @@ import {UserService} from "../../services/user.service";
 })
 export class ModalHeaderComponent implements OnInit {
   defaultColor = 'dark'
+  defaultDescriptionStyle = 'capitalize'
   @Input() icon?: string
   @Input() iconColor?: string
   @Input() iconBorder?: boolean = true
   @Input() title?: string
   @Input() titleColor?: string
+  @Input() descriptionStyle?: string
   @Input() description?: string
   @Input() quote?: string
 
@@ -21,6 +23,7 @@ export class ModalHeaderComponent implements OnInit {
   ngOnInit(): void {
     this.iconColor = this.iconColor || this.defaultColor;
     this.titleColor = this.titleColor || this.defaultColor;
+    this.descriptionStyle = this.descriptionStyle || this.defaultDescriptionStyle;
     if (this.quote) {
       let userName = this.userService.activeUser!.name;
       this.quote = this.quote.replace('%user_name%', userName)

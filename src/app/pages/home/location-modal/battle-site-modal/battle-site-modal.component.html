@@ -1,0 +1,22 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title slot="start">Battle site</ion-title>
+    <ion-buttons slot="end">
+      <ion-button color="medium" (click)="returnToMap()">Close</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content *ngIf="locationObject">
+  <div class="padding-10">
+    <!--<div class="modal-bg"></div>-->
+    <app-modal-header
+      icon="/assets/icon/location/battle-site.svg"
+      description="A battle recently took place here."
+      descriptionStyle="plain"
+      [quote]="description"
+    ></app-modal-header>
+    <ion-button expand="block" color="primary" (click)="search()" [disabled]="loading">
+      <ion-icon color="secondary" slot="start" src="/assets/icon/magnifying-glass.svg"></ion-icon> Search the area
+    </ion-button>
+  </div>
+</ion-content>

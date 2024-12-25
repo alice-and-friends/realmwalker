@@ -17,3 +17,18 @@ export function slug(s: string) {
     .replace(/[\s_]+/g, '-')
     .toLowerCase()
 }
+
+export function formatList(items: string[]): string {
+  // Check if the list is empty or has only one item
+  if (items.length === 0) {
+    return '';
+  } else if (items.length === 1) {
+    return items[0];
+  }
+
+  // Separate the last item
+  const lastItem = items.pop();
+
+  // Join the remaining items with a comma and add the Oxford comma plus "and" before the last item
+  return `${items.join(', ')}, and ${lastItem}`;
+}
