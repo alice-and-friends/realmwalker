@@ -17,6 +17,7 @@ import {LeyLine} from "../models/ley-line";
 import {Journal} from "../models/journal";
 import {RealmEvent} from "../models/realm-event";
 import {Renewable} from "../models/renewable";
+import {LootContainer} from "../models/loot-container";
 
 @Injectable({
   providedIn: 'root'
@@ -210,6 +211,14 @@ export class ApiService {
     return this.http.post<BattleResult>(this.url + `/v1/dungeons/${dungeonId}/battle`, {
       // TODO: Battle options?
     })
+  }
+  search(dungeonId: string) {
+    return this.http.post(this.url + `/v1/dungeons/${dungeonId}/search`, {}).pipe(
+      map((data: any) => {
+        data.dungeon = new Dungeon(data.dungeon, this.timeDifference)
+        return data;
+      })
+    )
   }
 
   getNpc(id: string) {

@@ -50,7 +50,7 @@
   <!-- LOOT -->
   <div *ngIf="data.battleResult.userWon;" class="ion-margin-top">
     <div *ngIf="data.battleResult.monsterDied; else monsterEscapedLoot">
-      <div *ngIf="data.inventoryChanges?.loot?.gold || data.inventoryChanges?.loot?.items.length; else noLoot">
+      <div *ngIf="data.inventoryChanges?.loot?.gold || data.inventoryChanges?.loot?.items!.length; else noLoot">
         <p>
           Loot from {{monsterName}}:<br>
           {{formattedLootList()}}

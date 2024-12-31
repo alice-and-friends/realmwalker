@@ -28,7 +28,7 @@ export class BattleResultModalComponent {
 
   formattedLootList() {
     let loot: string[] = []
-    for (let item of this.data.inventoryChanges?.loot?.items) loot.push(`${determineArticle(item.name)} ${item.name.toLowerCase()}`)
+    for (let item of this.data.inventoryChanges?.loot?.items!) loot.push(`${determineArticle(item.name)} ${item.name.toLowerCase()}`)
     if (this.data.inventoryChanges?.loot?.gold) loot.push(`${this.data.inventoryChanges.loot.gold} gold coins`)
     return capitalize(loot.join(', '))
   }

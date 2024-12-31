@@ -1,3 +1,5 @@
+import {LootContainer} from "./loot-container";
+
 export interface BattleResult {
   battleResult: {
     userWon: boolean,
@@ -9,10 +11,7 @@ export interface BattleResult {
     equipmentLost: boolean | undefined,
     amuletOfLossConsumed: boolean | undefined,
     amuletOfLifeConsumed: boolean | undefined,
-    loot: {
-      gold: number,
-      items: any
-    } | undefined
+    loot: LootContainer | undefined
   } | undefined
   xpLevelChange: {
     xpDiff: number,
