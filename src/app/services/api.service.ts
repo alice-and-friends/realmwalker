@@ -210,12 +210,20 @@ export class ApiService {
   battle(dungeonId: string) {
     return this.http.post<BattleResult>(this.url + `/v1/dungeons/${dungeonId}/battle`, {
       // TODO: Battle options?
-    })
+    }).pipe(
+      map((data: any) => {
+        if (data.inventoryChanges?.loot) {
+          data.inventoryChanges.loot = new LootContainer(data.inventoryChanges.loot)
+        }
+        return data;
+      })
+    )
   }
   search(dungeonId: string) {
     return this.http.post(this.url + `/v1/dungeons/${dungeonId}/search`, {}).pipe(
       map((data: any) => {
         data.dungeon = new Dungeon(data.dungeon, this.timeDifference)
+        data.loot = new LootContainer(data.loot)
         return data;
       })
     )
