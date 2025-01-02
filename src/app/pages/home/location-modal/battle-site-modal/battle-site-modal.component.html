@@ -18,5 +18,18 @@
     <ion-button expand="block" color="primary" (click)="search()" [disabled]="loading">
       <ion-icon color="secondary" slot="start" src="/assets/icon/magnifying-glass.svg"></ion-icon> Search the area
     </ion-button>
+
+    <!-- LOOT -->
+    <div *ngIf="loot">
+      <div *ngIf="loot?.empty === false; else noLoot">
+        <p>
+          You found the following:<br>
+          {{loot!.formattedLootList()}}
+        </p>
+      </div>
+      <ng-template #noLoot>
+        <p>You found nothing.</p>
+      </ng-template>
+    </div>
   </div>
 </ion-content>

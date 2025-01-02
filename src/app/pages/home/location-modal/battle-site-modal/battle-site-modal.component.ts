@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Dungeon} from "../../../../models/dungeon";
 import {AbstractLocationModalComponent} from "../location-modal.component";
 import {formatList} from "../../../../lib/util";
+import {LootContainer} from "../../../../models/loot-container";
 
 @Component({
   selector: 'app-battle-site-modal',
@@ -10,6 +11,7 @@ import {formatList} from "../../../../lib/util";
 })
 export class BattleSiteModalComponent extends AbstractLocationModalComponent implements OnInit {
   description?: string;
+  loot?: LootContainer
 
   async loadData() {
     this.loading = true;
@@ -23,5 +25,8 @@ export class BattleSiteModalComponent extends AbstractLocationModalComponent imp
   }
 
   search() {
+    this.api.searchDungeon(this.locationId).subscribe(({loot}) => {
+      this.loot = loot;
+    })
   }
 }

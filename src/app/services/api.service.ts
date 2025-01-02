@@ -219,7 +219,7 @@ export class ApiService {
       })
     )
   }
-  search(dungeonId: string) {
+  searchDungeon(dungeonId: string) {
     return this.http.post(this.url + `/v1/dungeons/${dungeonId}/search`, {}).pipe(
       map((data: any) => {
         data.dungeon = new Dungeon(data.dungeon, this.timeDifference)
