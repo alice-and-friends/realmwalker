@@ -13,13 +13,18 @@
       icon="/assets/icon/location/battle-site.svg"
       description="A battle recently took place here."
       descriptionStyle="plain"
-      [quote]="description"
+      [quote]="locationObject._description"
     ></app-modal-header>
-    <ion-button expand="block" color="primary" (click)="search()" [disabled]="loading">
+
+    <!-- BUTTONS -->
+    <ion-button *ngIf="locationObject.searchable!; else notSearchable" expand="block" color="primary" (click)="searchDungeon()" [disabled]="loading">
       <ion-icon color="secondary" slot="start" src="/assets/icon/magnifying-glass.svg"></ion-icon> Search the area
     </ion-button>
 
     <!-- LOOT -->
+    <div *ngIf="locationObject.alreadySearched">
+      <p>You've searched this area before</p>
+    </div>
     <div *ngIf="loot">
       <div *ngIf="loot?.empty === false; else noLoot">
         <p>
@@ -31,5 +36,10 @@
         <p>You found nothing.</p>
       </ng-template>
     </div>
+
+    <!-- BUTTONS -->
+    <ng-template #notSearchable>
+      <ion-button expand="block" fill="solid" color="dark" (click)="returnToMap()">Journey onwards</ion-button>
+    </ng-template>
   </div>
 </ion-content>

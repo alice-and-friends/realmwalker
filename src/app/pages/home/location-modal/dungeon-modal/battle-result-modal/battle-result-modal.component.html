@@ -28,7 +28,7 @@
   <!-- STORY -->
   <div *ngIf="data.battleResult.userWon; else defeatStory" class="ion-margin-top">
     <div *ngIf="data.battleResult.monsterDied; else monsterEscapedStory">
-      <p class="quote-box ion-no-margin">With valor and determination, you have conquered the beast. The land echoes your victory, a testament to your unwavering spirit.</p>
+      <p class="quote-box ion-no-margin">With valor and determination, you have conquered the beast.</p>
     </div>
     <ng-template #monsterEscapedStory>
       <p class="quote-box ion-no-margin">The {{monsterName.toLowerCase()}} has slipped away, leaving you with a feeling of unease. Be ever watchful, for danger could return when you least expect it.</p>

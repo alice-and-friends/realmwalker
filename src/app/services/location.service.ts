@@ -2,6 +2,7 @@ import { Injectable, NgZone } from '@angular/core';
 import {Geolocation, PermissionStatus, Position, PositionOptions} from "@capacitor/geolocation";
 import {Capacitor} from "@capacitor/core";
 
+// TODO: Review doc https://v17.angular.io/guide/observables
 @Injectable({
   providedIn: 'root'
 })

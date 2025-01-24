@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Dungeon} from "../../../../models/dungeon";
 import {AbstractLocationModalComponent} from "../location-modal.component";
-import {formatList} from "../../../../lib/util";
 import {LootContainer} from "../../../../models/loot-container";
 
 @Component({
@@ -10,23 +9,23 @@ import {LootContainer} from "../../../../models/loot-container";
   styleUrls: ['./battle-site-modal.component.scss'],
 })
 export class BattleSiteModalComponent extends AbstractLocationModalComponent implements OnInit {
-  description?: string;
+  override locationObject!: Dungeon
   loot?: LootContainer
 
   async loadData() {
     this.loading = true;
-    this.api.getDungeon(this.locationId).subscribe((data: Dungeon) => {
-      this.locationObject = data;
-      this.loading = false
-
-      const names = this.locationObject.defeatedBy.map((actor: any) => actor.name);
-      this.description = `You see a dead ${this.locationObject.monster.name}. It was slain by ${formatList(names)}.`
+    this.api.getDungeon(this.locationId).subscribe((dungeon: Dungeon) => {
+      this.locationObject = dungeon;
+      this.loading = false;
     })
   }
 
-  search() {
-    this.api.searchDungeon(this.locationId).subscribe(({loot}) => {
+  searchDungeon() {
+    this.loading = true;
+    this.api.searchDungeon(this.locationId).subscribe(({loot, dungeon}) => {
+      this.locationObject = dungeon;
       this.loot = loot;
+      this.loading = false;
     })
   }
 }
