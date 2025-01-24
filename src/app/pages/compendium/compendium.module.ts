@@ -10,6 +10,8 @@ import { MonstersPage } from './monsters.page';
 import { ItemsPage } from './items.page';
 import { LootPage } from './loot.page';
 import {EquipmentPage} from "./equipment.page";
+import {PortraitPage} from "./portrait.page";
+import {HomePageModule} from "../home/home.module";
 
 @NgModule({
   imports: [
@@ -17,7 +19,8 @@ import {EquipmentPage} from "./equipment.page";
     FormsModule,
     IonicModule,
     CompendiumRoutingModule,
+    HomePageModule,
   ],
-  declarations: [MonstersPage, ItemsPage, LootPage, EquipmentPage]
+  declarations: [MonstersPage, ItemsPage, LootPage, EquipmentPage, PortraitPage]
 })
 export class CompendiumModule {}

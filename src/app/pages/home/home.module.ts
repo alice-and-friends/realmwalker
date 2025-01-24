@@ -25,32 +25,35 @@ import {DirectivesModule} from "../../directives/directives.module";
 import {BattleSiteModalComponent} from "./location-modal/battle-site-modal/battle-site-modal.component";
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    HomePageRoutingModule,
-    DirectivesModule,
-  ],
-  declarations: [
-    HomePage,
-    NpcModalComponent,
-    DungeonModalComponent,
-    RunestoneModalComponent,
-    CharacterModalComponent,
-    BattleResultModalComponent,
-    ModalHeaderComponent,
-    BaseModalComponent,
-    LeyLineModalComponent,
-    ConstructionModalComponent,
-    JournalModalComponent,
-    MapMarkerComponent,
-    CountdownPipe,
-    ItemIconComponent,
-    EventsToolbarComponent,
-    EventModalComponent,
-    RenewableModalComponent,
-    BattleSiteModalComponent,
-  ]
+    imports: [
+        CommonModule,
+        FormsModule,
+        IonicModule,
+        HomePageRoutingModule,
+        DirectivesModule,
+    ],
+    exports: [
+        ModalHeaderComponent
+    ],
+    declarations: [
+        HomePage,
+        NpcModalComponent,
+        DungeonModalComponent,
+        RunestoneModalComponent,
+        CharacterModalComponent,
+        BattleResultModalComponent,
+        ModalHeaderComponent,
+        BaseModalComponent,
+        LeyLineModalComponent,
+        ConstructionModalComponent,
+        JournalModalComponent,
+        MapMarkerComponent,
+        CountdownPipe,
+        ItemIconComponent,
+        EventsToolbarComponent,
+        EventModalComponent,
+        RenewableModalComponent,
+        BattleSiteModalComponent,
+    ]
 })
 export class HomePageModule {}

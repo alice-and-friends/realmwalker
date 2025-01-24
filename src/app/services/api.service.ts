@@ -255,7 +255,7 @@ export class ApiService {
     );
   }
 
-  getCompendium(page: 'monsters'|'items') {
+  getCompendium(page: 'monsters'|'items'|'portraits') {
     return this.http.get<any[]>(this.url + `/v1/compendium/${page}`)
       .pipe(
         map((data: any[]) => data.map((item: any) => {
@@ -264,6 +264,8 @@ export class ApiService {
               return new Monster(item);
             case 'items':
               return new Item(item);
+            default:
+              return item;
           }
         }))
       );

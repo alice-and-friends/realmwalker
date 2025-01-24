@@ -1,0 +1,7 @@
+<ion-content [fullscreen]="true">
+  <ol>
+    <li *ngFor="let portrait of portraits">
+      <app-modal-header [title]="portrait.name" [icon]="'/assets/icon/portrait/'+portrait.name+'.svg'"></app-modal-header>
+    </li>
+  </ol>
+</ion-content>

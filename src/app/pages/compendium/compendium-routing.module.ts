@@ -1,10 +1,11 @@
-import { NgModule } from '@angular/core';
+import  { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { MonstersPage } from './monsters.page';
 import { ItemsPage } from './items.page';
 import {LootPage} from "./loot.page";
 import {EquipmentPage} from "./equipment.page";
+import {PortraitPage} from "./portrait.page";
 
 const routes: Routes = [
   {
@@ -27,6 +28,10 @@ const routes: Routes = [
   {
     path: 'equipment',
     component: EquipmentPage,
+  },
+  {
+    path: 'portrait',
+    component: PortraitPage,
   },
 ];
 
