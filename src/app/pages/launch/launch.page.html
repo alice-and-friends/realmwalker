@@ -1,4 +1,7 @@
 <ion-content *ngIf="!userService.loggedIn" class="ion-padding login-page">
+  <video #backgroundVideo id="background-video" autoplay loop muted poster="assets/247107_medium.jpg">
+    <source src="assets/247107_medium.mp4" type="video/mp4">
+  </video>
   <!--
   <ion-accordion-group class="login-debug">
     <ion-accordion value="first">
@@ -15,7 +18,7 @@
   </ion-accordion-group>
   -->
 
-  <ion-text color="danger">
+  <ion-text>
     <h1>RealmWalker</h1>
   </ion-text>
 
@@ -28,6 +31,6 @@
   </ng-container>
 
   <ng-template #loggedOut>
-    <ion-button color="dark" expand="full" (click)="handleLogin()" class="login-button">Log in</ion-button>
+    <ion-button color="dark" expand="full" fill="clear" (click)="handleLogin()" class="login-button">Log in</ion-button>
   </ng-template>
 </ion-content>

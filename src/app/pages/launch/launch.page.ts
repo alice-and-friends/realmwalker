@@ -1,4 +1,4 @@
-import {Component, NgZone, OnInit} from '@angular/core';
+import {Component, ElementRef, NgZone, OnInit, ViewChild} from '@angular/core';
 import {AuthService} from "@auth0/auth0-angular";
 import {UserService} from "../../services/user.service";
 import {LocationService} from "../../services/location.service";
@@ -15,6 +15,22 @@ import {Router} from "@angular/router";
 })
 export class LaunchPage {
   constructor(private analytics: AnalyticsService, public auth: AuthService, public userService: UserService, public location: LocationService, private router: Router) { }
+
+  @ViewChild('backgroundVideo', { static: false }) videoElement!: ElementRef<HTMLVideoElement>;
+
+  ngAfterViewInit(): void {
+    const video = this.videoElement.nativeElement;
+
+    video.muted = true; // Ensure it's muted programmatically
+    video.playbackRate = 0.5;
+
+    // Wait for the video to be ready
+    video.addEventListener('canplay', () => {
+      video.play().catch((error) => {
+        console.warn('Autoplay failed:', error);
+      });
+    });
+  }
 
   handleLogin(): void {
     this.analytics.events.login()

@@ -1,9 +1,24 @@
 .login-page {
-  --background: url("/assets/strawberry-battlefield.png") 0 0/100% 100% no-repeat;
+  //--background: url("/assets/strawberry-battlefield.png") 0 0/100% 100% no-repeat;
+}
+#background-video {
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: -1;
+  opacity: 0.9;
 }
 .login-debug {
   color: white;
   font-family: monospace, serif;
+}
+ion-text {
+  opacity: 0.8;
 }
 h1 {
   text-align: center;
