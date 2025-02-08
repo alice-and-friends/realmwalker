@@ -13,7 +13,7 @@ export class BattleResultModalComponent {
   monsterName!: string
   data!: BattleResult
   dismissParentModal!: any
-  openCharacterModal!: any
+  openInventory!: any
 
   constructor(private modalService: ModalService) { }
 
@@ -23,6 +23,6 @@ export class BattleResultModalComponent {
 
   async viewInventory() {
     await this.modalService.dismissAll();
-    return this.openCharacterModal()
+    return this.openInventory()
   }
 }

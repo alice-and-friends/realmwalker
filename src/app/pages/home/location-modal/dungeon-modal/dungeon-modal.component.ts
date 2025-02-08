@@ -11,7 +11,8 @@ import {AbstractLocationModalComponent} from "../location-modal.component";
 })
 export class DungeonModalComponent extends AbstractLocationModalComponent implements OnInit {
   battleResultModal: HTMLIonModalElement | undefined
-  openCharacterModal!: Function
+  changeEquipment!: Function
+  openInventory!: Function
   analysis: BattlePrediction | undefined
   battleResult: any | undefined
 
@@ -50,7 +51,7 @@ export class DungeonModalComponent extends AbstractLocationModalComponent implem
             monsterName: this.locationObject!.monster.name,
             data: this.battleResult,
             dismissParentModal: this.returnToMap,
-            openCharacterModal: this.openCharacterModal
+            openInventory: this.openInventory,
           }
         });
         await this.battleResultModal.present();

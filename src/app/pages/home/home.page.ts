@@ -234,13 +234,17 @@ export class HomePage implements OnInit, OnDestroy {
         modal: this.modal,
         refreshMap: () => this.loadRealmData(),
         locationId: location.id,
-        openCharacterModal: async () => {
+        changeEquipment: async () => {
           if (this.modal) {
             await this.modalService.dismiss();
           }
           await this.openCharacterModal(() => {
             this.openLocationModal(location)
           })
+        },
+        openInventory: async () => {
+          await this.modalService.dismissAll();
+          await this.openInventoryModal();
         },
       },
     }
