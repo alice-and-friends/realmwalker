@@ -3,5 +3,15 @@
   list-style: none;
 }
 .runestone-item {
-  background: var(--ion-color-medium)
+  background: var(--ion-color-medium);
+}
+.runestone-quote:before {
+  content: open-quote;
+  font-weight: bold;
+  font-size: 1em;
+}
+.runestone-quote:after {
+  content: close-quote;
+  font-weight: bold;
+  font-size: 1em;
 }
