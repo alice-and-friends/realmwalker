@@ -99,10 +99,10 @@ export class MapMarkerComponent  implements OnInit {
         }
       case LocationType.Dungeon:
         const dungeonLevel = this.location.level!
-        if (dungeonLevel == 10) {
+        if (dungeonLevel >= 90) {
           return 100
         }
-        else if (dungeonLevel == 9) {
+        else if (dungeonLevel >= 80) {
           return defaultSize + 15
         }
         else if (dungeonLevel >= 9) {

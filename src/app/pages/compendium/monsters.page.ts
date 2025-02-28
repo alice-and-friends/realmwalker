@@ -9,7 +9,7 @@ import {Monster} from "../../models/monster";
 })
 export class MonstersPage implements OnInit {
   monsters: any = [];
-  levels: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+  levels: number[] = Array.from({ length: 100 }, (_, i) => i + 1);
   classifications: Set<string> = new Set()
   constructor(public api: ApiService) {}
 
