@@ -9,11 +9,11 @@ import {AnalyticsService} from "../../services/analytics.service";
 import {Router} from "@angular/router";
 
 @Component({
-  selector: 'app-launch',
-  templateUrl: './launch.page.html',
-  styleUrls: ['./launch.page.scss'],
+  selector: 'app-main-menu',
+  templateUrl: './main-menu-page.component.html',
+  styleUrls: ['./main-menu-page.component.scss'],
 })
-export class LaunchPage {
+export class MainMenuPage {
   constructor(private analytics: AnalyticsService, public auth: AuthService, public userService: UserService, public location: LocationService, private router: Router) { }
 
   handleLogin(): void {

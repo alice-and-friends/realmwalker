@@ -10,8 +10,8 @@ const routes: Routes = [
     canActivate: [AuthGuard, locationGuard],
   },
   {
-    path: 'launch',
-    loadChildren: () => import('./pages/launch/launch.module').then( m => m.LaunchPageModule)
+    path: 'main-menu',
+    loadChildren: () => import('./pages/main-menu/main-menu.module').then(m => m.MainMenuPageModule)
   },
   {
     path: 'callback',
@@ -19,7 +19,7 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'launch',
+    redirectTo: 'main-menu',
     pathMatch: 'full'
   },
   {

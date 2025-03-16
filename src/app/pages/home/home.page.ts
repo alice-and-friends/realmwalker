@@ -63,7 +63,7 @@ export class HomePage implements OnInit, OnDestroy {
     private viewContainerRef: ViewContainerRef,
   ) {
     if (!userService.loggedIn) {
-      void this.router.navigate(['/launch']); // TODO: Maybe handle this in a router guard or something like that
+      void this.router.navigate(['/main-menu']); // TODO: Maybe handle this in a router guard or something like that
       return;
     }
   }

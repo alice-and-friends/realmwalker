@@ -1,12 +1,12 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { LaunchPage } from './launch.page';
+import { MainMenuPage } from './main-menu-page.component';
 
-describe('LaunchPage', () => {
-  let component: LaunchPage;
-  let fixture: ComponentFixture<LaunchPage>;
+describe('MainMenuPage', () => {
+  let component: MainMenuPage;
+  let fixture: ComponentFixture<MainMenuPage>;
 
   beforeEach(async(() => {
-    fixture = TestBed.createComponent(LaunchPage);
+    fixture = TestBed.createComponent(MainMenuPage);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

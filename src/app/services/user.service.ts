@@ -21,7 +21,7 @@ export class UserService {
   logout() {
     this.activeUser = undefined;
     this.loggedIn = false;
-    void this.router.navigate(['/launch'])
+    void this.router.navigate(['/main-menu'])
   }
 
   login() {
