@@ -26,14 +26,13 @@ export class RealmwalkerApiInterceptor implements HttpInterceptor {
 
   handleError(errorResponse: HttpErrorResponse) {
     console.error(errorResponse)
-    let errorMsg = '';
     if (errorResponse.error instanceof ErrorEvent) {
       // This is client side error
       this.notification.presentToast(`Error ${errorResponse.message}:`, {error: true});
     } else if (errorResponse.status === 0) {
       // This is a network error
       this.notification.presentToast('Lost connection to server', {error: true});
-    } else {
+    } else if (errorResponse.status >= 500) {
       // This is server side error
       this.notification.presentToast(`Error ${errorResponse.status}: ${errorResponse.error.message || errorResponse.statusText}`, {error: true});
     }

@@ -23,9 +23,10 @@ export class ModalService {
     }
   }
 
-  async dismiss() {
+  async dismiss(callback = () => {}) {
     let modal = this.modals.pop()
     await modal.dismiss('cancel').catch((error: Error) => console.error('Error closing modal', error));
+    callback()
   }
 
   async dismissAll() {

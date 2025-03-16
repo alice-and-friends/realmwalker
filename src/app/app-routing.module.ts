@@ -34,6 +34,10 @@ const routes: Routes = [
     path: 'credits',
     loadChildren: () => import('./pages/credits/credits.module').then( m => m.CreditsPageModule)
   },
+  {
+    path: 'battle/:id',
+    loadChildren: () => import('./pages/battle/battle.module').then( m => m.BattlePageModule)
+  },
 ];
 
 @NgModule({

@@ -5,6 +5,7 @@ import {AnalyticsService} from "../../../services/analytics.service";
 import {ModalService} from "../../../services/modal.service";
 import {UserService} from "../../../services/user.service";
 import {User} from "../../../models/user";
+import {Router} from "@angular/router";
 
 @Directive() // Using @Directive() since Angular doesn't allow @Component on abstract classes
 export abstract class AbstractLocationModalComponent implements OnInit {
@@ -22,6 +23,7 @@ export abstract class AbstractLocationModalComponent implements OnInit {
     protected api: ApiService,
     public notifications: NotificationService,
     public userService: UserService,
+    public router: Router,
   ) {
     this.user = userService.activeUser!
   }

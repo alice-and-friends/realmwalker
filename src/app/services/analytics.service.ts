@@ -88,16 +88,16 @@ class AnalyticsEvents {
       locationLevel: params.location.level,
     });
   }
-  battle(params: { location: RealmLocation, monster: Monster }): void {
-    this.analytics.trackEvent('battle', {
-      locationId: params.location.id,
-      locationName: params.location.name,
-      locationLevel: params.location.level,
-      monsterId: params.monster.id,
-      monsterName: params.monster.name,
-      monsterLevel: params.monster.level,
-    });
-  }
+  // battle(params: { location: RealmLocation, monster: Monster }): void {
+  //   this.analytics.trackEvent('battle', {
+  //     locationId: params.location.id,
+  //     locationName: params.location.name,
+  //     locationLevel: params.location.level,
+  //     monsterId: params.monster.id,
+  //     monsterName: params.monster.name,
+  //     monsterLevel: params.monster.level,
+  //   });
+  // }
   buildBase(): void {
     this.analytics.trackEvent('build_base');
   }

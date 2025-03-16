@@ -18,6 +18,8 @@ import {Journal} from "../models/journal";
 import {RealmEvent} from "../models/realm-event";
 import {Renewable} from "../models/renewable";
 import {LootContainer} from "../models/loot-container";
+import {Battle} from "../models/battle";
+import {BattleTurn} from "../models/battle-turn";
 
 @Injectable({
   providedIn: 'root'
@@ -200,25 +202,47 @@ export class ApiService {
       })
     )
   }
-  getBattlePrediction(dungeonId: string) {
-    return this.http.get<BattlePrediction>(this.url + `/v1/dungeons/${dungeonId}/analyze`).pipe(
+  startBattle(dungeonId: string) {
+    return this.http.post<any>(this.url + `/v1/battles`, {
+      battle: {
+        'opponent_type': 'Dungeon',
+        'opponent_id': dungeonId,
+      }
+    })
+  }
+  getBattle(battleId: string) {
+    return this.http.get<Battle>(this.url + `/v1/battles/${battleId}`).pipe(
       map(data => {
-        return new BattlePrediction(data)
+        return new Battle(data)
       })
     )
   }
-  battle(dungeonId: string) {
-    return this.http.post<BattleResult>(this.url + `/v1/dungeons/${dungeonId}/battle`, {
-      // TODO: Battle options?
-    }).pipe(
-      map((data: any) => {
-        if (data.inventoryChanges?.loot) {
-          data.inventoryChanges.loot = new LootContainer(data.inventoryChanges.loot)
-        }
-        return data;
+  takeBattleTurn(battleId: string, turnId: string, body: BattleTurn) {
+    return this.http.patch<Battle>(this.url + `/v1/battles/${battleId}/turn/${turnId}`, body).pipe(
+      map(data => {
+        return new Battle(data)
       })
     )
   }
+  // getBattlePrediction(dungeonId: string) {
+  //   return this.http.get<BattlePrediction>(this.url + `/v1/dungeons/${dungeonId}/analyze`).pipe(
+  //     map(data => {
+  //       return new BattlePrediction(data)
+  //     })
+  //   )
+  // }
+  // battle(dungeonId: string) {
+  //   return this.http.post<BattleResult>(this.url + `/v1/dungeons/${dungeonId}/battle`, {
+  //     // TODO: Battle options?
+  //   }).pipe(
+  //     map((data: any) => {
+  //       if (data.inventoryChanges?.loot) {
+  //         data.inventoryChanges.loot = new LootContainer(data.inventoryChanges.loot)
+  //       }
+  //       return data;
+  //     })
+  //   )
+  // }
   searchDungeon(dungeonId: string) {
     return this.http.post(this.url + `/v1/dungeons/${dungeonId}/search`, {}).pipe(
       map((data: any) => {

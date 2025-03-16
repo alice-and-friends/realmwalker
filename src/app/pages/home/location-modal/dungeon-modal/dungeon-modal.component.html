@@ -8,13 +8,13 @@
 </ion-header>
 <ion-content *ngIf="locationObject">
   <div class="padding-10">
-    <!--<div class="modal-bg"></div>-->
     <app-modal-header
       [icon]="locationObject.monster.icon"
       [title]="locationObject.monster.name"
       [description]="'Level '+locationObject.monster.level+' '+locationObject.monster.classification"
       [quote]="locationObject.monster.description"
     ></app-modal-header>
+    <!--
     <div *ngIf="analysis;" class="ion-text-center ion-margin-bottom">
       <h2>Assessment: <span [class]="'assessment-'+analysis.assessment.toLowerCase()">{{analysis.assessment}}</span></h2>
       <p class="detail-line compact">Base chance: {{analysis.baseChance}}%</p>
@@ -28,13 +28,9 @@
         Chance of success: {{analysis.chanceOfSuccess}}%
         <span *ngIf="analysis.overkill">({{analysis.overkill}} overkill)</span>
       </h3>
-      <p *ngIf="analysis.riskOfDeath.overall" class="detail-line"><b>Risk of death: {{analysis.riskOfDeath.overall}}%</b></p>
-  <!--    <p *ngIf="analysis.chanceOfInventoryLoss" class="detail-line">Chance of inventory loss: {{analysis.chanceOfInventoryLoss}}%</p>-->
-  <!--    <p *ngIf="analysis.chanceOfEquipmentLoss" class="detail-line">Chance of equipment loss: {{analysis.chanceOfEquipmentLoss}}%</p>-->
-  <!--    <ion-text color="secondary">-->
-  <!--      <p *ngFor="let modifier of analysis.modifiersDeath" class="detail-line">{{modifier}}</p>-->
-  <!--    </ion-text>-->
     </div>
+    -->
+    <!--
     <ion-grid class="ion-no-padding">
       <ion-row>
         <ion-col>
@@ -43,20 +39,21 @@
           </ion-button>
         </ion-col>
         <ion-col>
-          <ion-button expand="block" fill="outline" color="dark" (click)="changeEquipment()" [disabled]="loading">
-            <ion-icon slot="start" src="/assets/icon/switch-weapon.svg"></ion-icon> Change equipment
-          </ion-button>
+
         </ion-col>
       </ion-row>
     </ion-grid>
-    <!--
-    <ng-template #analyzeButton>
-      <ion-button expand="full" (click)="analyze()" [disabled]="loading">Analyze</ion-button>
-    </ng-template>
-    <ion-button expand="full" (click)="changeEquipment()" [disabled]="loading">Change equipment</ion-button>
     -->
+
+    <ion-button expand="block" fill="outline" color="dark" (click)="changeEquipment()" [disabled]="loading || loadingBattle">
+      <ion-icon slot="start" src="/assets/icon/switch-weapon.svg"></ion-icon> Change equipment
+    </ion-button>
+
     <ion-button expand="block" color="danger" (click)="battle()" [disabled]="loading">
-      <ion-icon slot="start" src="/assets/icon/light-sabers.svg"></ion-icon> Battle!
+      <ion-spinner *ngIf="loadingBattle; else battleCTA"></ion-spinner>
+      <ng-template #battleCTA>
+        <ion-icon slot="start" src="/assets/icon/light-sabers.svg"></ion-icon> Battle!
+      </ng-template>
     </ion-button>
   </div>
 </ion-content>

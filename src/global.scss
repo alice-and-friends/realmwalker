@@ -108,6 +108,11 @@ ion-modal.floating-modal {
   }
 }
 
+ion-button ion-spinner {
+  width: 1em;
+  height: 1em;
+}
+
 .ornate-frame-base {
   -webkit-mask-image: url(/assets/frame-corner.svg);
   content: "";
