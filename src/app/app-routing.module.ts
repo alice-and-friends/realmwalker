@@ -28,7 +28,8 @@ const routes: Routes = [
   },
   {
     path: 'settings',
-    loadChildren: () => import('./pages/settings/settings.module').then( m => m.SettingsPageModule)
+    loadChildren: () => import('./pages/settings/settings.module').then( m => m.SettingsPageModule),
+    canActivate: [AuthGuard],
   },
   {
     path: 'credits',
@@ -36,7 +37,8 @@ const routes: Routes = [
   },
   {
     path: 'battle/:id',
-    loadChildren: () => import('./pages/battle/battle.module').then( m => m.BattlePageModule)
+    loadChildren: () => import('./pages/battle/battle.module').then( m => m.BattlePageModule),
+    canActivate: [AuthGuard],
   },
 ];
 

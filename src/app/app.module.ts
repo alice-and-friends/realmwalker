@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import {APP_INITIALIZER, NgModule} from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
@@ -14,6 +14,14 @@ import {NotificationService} from "./services/notification.service";
 import {UserService} from "./services/user.service";
 import {LocationService} from "./services/location.service";
 import {MapService} from "./services/map.service";
+
+export function initUserService(userService: UserService) {
+  return () => userService.init(); // Return a function that returns a Promise
+}
+
+export function initLocationService(locationService: LocationService) {
+  return () => locationService.init(); // Return a function that returns a Promise
+}
 
 @NgModule({
   declarations: [AppComponent],
@@ -53,6 +61,20 @@ import {MapService} from "./services/map.service";
       multi: true,
       deps: [NotificationService, UserService, LocationService, MapService]
     },
+    UserService,
+    {
+      provide: APP_INITIALIZER,
+      useFactory: initUserService,
+      deps: [UserService],
+      multi: true
+    },
+    LocationService,
+    {
+      provide: APP_INITIALIZER,
+      useFactory: initLocationService,
+      deps: [LocationService],
+      multi: true
+    }
   ],
   bootstrap: [AppComponent],
   exports: [],

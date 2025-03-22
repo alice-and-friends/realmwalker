@@ -49,14 +49,10 @@ export class AppComponent implements OnInit, OnDestroy {
     });
 
     // Location Service
-    const locationServiceOperational = await this.location.init(); // TODO: Could we make the service self-initialize, same as AnalyticsService?
-    console.log('Location service reports operational:', locationServiceOperational, 'Initial position:', this.location.latitude, this.location.longitude)
-    if (locationServiceOperational) {
-      await this.location.track();
-      this.userService.login();
-    } else {
-      console.warn('Login aborted due to problem with location service')
-    }
+    // await this.location.init();
+
+    // Login
+    // this.userService.autoLogin();
 
     // Use Capacitor's App plugin to subscribe to the `appUrlOpen` event
     App.addListener('appUrlOpen', ({ url }) => {
@@ -75,7 +71,7 @@ export class AppComponent implements OnInit, OnDestroy {
               .pipe(mergeMap(() => Browser.close()))
               .subscribe({
                 next: (a: any) => {
-                  this.userService.login();
+                  this.userService.login(); // TODO: Review, should we use the autoLogin function?
                 }
               });
           } else {

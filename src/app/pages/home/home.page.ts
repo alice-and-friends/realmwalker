@@ -63,7 +63,8 @@ export class HomePage implements OnInit, OnDestroy {
     private viewContainerRef: ViewContainerRef,
   ) {
     if (!userService.loggedIn) {
-      void this.router.navigate(['/main-menu']); // TODO: Maybe handle this in a router guard or something like that
+      console.error('Not logged in error on home page')
+      // void this.router.navigate(['/main-menu']); // TODO: Maybe handle this in a router guard or something like that
       return;
     }
   }

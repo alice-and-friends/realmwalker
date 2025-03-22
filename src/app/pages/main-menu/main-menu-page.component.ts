@@ -16,13 +16,21 @@ import {Router} from "@angular/router";
 export class MainMenuPage {
   constructor(private analytics: AnalyticsService, public auth: AuthService, public userService: UserService, public location: LocationService, private router: Router) { }
 
-  handleLogin(): void {
+  ngOnInit() {
+    console.log('Init Main Menu')
+  }
+
+  launchGame(): void {
+    void this.router.navigate(['/home'])
+  }
+
+  userLoginAction(): void {
     this.analytics.events.login()
 
-    if (!this.location.permissionsGranted()) {
-      alert("Unable to log in. Please check location permissions.");
-      return;
-    }
+    // if (!this.location.permissionsGranted()) {
+    //   alert("Unable to log in. Please check location permissions.");
+    //   return;
+    // }
 
     const platform = Capacitor.getPlatform();
     console.log(env.auth0.authorizationParams.redirect_uri)
@@ -38,10 +46,22 @@ export class MainMenuPage {
     }
   }
 
+  // canLogIn() {
+  //   return !this.auth.isAuthenticated$ && !this.userService.loggedIn
+  // }
+  //
+  // canLogOut() {
+  //   return this.auth.isAuthenticated$ || this.userService.loggedIn
+  // }
+  //
+  // canLaunchGame() {
+  //   return this.auth.isAuthenticated$ && this.userService.loggedIn && this.location.tracking
+  // }
+
   private webLogin() {
     this.auth.loginWithRedirect({
       appState: {
-        target: '/home',
+        target: '/ ',
       },
     });
   }
@@ -54,13 +74,13 @@ export class MainMenuPage {
           await Browser.open({ url, windowName: '_self' });
         },
         appState: {
-          target: '/home',
+          target: '/',
         },
       })
       .subscribe({
         next: (response: any) => {
           console.log(1, this.auth.isAuthenticated$)
-          void this.router.navigate(['/home'])
+          void this.router.parseUrl('/');
         },
         error: (err: any) => {
           console.error(err)
