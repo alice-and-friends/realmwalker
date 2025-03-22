@@ -7,8 +7,11 @@ import {Capacitor} from "@capacitor/core";
   providedIn: 'root'
 })
 export class LocationService {
-  private wait: any
-  public permissionError: boolean | undefined
+  private initialized = false
+  private watcher: any
+  public permissionsOK: boolean | undefined
+  public permissionError: string | undefined
+  public tracking: boolean = false;
   public latitude: any;
   public longitude: any;
   public location: Position | undefined;
@@ -19,16 +22,34 @@ export class LocationService {
     maximumAge: 30 * 1_000,
   }
 
-  constructor(public ngZone: NgZone) { }
+  constructor(public ngZone: NgZone) {}
 
-  async init() {
-    console.debug('Initializing Location Service')
-    if (!await this.permissionsGranted()) {
-      await this.requestPermissions()
-    }
-    await this.testPermissions();
+  isOperational() {
     return !!this.latitude && !!this.longitude;
   }
+
+  async init(): Promise<void> {
+    if (this.initialized) return; // Prevent multiple initializations
+
+    console.log('⏳ Initializing location service...');
+
+    if (await this.permissionsGranted()) {
+      console.debug('✅ Geolocation permissions OK')
+      await this.trackUserLocation();
+    }
+
+    console.log('✅ Location service initialized!');
+    this.initialized = true;
+  }
+
+  // public async init() {
+  //   console.debug('Initializing Location Service')
+  //   if (await this.permissionsGranted()) {
+  //     console.debug('Geolocation permissions OK ✅')
+  //     await this.trackUserLocation();
+  //   }
+  //   return this.isOperational();
+  // }
 
   private async testPermissions() {
     console.debug('Testing location permissions...')
@@ -36,11 +57,13 @@ export class LocationService {
       const { coords } = await Geolocation.getCurrentPosition(this.positionOptions)
       this.latitude = coords.latitude;
       this.longitude = coords.longitude;
-      console.debug('Location permissions good ✅')
+      this.permissionsOK = true;
+      console.debug('Location permissions OK ✅')
     }
-    catch(err) {
+    catch(err: any) {
+      this.permissionsOK = false;
+      this.permissionError = err.message;
       console.error(err)
-      this.permissionError = true;
     }
   }
 
@@ -49,27 +72,56 @@ export class LocationService {
     return test.location === 'granted'
   }
 
+  public async setup() {
+    if (Capacitor.isNativePlatform()) {
+      try {
+        const test:PermissionStatus = await Geolocation.requestPermissions({ permissions: ['location'] })
+        const granted = (test.location === 'granted')
+        this.permissionsOK = granted
+        return await this.trackUserLocation();
+      }
+      catch (err: any) {
+        console.error(err)
+        this.permissionsOK = false
+        this.permissionError = err.message
+        return false
+      }
+    }
+    else {
+      // Web setup
+      return await this.trackUserLocation();
+    }
+  }
+
   public async requestPermissions() {
     try {
       if (Capacitor.isNativePlatform()) {
         const test:PermissionStatus = await Geolocation.requestPermissions({ permissions: ['location'] })
         const granted = (test.location === 'granted')
-        this.permissionError = !granted
+        this.permissionsOK = granted
         return granted
+      } else {
+        return await this.trackUserLocation();
       }
-      return true
     }
-    catch (err) {
+    catch (err: any) {
       console.error(err)
-      this.permissionError = true
+      this.permissionsOK = false
+      this.permissionError = err.message
       return false
     }
   }
 
-  public async track() {
+  public async trackUserLocation() {
+    await this.testPermissions()
+    if (!this.permissionsOK) {
+      console.error('Abort trackUserLocation, permissions do not check out')
+      return
+    }
+
     console.debug('Location service starting to track')
     try {
-      this.wait = Geolocation.watchPosition(
+      this.watcher = Geolocation.watchPosition(
         this.positionOptions,
         (position, err) => {
           if (err) {
@@ -87,14 +139,15 @@ export class LocationService {
           })
         }
       )
+      this.tracking = true;
     }
     catch (err) {
       console.error(err)
-      this.permissionError = true
     }
   }
 
   public stopTracking() {
-    Geolocation.clearWatch({ id: this.wait });
+    Geolocation.clearWatch({ id: this.watcher });
+    this.tracking = false;
   }
 }

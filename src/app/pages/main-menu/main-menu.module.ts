@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { MainMenuRoutingModule } from './main-menu-routing.module';
 
 import { MainMenuPage } from './main-menu-page.component';
+import { ObfuscateEmailPipe } from '../../obfuscate-email.pipe';
 
 @NgModule({
   imports: [
@@ -15,7 +16,7 @@ import { MainMenuPage } from './main-menu-page.component';
     IonicModule,
     MainMenuRoutingModule
   ],
-  declarations: [MainMenuPage]
+  declarations: [MainMenuPage, ObfuscateEmailPipe]
 })
 export class MainMenuPageModule {
 }

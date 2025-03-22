@@ -62,7 +62,7 @@ export class SettingsPage {
         })
         .subscribe({
           next: () => {
-            this.userService.logout()
+            this.userService.logoutAndRedirect()
             this.close()
           }
         });
