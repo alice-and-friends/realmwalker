@@ -8,6 +8,7 @@ import { SettingsPageRoutingModule } from './settings-routing.module';
 
 import { SettingsPage } from './settings.page';
 import {DirectivesModule} from "../../directives/directives.module";
+import {RouterLinkWithHref} from "@angular/router";
 
 @NgModule({
   imports: [
@@ -16,6 +17,7 @@ import {DirectivesModule} from "../../directives/directives.module";
     IonicModule,
     SettingsPageRoutingModule,
     DirectivesModule,
+    RouterLinkWithHref,
   ],
   declarations: [SettingsPage]
 })

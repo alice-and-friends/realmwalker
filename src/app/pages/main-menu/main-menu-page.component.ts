@@ -1,8 +1,7 @@
-import {Component, NgZone, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {AuthService} from "@auth0/auth0-angular";
 import {UserService} from "../../services/user.service";
 import {LocationService} from "../../services/location.service";
-import {Browser} from "@capacitor/browser";
 import { environment as env } from '../../../environments/environment';
 import {Capacitor} from "@capacitor/core";
 import {AnalyticsService} from "../../services/analytics.service";
@@ -46,41 +45,24 @@ export class MainMenuPage {
     }
   }
 
-  // canLogIn() {
-  //   return !this.auth.isAuthenticated$ && !this.userService.loggedIn
-  // }
-  //
-  // canLogOut() {
-  //   return this.auth.isAuthenticated$ || this.userService.loggedIn
-  // }
-  //
-  // canLaunchGame() {
-  //   return this.auth.isAuthenticated$ && this.userService.loggedIn && this.location.tracking
-  // }
+  userLogoutAction() {
+    this.analytics.events.logout()
+    this.userService.logoutAndRedirect();
+  }
 
   private webLogin() {
-    this.auth.loginWithRedirect({
-      appState: {
-        target: '/ ',
-      },
-    });
+    this.auth.loginWithRedirect();
   }
 
   private nativeLogin() {
     // https://auth0.com/docs/quickstart/native/ionic-angular/
     this.auth
-      .loginWithRedirect({
-        async openUrl(url: string) {
-          await Browser.open({ url, windowName: '_self' });
-        },
-        appState: {
-          target: '/',
-        },
-      })
+      .loginWithRedirect()
       .subscribe({
         next: (response: any) => {
-          console.log(1, this.auth.isAuthenticated$)
-          void this.router.parseUrl('/');
+          if (this.auth.isAuthenticated$) {
+            this.userService.autoLogin()
+          }
         },
         error: (err: any) => {
           console.error(err)

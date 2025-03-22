@@ -1,6 +1,6 @@
 <ion-app>
   <div *ngIf="auth.isLoading$ | async; else ready">
-    <!--<h1>Loading...</h1>-->
+    <h1>Loading...</h1>
   </div>
   <ng-template #ready>
     <ion-router-outlet></ion-router-outlet>

@@ -19,11 +19,10 @@
     <h1>RealmWalker</h1>
   </ion-text>
 
-  <ng-container>
-    <p *ngIf="location.permissionsOK; else locationPermissionError">🟢 Permissions OK</p>
+  <div class="status-lights">
+    <p *ngIf="location.permissionsOK; else locationPermissionError">🟢 Device permissions OK</p>
     <ng-template #locationPermissionError>
       <p>🔴 Missing location permissions</p>
-      <ion-button (click)="location.setup()">Grant permissions</ion-button>
     </ng-template>
 
     <p *ngIf="location.tracking; else locationNotTracking">🟢 Location service active</p>
@@ -44,18 +43,21 @@
     <ng-template #notConnected>
       <p>🔴 Not connected to game server</p>
     </ng-template>
-  </ng-container>
+  </div>
 
-  <ion-button *ngIf="(auth.isAuthenticated$ | async) === false" color="dark" expand="full" (click)="userLoginAction()" class="login-button">
-    Log in
-  </ion-button>
-
-  <ion-button *ngIf="(auth.isAuthenticated$ | async)" color="dark" expand="full" (click)="auth.logout({ logoutParams: { returnTo: document.location.origin } })">
-    Log out
-  </ion-button>
-
-  <ion-button *ngIf="(auth.isAuthenticated$ | async) && userService.loggedIn && location.tracking" color="danger" expand="full" (click)="launchGame()" class="login-button">
-    Play now
-  </ion-button>
+  <div class="controls">
+    <ion-button *ngIf="(auth.isAuthenticated$ | async) && userService.loggedIn && location.tracking" color="danger" expand="full" (click)="launchGame()" class="play-button">
+      Play now
+    </ion-button>
+    <ion-button *ngIf="!location.permissionsOK" color="dark" expand="full" (click)="location.setup()">
+      Grant permissions
+    </ion-button>
+    <ion-button *ngIf="(auth.isAuthenticated$ | async) === false" color="dark" expand="full" (click)="userLoginAction()" class="login-button">
+      Log in
+    </ion-button>
+    <ion-button *ngIf="(auth.isAuthenticated$ | async)" color="dark" expand="full" (click)="userLogoutAction()" class="logout-button">
+      Log out
+    </ion-button>
+  </div>
 
 </ion-content>

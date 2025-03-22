@@ -48,14 +48,10 @@ export class AppComponent implements OnInit, OnDestroy {
       this.analytics.trackPageView(event.urlAfterRedirects);
     });
 
-    // Location Service
-    // await this.location.init();
-
-    // Login
-    // this.userService.autoLogin();
-
     // Use Capacitor's App plugin to subscribe to the `appUrlOpen` event
+    // ...This should trigger whenever we return from one of Auth0's hosted screens
     App.addListener('appUrlOpen', ({ url }) => {
+      console.log('EVENT appUrlOpen');
       // Must run inside an NgZone for Angular to pick up the changes
       // https://capacitorjs.com/docs/guides/angular
       this.ngZone.run(() => {
@@ -71,7 +67,7 @@ export class AppComponent implements OnInit, OnDestroy {
               .pipe(mergeMap(() => Browser.close()))
               .subscribe({
                 next: (a: any) => {
-                  this.userService.login(); // TODO: Review, should we use the autoLogin function?
+                  this.userService.autoLogin();
                 }
               });
           } else {

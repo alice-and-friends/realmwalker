@@ -29,7 +29,7 @@ export const environment: RealmWalkerEnvironment = {
     },
   },
   realmwalkerApi: {
-    host: 'https://localhost:3001/api',
+    host: 'https://172.16.4.171:3001/api',
   },
   realmWalker: {
     mapRefreshRate: 0, // Every n seconds

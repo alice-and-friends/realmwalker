@@ -6,12 +6,15 @@ import {AnalyticsService} from "./analytics.service";
 import {Capacitor} from "@capacitor/core";
 import {environment as env} from "../../environments/environment";
 import {AuthService} from "@auth0/auth0-angular";
+import {firstValueFrom} from "rxjs";
+import {Browser} from "@capacitor/browser";
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
   private initialized = false;
+  private platform = Capacitor.getPlatform();
   public loggedIn = false;
   public activeUser: User | undefined;
 
@@ -38,42 +41,53 @@ export class UserService {
     this.loggedIn = false;
   }
 
-  logoutAndRedirect() {
-    this.nullifyActiveUser()
-    void this.router.navigate(['/'])
-  }
-
-  login() {
-    console.info('User service starting login procedure')
-    this.api.me().subscribe({
-      next: (response: any) => {
-        this.setActiveUser(response);
-        this.loggedIn = true;
-        console.debug('User service redirecting to home route')
-        // if(!this.router.url.includes('compendium')) {
-        //   void this.router.navigate(['/home'])
-        // }
-      },
-      error: (err: any) => {
-        console.error('Error on login', err)
-        this.logoutAndRedirect()
-      }
-    });
-  }
-
   async autoLogin() {
     console.info('User service attempting auto-login')
 
     // Auth0
-    if (this.auth.isAuthenticated$) {
-      console.info('Auth0 OK', this.auth.user$)
+    if (await firstValueFrom(this.auth.isAuthenticated$)) {
+      console.info('Auto-login: Auth0 OK')
     } else {
       console.info('Auto-login halted: Auth0 not authenticated')
       return false;
     }
 
-    // Realmwalker
-    return this.api.me().subscribe({
+    // Realmwalker server auth
+    return this.getRealmWalkerUser();
+  }
+
+  logoutAndRedirect() {
+    console.log('logoutAndRedirect called...')
+
+    if (this.platform === 'web') {
+      console.log('web logout')
+      this.auth.logout({ logoutParams: { returnTo: document.location.origin } })
+    }
+    else {
+      console.log('native logout')
+      const returnTo = `${env.auth0.appId}://${env.auth0.domain}/capacitor/${env.auth0.appId}/callback`;
+
+      this.auth
+        .logout({
+          logoutParams: {
+            returnTo,
+          },
+          async openUrl(url: string) {
+            await Browser.open({ url });
+          }
+        })
+        .subscribe({
+          next: () => {
+            this.nullifyActiveUser()
+            void this.router.navigate(['/'])
+          }
+        });
+    }
+  }
+
+  async getRealmWalkerUser() {
+    console.log('Authorizing user against game api...')
+    this.api.me().subscribe({
       next: (response: any) => {
         this.setActiveUser(response);
         console.info('User authorized:', this.activeUser)
@@ -87,22 +101,6 @@ export class UserService {
       }
     });
   }
-
-  // async realmWalkerLogin() {
-  //   this.api.me().subscribe({
-  //     next: (response: any) => {
-  //       this.setActiveUser(response);
-  //       this.loggedIn = true;
-  //       return true;
-  //     },
-  //     error: (err: any) => {
-  //       console.error('Error on login', err)
-  //       this.nullifyActiveUser()
-  //       // this.logoutAndRedirect()
-  //       return false;
-  //     }
-  //   });
-  // }
 
   refresh() {
     this.api.me().subscribe({

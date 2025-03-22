@@ -1,11 +1,7 @@
 import {Component} from '@angular/core';
 import {UserService} from "../../services/user.service";
 import {User} from "../../models/user";
-import {AuthService} from "@auth0/auth0-angular";
 import {Router} from "@angular/router";
-import {environment as env} from "../../../environments/environment";
-import {Browser} from "@capacitor/browser";
-import {Capacitor} from "@capacitor/core";
 import {AnalyticsService} from "../../services/analytics.service";
 import {ModalService} from "../../services/modal.service";
 import {SoundAsset, SoundService} from "../../services/sound.service";
@@ -18,13 +14,11 @@ import {SoundAsset, SoundService} from "../../services/sound.service";
 export class SettingsPage {
   settings: any = {};
   activeUser: User | undefined;
-  platform = Capacitor.getPlatform();
 
   constructor(
     public userService: UserService,
     protected modalService: ModalService,
     private analytics: AnalyticsService,
-    private auth: AuthService,
     private router: Router,
     private soundService: SoundService,
   ) {
@@ -42,39 +36,23 @@ export class SettingsPage {
     this.userService.updatePreference(settingKey, event.detail.value);
   }
 
-  logout() {
+  async logout() {
+    await this.modalService.dismissAll();
     this.analytics.events.logout()
-
-    if (this.platform === 'web') {
-      this.auth.logout({ logoutParams: { returnTo: document.location.origin } })
-    }
-    else {
-      const returnTo = `${env.auth0.appId}://${env.auth0.domain}/capacitor/${env.auth0.appId}/callback`;
-
-      this.auth
-        .logout({
-          logoutParams: {
-            returnTo,
-          },
-          async openUrl(url: string) {
-            await Browser.open({ url });
-          }
-        })
-        .subscribe({
-          next: () => {
-            this.userService.logoutAndRedirect()
-            this.close()
-          }
-        });
-    }
+    this.userService.logoutAndRedirect();
   }
 
-  close() {
-    void this.modalService.dismiss()
+  async close() {
+    await this.modalService.dismiss()
+  }
+
+  goToMainMenu() {
+    void this.close()
+    void this.router.navigate(['/main-menu'])
   }
 
   goToCredits() {
-    this.close()
+    void this.close()
     void this.router.navigate(['/credits'])
   }
 }
